@@ -1,0 +1,45 @@
+//
+//  PodcastCell.swift
+//  LacunaPodcasts
+//
+//  Created by Priscilla Ip on 2020-06-29.
+//  Copyright © 2020 Priscilla Ip. All rights reserved.
+//
+
+import UIKit
+import SDWebImage
+
+class PodcastCell: UITableViewCell {
+    
+    static var reuseIdentifier: String {
+        String(describing: self)
+    }
+    static var nib: UINib {
+        return UINib(nibName: String(describing: self), bundle: nil)
+    }
+    
+    @IBOutlet weak var podcastImageView: UIImageView!
+    @IBOutlet weak var trackNameLabel: UILabel!
+    @IBOutlet weak var artistNameLabel: UILabel!
+    @IBOutlet weak var episodeCountLabel: UILabel!
+    
+    var podcast: Podcast! {
+        didSet {
+            trackNameLabel.text = podcast.trackName
+            artistNameLabel.text = podcast.artistName
+            episodeCountLabel.text = "\(podcast.trackCount ?? 0) Episodes"
+
+            guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
+            
+//            URLSession.shared.dataTask(with: url) { (data, response, error) in
+//                guard let data = data else { return }
+//                DispatchQueue.main.async {
+//                    self.podcastImageView.image = UIImage(data: data)
+//                }
+//            }.resume()
+            
+            //podcastImageView.sd_setImage(with: url, completed: nil)
+            podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
+        }
+    }
+}

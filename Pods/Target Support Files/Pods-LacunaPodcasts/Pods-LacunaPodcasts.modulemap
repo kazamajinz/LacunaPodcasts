@@ -1,0 +1,6 @@
+framework module Pods_LacunaPodcasts {
+  umbrella header "Pods-LacunaPodcasts-umbrella.h"
+
+  export *
+  module * { export * }
+}

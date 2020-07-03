@@ -1,0 +1,30 @@
+PODS:
+  - Alamofire (5.2.1)
+  - FeedKit (9.1.2)
+  - SDWebImage (5.8.1):
+    - SDWebImage/Core (= 5.8.1)
+  - SDWebImage/Core (5.8.1)
+  - UIImageColors (2.1.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.2)
+  - FeedKit (~> 9.1)
+  - SDWebImage (~> 5.0)
+  - UIImageColors
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - FeedKit
+    - SDWebImage
+    - UIImageColors
+
+SPEC CHECKSUMS:
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  FeedKit: 71653273ab08e618cd6fd1301ca08fc02dca6a9e
+  SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
+  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
+
+PODFILE CHECKSUM: 89d9c59388331d082eea00c0837af16b78086972
+
+COCOAPODS: 1.9.3
