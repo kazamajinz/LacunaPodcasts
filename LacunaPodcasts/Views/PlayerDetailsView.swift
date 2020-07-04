@@ -70,9 +70,16 @@ class PlayerDetailsView: UIView {
             
             titleLabel.text = episode.title
             authorLabel.text = episode.author.uppercased()
-            
             miniTitleLabel.text = episode.title
             miniAuthorLabel.text = episode.author.uppercased()
+            
+            
+//            maximizedHeader.alpha = 0
+//            durationSliderContainer.alpha = 0
+//            playerControlsContainer.alpha = 0
+//            miniPlayerView.alpha = 0
+            
+            
             
 
             playEpisode()
@@ -123,7 +130,7 @@ class PlayerDetailsView: UIView {
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
         let times = [NSValue(time: time)]
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
-            //self?.enlargeEpisodeImageView()
+            self?.enlargeEpisodeImageView()
         }
     }
     
@@ -407,7 +414,7 @@ class PlayerDetailsView: UIView {
             })
             isPlaying = true
 
-            //enlargeEpisodeImageView()
+            enlargeEpisodeImageView()
             
         } else {
             removeBoundaryTimeObserver()
@@ -415,7 +422,7 @@ class PlayerDetailsView: UIView {
                 self.player.pause()
             })
             isPlaying = false
-            //shrinkEpisodeImageView()
+            shrinkEpisodeImageView()
         }
     }
     

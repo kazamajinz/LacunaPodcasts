@@ -68,11 +68,8 @@ class EpisodesController: UITableViewController {
         let episode = self.episodes[indexPath.row]
         guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
         mainTabBarController.maximizePlayerDetails(episode: episode)
-        
-        
-        
-        
 
+        
 //        print("Trying to play episode:", episode.title)
 //
 //        let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
@@ -82,7 +79,7 @@ class EpisodesController: UITableViewController {
 //        playerDetailsView.frame = self.view.frame
 //        window?.addSubview(playerDetailsView)
 //
-//        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
