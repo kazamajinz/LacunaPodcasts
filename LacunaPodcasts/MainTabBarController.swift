@@ -23,33 +23,38 @@ class MainTabBarController: UITabBarController {
         maximizedTopAnchorConstraint.isActive = false
         minimizedTopAnchorConstraint.isActive = true
         
-        UIView.animate(withDuration: 0.05, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
             self.playerDetailsView.maximizedHeader.alpha = 0
             self.playerDetailsView.durationSliderContainer.alpha = 0
+            self.playerDetailsView.playerControlsContainer.alpha = 0
         }, completion: nil)
+        
+        UIView.animate(withDuration: 0.1, delay: 0.4, options: .curveEaseOut, animations: {
+            self.playerDetailsView.miniPlayerView.alpha = 1
+        }, completion: nil)
+        
         
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
 
             self.playerDetailsView.maximizedHeaderHeight.constant = 0
             
-            // configure episode image
             
+            // configure episode image
+            self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 0)
             self.playerDetailsView.episodeImageViewHeight.constant = 64
             self.playerDetailsView.episodeImageViewTop.constant = 0
             self.playerDetailsView.episodeImageViewLeading.constant = 0
             self.playerDetailsView.episodeImageViewBottom.constant = 0
             
-            // configure player controls
-            self.playerDetailsView.playerControlsContainer.transform = CGAffineTransform(translationX: 0, y: 250)
-            
-
-            
             self.view.layoutIfNeeded()
             self.showTabBar()
             
-            
-
         }, completion: nil)
+        
+        
+        
+        
+        
     }
     
     
@@ -62,20 +67,25 @@ class MainTabBarController: UITabBarController {
             playerDetailsView.episode = episode
         }
         
-        UIView.animate(withDuration: 0.05, delay: 0, options: .curveEaseOut, animations: {
+        self.playerDetailsView.miniPlayerView.alpha = 0
+        
+        UIView.animate(withDuration: 0.1, delay: 0.4, options: .curveEaseOut, animations: {
             self.playerDetailsView.maximizedHeader.alpha = 1
             self.playerDetailsView.durationSliderContainer.alpha = 1
+            self.playerDetailsView.playerControlsContainer.alpha = 1
         }, completion: nil)
         
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
            
             self.playerDetailsView.maximizedHeaderHeight.constant = 52
             
-            
+            self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 16)
             self.playerDetailsView.episodeImageViewHeight.constant = self.playerDetailsView.episodeImageContainer.bounds.width - 24 * 2
             self.playerDetailsView.episodeImageViewTop.constant = 0
             self.playerDetailsView.episodeImageViewBottom.constant = 0
             self.playerDetailsView.episodeImageViewLeading.constant = 24
+            
+            self.playerDetailsView.playerControlsContainer.transform = .identity
             
             
             

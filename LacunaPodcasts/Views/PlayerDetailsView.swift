@@ -52,22 +52,34 @@ class PlayerDetailsView: UIView {
         super.awakeFromNib()
     }
     
+    var isPlaying: Bool! {
+        didSet {
+            if isPlaying {
+                playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+                miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            } else {
+                playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+                miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            }
+        }
+    }
+    
     var episode: Episode! {
         didSet {
+            isPlaying = true
+            
             titleLabel.text = episode.title
             authorLabel.text = episode.author.uppercased()
             
+            miniTitleLabel.text = episode.title
+            miniAuthorLabel.text = episode.author.uppercased()
             
-            
-            
-            
+
             playEpisode()
             
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
-            //miniEpisodeImageView.sd_setImage(with: url)
-            
-            
+
             //            if let colors = episodeImageView.image?.getColors() {
             //                guard let backgroundColor = colors.background else { return }
             //                guard let primaryColor = colors.primary else { return }
@@ -304,55 +316,36 @@ class PlayerDetailsView: UIView {
     }
     
     //MARK: - User Actions
-    //EPISODE IMAGE VIEW
+
+    // EPISODE IMAGE
     @IBOutlet weak var episodeImageContainer: UIView!
-    
-    @IBOutlet weak var episodeImageContainerWidth: NSLayoutConstraint!
-    
-    
-    @IBOutlet weak var episodeImageViewTop: NSLayoutConstraint!
-    @IBOutlet weak var episodeImageViewBottom: NSLayoutConstraint!
-    @IBOutlet weak var episodeImageViewLeading: NSLayoutConstraint!
-    @IBOutlet weak var episodeImageViewTrailing: NSLayoutConstraint!
     @IBOutlet weak var episodeImageViewHeight: NSLayoutConstraint!
-    
-    
+    @IBOutlet weak var episodeImageViewTop: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageViewTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var durationSliderContainer: UIView!
     @IBOutlet weak var playerControlsContainer: UIView!
     
-    
-    //PLAYER CONTROLS
-    @IBOutlet weak var playerControlsContainerTop: NSLayoutConstraint!
-    @IBOutlet weak var playerControlsContainerLeading: NSLayoutConstraint!
-    @IBOutlet weak var playerControlsContainerBottom: NSLayoutConstraint!
-    @IBOutlet weak var playerControlsContainerTrailing: NSLayoutConstraint!
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //EPISODE DETAIL HEADER
-    @IBOutlet weak var miniPlayerView: UIView!
     @IBOutlet weak var maximizedHeader: UIView!
     @IBOutlet weak var maximizedHeaderHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var miniPlayerViewHeight: NSLayoutConstraint!
-    
-    
-    //MINI PLAYER
-    @IBOutlet weak var dismissButton: UIButton!
-    
-    
-    
-    
+
+    // MINI PLAYER
+    @IBOutlet weak var miniPlayerView: UIView!
+    @IBOutlet weak var miniTitleLabel: UILabel!
+    @IBOutlet weak var miniAuthorLabel: UILabel!
+    @IBOutlet weak var miniPlayPauseButton: UIButton! {
+        didSet {
+            miniPlayPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+        }
+    }
+    @IBOutlet weak var miniRewindButton: UIButton!
+    @IBOutlet weak var miniFastForwardButton: UIButton!
+
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
-            //episodeImageView.roundCorners(cornerRadius: 16)
+            episodeImageView.roundCorners(cornerRadius: 16)
             //episodeImageView.transform = shrunkenTransform // default
         }
     }
@@ -361,6 +354,8 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var currentTimeSlider: UISlider!
+    
+    //MARK: - @IBActions
     
     @IBAction func didChangeCurrentTimeSlider(_ sender: Any) {
         guard let duration = player.currentItem?.duration else { return }
@@ -375,13 +370,6 @@ class PlayerDetailsView: UIView {
         
         player.seek(to: seekTime)
     }
-    
-    
-    
-    
-    
-    
-    
     
     @IBAction func didFastForward(_ sender: Any) {
         seekToCurrentTime(delta: 15)
@@ -405,11 +393,8 @@ class PlayerDetailsView: UIView {
 //        player.volume = sender.value
 //    }
     
-    // PLAY PAUSE BUTTON
-    
     @IBOutlet weak var playPauseButton: UIButton! {
         didSet {
-            playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             playPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
         }
     }
@@ -420,7 +405,8 @@ class PlayerDetailsView: UIView {
             fadeTimer = player.fadeVolume(from: 0, to: 1, duration: 0.5, completion: {
                 self.player.play()
             })
-            playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            isPlaying = true
+
             //enlargeEpisodeImageView()
             
         } else {
@@ -428,7 +414,7 @@ class PlayerDetailsView: UIView {
             fadeTimer = player.fadeVolume(from: player.volume, to: 0, duration: 0.5, completion: {
                 self.player.pause()
             })
-            playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            isPlaying = false
             //shrinkEpisodeImageView()
         }
     }
