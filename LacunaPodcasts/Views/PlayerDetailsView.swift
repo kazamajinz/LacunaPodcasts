@@ -54,8 +54,6 @@ class PlayerDetailsView: UIView {
     
     var episode: Episode! {
         didSet {
-            //miniTitleLabel.text = episode.title
-            //miniAuthorLabel.text = episode.author.uppercased()
             titleLabel.text = episode.title
             authorLabel.text = episode.author.uppercased()
             
@@ -306,24 +304,56 @@ class PlayerDetailsView: UIView {
     }
     
     //MARK: - User Actions
-    // EPISODE IMAGE VIEW
+    //EPISODE IMAGE VIEW
+    @IBOutlet weak var episodeImageContainer: UIView!
     
+    @IBOutlet weak var episodeImageContainerWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var episodeImageViewTop: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageViewTrailing: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageViewHeight: NSLayoutConstraint!
+    
+    
+    
+    @IBOutlet weak var durationSliderContainer: UIView!
+    @IBOutlet weak var playerControlsContainer: UIView!
+    
+    
+    //PLAYER CONTROLS
+    @IBOutlet weak var playerControlsContainerTop: NSLayoutConstraint!
+    @IBOutlet weak var playerControlsContainerLeading: NSLayoutConstraint!
+    @IBOutlet weak var playerControlsContainerBottom: NSLayoutConstraint!
+    @IBOutlet weak var playerControlsContainerTrailing: NSLayoutConstraint!
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //EPISODE DETAIL HEADER
+    @IBOutlet weak var miniPlayerView: UIView!
+    @IBOutlet weak var maximizedHeader: UIView!
+    @IBOutlet weak var maximizedHeaderHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var miniPlayerViewHeight: NSLayoutConstraint!
     
     
     //MINI PLAYER
-    @IBOutlet weak var detailButton: UIButton!
     @IBOutlet weak var dismissButton: UIButton!
     
     
     
     
-    
-    @IBOutlet weak var maximizedStackView: UIStackView!
-
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
-            episodeImageView.roundCorners(cornerRadius: 16)
-            episodeImageView.transform = shrunkenTransform // default
+            //episodeImageView.roundCorners(cornerRadius: 16)
+            //episodeImageView.transform = shrunkenTransform // default
         }
     }
     @IBOutlet weak var titleLabel: UILabel!
@@ -419,15 +449,14 @@ class PlayerDetailsView: UIView {
 
 
     @IBAction func didTapDismiss(_ sender: Any) {
-        
-//        // getting access to the window object from SceneDelegate
-//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//          let sceneDelegate = windowScene.delegate as? SceneDelegate
-//        else { return }
-//        //let viewcontroller = UIViewController()
-//        let mainTabBarController = MainTabBarController()
-//        //viewcontroller.view.backgroundColor = .blue
-//        sceneDelegate.window?.rootViewController = mainTabBarController
+///        // getting access to the window object from SceneDelegate
+///        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+///          let sceneDelegate = windowScene.delegate as? SceneDelegate
+///        else { return }
+///        //let viewcontroller = UIViewController()
+///        let mainTabBarController = MainTabBarController()
+///        //viewcontroller.view.backgroundColor = .blue
+///        sceneDelegate.window?.rootViewController = mainTabBarController
 
         guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
         mainTabBarController.minimizePlayerDetails()
