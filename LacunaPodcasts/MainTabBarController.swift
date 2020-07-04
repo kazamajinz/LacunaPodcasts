@@ -15,7 +15,6 @@ class MainTabBarController: UITabBarController {
         UINavigationBar.appearance().prefersLargeTitles = false
         tabBar.tintColor = .black
         setupViewControllers()
-        
         setupPlayerDetailsView()
     }
     
@@ -23,32 +22,51 @@ class MainTabBarController: UITabBarController {
         
         maximizedTopAnchorConstraint.isActive = false
         minimizedTopAnchorConstraint.isActive = true
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
 
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            
             self.view.layoutIfNeeded()
             self.showTabBar()
             
-            self.playerDetailsView.maximizedStackView.alpha = 0
-            self.playerDetailsView.miniPlayerView.alpha = 1
             
+            
+            
+            //            self.playerDetailsView.maximizedStackView.alpha = 0
+            //            self.playerDetailsView.miniPlayerView.alpha = 1
+
+        
         }, completion: nil)
     }
+    
+    
+    
+    
+    
+    
+    
     
     func maximizePlayerDetails(episode: Episode?) {
         maximizedTopAnchorConstraint.isActive = true
         maximizedTopAnchorConstraint.constant = 0
         minimizedTopAnchorConstraint.isActive = false
         
+        
+
         if episode != nil {
             playerDetailsView.episode = episode
         }
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+
+            
             self.view.layoutIfNeeded()
             self.hideTabBar()
             
-            self.playerDetailsView.maximizedStackView.alpha = 1
-            self.playerDetailsView.miniPlayerView.alpha = 0
+            
+//            self.playerDetailsView.maximizedStackView.alpha = 1
+//            self.playerDetailsView.miniPlayerView.alpha = 0
+
             
         }, completion: nil)
     }
@@ -61,21 +79,7 @@ class MainTabBarController: UITabBarController {
     
     
     
-    
-//    func hideTabBar() {
-//        self.tabBar.frame.origin.y = self.view.frame.size.height + (self.tabBar.frame.size.height)
-//        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut ,animations: {
-//            self.tabBar.frame = self.tabBar.frame
-//        })
-//    }
-//
-//    func showTabBar() {
-//        self.tabBar.frame.origin.y = self.view.frame.size.height - (self.tabBar.frame.size.height)
-//        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut ,animations: {
-//            self.tabBar.frame = self.tabBar.frame
-//        })
-//    }
-    
+
     
     
     

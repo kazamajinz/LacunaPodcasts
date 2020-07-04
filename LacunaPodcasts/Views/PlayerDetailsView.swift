@@ -54,7 +54,8 @@ class PlayerDetailsView: UIView {
     
     var episode: Episode! {
         didSet {
-            miniTitleLabel.text = episode.title
+            //miniTitleLabel.text = episode.title
+            //miniAuthorLabel.text = episode.author.uppercased()
             titleLabel.text = episode.title
             authorLabel.text = episode.author.uppercased()
             
@@ -66,7 +67,7 @@ class PlayerDetailsView: UIView {
             
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
-            miniEpisodeImageView.sd_setImage(with: url)
+            //miniEpisodeImageView.sd_setImage(with: url)
             
             
             //            if let colors = episodeImageView.image?.getColors() {
@@ -112,7 +113,7 @@ class PlayerDetailsView: UIView {
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
         let times = [NSValue(time: time)]
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
-            self?.enlargeEpisodeImageView()
+            //self?.enlargeEpisodeImageView()
         }
     }
     
@@ -305,32 +306,20 @@ class PlayerDetailsView: UIView {
     }
     
     //MARK: - User Actions
+    // EPISODE IMAGE VIEW
+    
+    
+    
     //MINI PLAYER
+    @IBOutlet weak var detailButton: UIButton!
+    @IBOutlet weak var dismissButton: UIButton!
     
     
     
-    @IBOutlet weak var miniEpisodeImageView: UIImageView!
-    @IBOutlet weak var miniTitleLabel: UILabel!
-    
-    @IBOutlet weak var miniPlayPauseButton: UIButton! {
-        didSet {
-            miniPlayPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
-        }
-    }
-    
-    @IBOutlet weak var miniRewindButton: UIButton!
-    @IBOutlet weak var miniFastForwardButton: UIButton!
     
     
-    
-    @IBOutlet weak var miniPlayerView: UIStackView!
     @IBOutlet weak var maximizedStackView: UIStackView!
-    
-    
-    
-    
-    
-    
+
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
             episodeImageView.roundCorners(cornerRadius: 16)
@@ -382,9 +371,9 @@ class PlayerDetailsView: UIView {
         player.seek(to: seekTime)
     }
     
-    @IBAction func didChangeVolume(_ sender: UISlider) {
-        player.volume = sender.value
-    }
+//    @IBAction func didChangeVolume(_ sender: UISlider) {
+//        player.volume = sender.value
+//    }
     
     // PLAY PAUSE BUTTON
     
@@ -402,8 +391,7 @@ class PlayerDetailsView: UIView {
                 self.player.play()
             })
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            enlargeEpisodeImageView()
+            //enlargeEpisodeImageView()
             
         } else {
             removeBoundaryTimeObserver()
@@ -411,8 +399,7 @@ class PlayerDetailsView: UIView {
                 self.player.pause()
             })
             playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-            miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            shrinkEpisodeImageView()
+            //shrinkEpisodeImageView()
         }
     }
     
@@ -444,6 +431,5 @@ class PlayerDetailsView: UIView {
 
         guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
         mainTabBarController.minimizePlayerDetails()
-        print("did tap dismiss")
     }
 }
