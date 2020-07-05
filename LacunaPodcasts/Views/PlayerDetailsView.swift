@@ -63,6 +63,18 @@ class PlayerDetailsView: UIView {
         }
     }
     
+//    var isMaximized: Bool! {
+//        didSet {
+//            if isMaximized {
+//                panGestureUp.isEnabled = false
+//                panGestureDown.isEnabled = true
+//            } else {
+//                panGestureUp.isEnabled = true
+//                panGestureDown.isEnabled = false
+//            }
+//        }
+//    }
+    
     var episode: Episode! {
         didSet {
             isPlaying = true
@@ -144,12 +156,15 @@ class PlayerDetailsView: UIView {
     //MARK: - Gesture Recognizers
     
     var panGesture: UIPanGestureRecognizer!
+    var panGestureDown: UIPanGestureRecognizer!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
+//        panGestureDown = UIPanGestureRecognizer(target: self, action: #selector(handlePanDown))
+//        addGestureRecognizer(panGestureDown)
     }
 
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -336,7 +351,6 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var episodeImageViewBottom: NSLayoutConstraint!
     @IBOutlet weak var episodeImageViewTrailing: NSLayoutConstraint!
     
-    @IBOutlet weak var durationSliderContainer: UIView!
     @IBOutlet weak var playerControlsContainer: UIView!
     
     @IBOutlet weak var maxiHeader: UIView!

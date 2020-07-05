@@ -27,7 +27,7 @@ class MainTabBarController: UITabBarController {
     
     let duration: TimeInterval = 0.5
     var delay: TimeInterval {
-        return duration * 0.75
+        return duration * 0.5
     }
     
     fileprivate func animateMiniPlayerView(type: AnimationType) {
@@ -45,7 +45,6 @@ class MainTabBarController: UITabBarController {
         let alpha: CGFloat = type == .animateIn ? 1 : 0
         UIView.animate(withDuration: 0.1, delay: delay, options: .curveEaseOut, animations: {
             self.playerDetailsView.maxiHeader.alpha = alpha
-            self.playerDetailsView.durationSliderContainer.alpha = alpha
             self.playerDetailsView.playerControlsContainer.alpha = alpha
         }, completion: nil)
     }
@@ -53,7 +52,7 @@ class MainTabBarController: UITabBarController {
     fileprivate func configureEpisodeImageInPosition(maximize: Bool) {
 
         let episodeImageContainerWidth = self.playerDetailsView.episodeImageContainer.bounds.width
-        let maximizedHeaderHeight: CGFloat = maximize ? 52 : 0
+        let maximizedHeaderHeight: CGFloat = maximize ? 64 : 0
         let episodeImageViewLeadingInset: CGFloat = maximize ? 24 : 0
         let episodeImageViewHeight: CGFloat = maximize ? episodeImageContainerWidth - 24 * 2 : 64
         let episodeImageCornerRadius: CGFloat = maximize ? 16 : 0

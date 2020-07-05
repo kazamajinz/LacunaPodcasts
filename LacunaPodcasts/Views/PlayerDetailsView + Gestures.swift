@@ -22,32 +22,43 @@ extension PlayerDetailsView {
             handlePanEnded(gesture: gesture)
         }
     }
-    
-    
-    
-    
-    
+
     func handlePanChanged(gesture: UIPanGestureRecognizer) {
+        let screenSizeHeight = UIScreen.main.bounds.height
         let translation = gesture.translation(in: self.superview)
-        print("Ended:", translation.y)
+        let velocity = gesture.velocity(in: self.superview)
         
+        print("Ended:", translation.y, velocity.y, screenSizeHeight)
+
         self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+
+        if gesture.verticalDirection(target: self) == .up {
+            
+            self.miniPlayerView.alpha = 1 + translation.y / (screenSizeHeight * 0.25)
+            self.maxiHeaderHeight.constant = 64 * -(translation.y / screenSizeHeight)
+            self.maxiHeader.alpha = -translation.y / (screenSizeHeight * 0.25)
+            self.playerControlsContainer.alpha = (-translation.y - 500) / (screenSizeHeight * 0.25)
+
+            // EPISODE IMAGE VIEW ANIMATION
+            let maxImageWidth = episodeImageContainer.bounds.width - 24 * 2
+            self.episodeImageViewLeading.constant = 24 * -(translation.y / screenSizeHeight)
+            self.episodeImageViewHeight.constant = 64 +  (maxImageWidth * -(translation.y / screenSizeHeight))
+            self.episodeImageView.roundCorners(cornerRadius: 16 * -(translation.y / screenSizeHeight))
+            
+        } else {
+            
+            
+            
+            print("Gesture Down")
+        }
         
-        self.miniPlayerView.alpha = 1 + translation.y / 200
         
-        
-        
-        
-        
-        self.maxiHeader.alpha = -translation.y / 200
-        
-        
-        
-        //            self.durationSliderContainer.alpha = -translation.y / 200
-        //            self.playerControlsContainer.alpha = -translation.y / 200
         
         
     }
+    
+    
+    
     
     
     
@@ -56,27 +67,25 @@ extension PlayerDetailsView {
         let translation = gesture.translation(in: self.superview)
         let velocity = gesture.velocity(in: self.superview)
         
-        
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             
             self.transform = .identity
             
-            if translation.y < -100 || velocity.y < -500 {
+            
+            
+            if translation.y < -80 || velocity.y < -500 {
                 guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
                 mainTabBarController.maximizePlayerDetails(episode: nil)
-                gesture.isEnabled = false
             } else {
                 guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
                 mainTabBarController.minimizePlayerDetails()
             }
+            
+            
+            
+            
+            
         }, completion: nil)
-        
-        
-        //                self.miniPlayerView.alpha = 1
-        //
-        //                self.maxiHeader.alpha = 0
-        //                self.durationSliderContainer.alpha = 0
-        //                self.playerControlsContainer.alpha = 0
     }
     
 }
