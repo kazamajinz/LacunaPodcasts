@@ -25,15 +25,15 @@ class MainTabBarController: UITabBarController {
         case animateIn, animateOut
     }
     
-    let duration: TimeInterval = 0.3
+    let duration: TimeInterval = 0.5
     var delay: TimeInterval {
-        return duration * 0.8
+        return duration * 0.75
     }
     
     fileprivate func animateMiniPlayerView(type: AnimationType) {
         let delay: TimeInterval = type == .animateIn ? self.delay : 0
         let alpha: CGFloat = type == .animateIn ? 1 : 0
-        UIView.animate(withDuration: 0.05, delay: delay, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.1, delay: delay, options: .curveEaseOut, animations: {
             self.playerDetailsView.miniPlayerView.alpha = alpha
             self.miniDurationBar.alpha = alpha
         }, completion: nil)
@@ -65,7 +65,7 @@ class MainTabBarController: UITabBarController {
     }
     
     private func maximizeEpisodeImage() {
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.configureEpisodeImageInPosition(maximize: true)
             self.view.layoutIfNeeded()
             self.hideTabBar()
@@ -73,7 +73,7 @@ class MainTabBarController: UITabBarController {
     }
     
     private func minimizeEpisodeImage() {
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.configureEpisodeImageInPosition(maximize: false)
             self.view.layoutIfNeeded()
             self.showTabBar()
@@ -81,24 +81,29 @@ class MainTabBarController: UITabBarController {
     }
 
     @objc func minimizePlayerDetails() {
-        toggleTopAnchorConstraints(maximizingPlayer: false)
+        maximizedTopAnchorConstraint.isActive = false
+        bottomAnchorConstraint.constant = view.frame.height
+        minimizedTopAnchorConstraint.isActive = true
+        
         animatePlayerControls(type: .animateOut)
         animateMiniPlayerView(type: .animateIn)
         minimizeEpisodeImage()
     }
 
     func maximizePlayerDetails(episode: Episode?) {
+        minimizedTopAnchorConstraint.isActive = false
+        maximizedTopAnchorConstraint.isActive = true
+        maximizedTopAnchorConstraint.constant = 0
+        bottomAnchorConstraint.constant = 0
+        
         if episode != nil {
             playerDetailsView.episode = episode
         }
-        toggleTopAnchorConstraints(maximizingPlayer: true)
+        
         animatePlayerControls(type: .animateIn)
         animateMiniPlayerView(type: .animateOut)
         maximizeEpisodeImage()
     }
-    
-    
-
     
     
     
@@ -126,6 +131,7 @@ class MainTabBarController: UITabBarController {
     
     var maximizedTopAnchorConstraint: NSLayoutConstraint!
     var minimizedTopAnchorConstraint: NSLayoutConstraint!
+    var bottomAnchorConstraint: NSLayoutConstraint!
 
     fileprivate func setupPlayerDetailsView() {
 
@@ -136,9 +142,10 @@ class MainTabBarController: UITabBarController {
         maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
         minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
         maximizedTopAnchorConstraint.isActive = true
+        bottomAnchorConstraint = playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
+        bottomAnchorConstraint.isActive = true
         playerDetailsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         playerDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     
@@ -146,33 +153,21 @@ class MainTabBarController: UITabBarController {
     
     let miniDurationBar = UISlider()
     fileprivate func setupMiniDurationBar() {
-
-        view.addSubview(miniDurationBar)
-        miniDurationBar.setThumbImage(UIImage(), for: .normal)
-        miniDurationBar.minimumTrackTintColor = .black
-        miniDurationBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-
-        // AUTO-LAYOUT
-        miniDurationBar.translatesAutoresizingMaskIntoConstraints = false
-        miniDurationBar.bottomAnchor.constraint(equalTo: playerDetailsView.topAnchor).isActive = true
-        miniDurationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -2).isActive = true
-        miniDurationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 2).isActive = true
+//
+//        view.addSubview(miniDurationBar)
+//        miniDurationBar.isUserInteractionEnabled = false
+//        miniDurationBar.setThumbImage(UIImage(), for: .normal)
+//        miniDurationBar.minimumTrackTintColor = .black
+//        miniDurationBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//
+//        // AUTO-LAYOUT
+//        miniDurationBar.translatesAutoresizingMaskIntoConstraints = false
+//        miniDurationBar.bottomAnchor.constraint(equalTo: playerDetailsView.topAnchor).isActive = true
+//        miniDurationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -2).isActive = true
+//        miniDurationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 2).isActive = true
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func toggleTopAnchorConstraints(maximizingPlayer: Bool) {
-        maximizedTopAnchorConstraint.isActive = maximizingPlayer ? true : false
-        minimizedTopAnchorConstraint.isActive = maximizingPlayer ? false : true
-        if maximizingPlayer { maximizedTopAnchorConstraint.constant = 0 }
-    }
+
 
     
     

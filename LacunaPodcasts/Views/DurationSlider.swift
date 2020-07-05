@@ -10,7 +10,7 @@ import UIKit
 
 class DurationSlider: UISlider {
 
-    @IBInspectable var trackHeight: CGFloat = 3
+    @IBInspectable var trackHeight: CGFloat = 2
     @IBInspectable var thumbRadius: CGFloat = 10
 
     // Custom thumb view which will be converted to UIImage
