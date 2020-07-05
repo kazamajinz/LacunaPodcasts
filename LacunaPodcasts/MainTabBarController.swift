@@ -16,6 +16,7 @@ class MainTabBarController: UITabBarController {
         tabBar.tintColor = .black
         setupViewControllers()
         setupPlayerDetailsView()
+        setupProgressBar()
     }
     
     //MARK: - ANIMATIONS: Maximize and Minimize Player
@@ -42,7 +43,7 @@ class MainTabBarController: UITabBarController {
         let delay: TimeInterval = type == .animateIn ? self.delay : 0
         let alpha: CGFloat = type == .animateIn ? 1 : 0
         UIView.animate(withDuration: 0.1, delay: delay, options: .curveEaseOut, animations: {
-            self.playerDetailsView.maximizedHeader.alpha = alpha
+            self.playerDetailsView.maxiHeader.alpha = alpha
             self.playerDetailsView.durationSliderContainer.alpha = alpha
             self.playerDetailsView.playerControlsContainer.alpha = alpha
         }, completion: nil)
@@ -54,12 +55,12 @@ class MainTabBarController: UITabBarController {
         let maximizedHeaderHeight: CGFloat = maximize ? 52 : 0
         let episodeImageViewLeadingInset: CGFloat = maximize ? 24 : 0
         let episodeImageViewHeight: CGFloat = maximize ? episodeImageContainerWidth - 24 * 2 : 64
-        let cornerRadius: CGFloat = maximize ? 16 : 0
-
-        self.playerDetailsView.maximizedHeaderHeight.constant = maximizedHeaderHeight
+        let episodeImageCornerRadius: CGFloat = maximize ? 16 : 0
+        
+        self.playerDetailsView.maxiHeaderHeight.constant = maximizedHeaderHeight
         self.playerDetailsView.episodeImageViewHeight.constant = episodeImageViewHeight
         self.playerDetailsView.episodeImageViewLeading.constant = episodeImageViewLeadingInset
-        self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: cornerRadius)
+        self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: episodeImageCornerRadius)
     }
     
     private func maximizeEpisodeImage() {
@@ -139,6 +140,31 @@ class MainTabBarController: UITabBarController {
         playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
+    
+    
+    let progressBar = UIView()
+    fileprivate func setupProgressBar() {
+        view.insertSubview(progressBar, belowSubview: tabBar)
+        
+        progressBar.backgroundColor = .red
+        
+        // AUTO-LAYOUT
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        progressBar.heightAnchor.constraint(equalToConstant: 3.0).isActive = true
+        progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        progressBar.bottomAnchor.constraint(equalTo: playerDetailsView.topAnchor).isActive = true
+    }
+    
+    // width  = percentage of duration played
+    
+    
+    
+    
+    
+    
+    
+    
     func toggleTopAnchorConstraints(maximizingPlayer: Bool) {
         maximizedTopAnchorConstraint.isActive = maximizingPlayer ? true : false
         minimizedTopAnchorConstraint.isActive = maximizingPlayer ? false : true
@@ -167,11 +193,14 @@ class MainTabBarController: UITabBarController {
     
     
     
+    
+    
+    
     func setupViewControllers() {
         viewControllers = [
             generateNavigationController(with: PodcastsSearchController(), title: "Search", image: #imageLiteral(resourceName: "search")),
             generateNavigationController(with: ViewController(), title: "Favourites", image: #imageLiteral(resourceName: "favorites")),
-            generateNavigationController(with: ViewController(),    title: "Downloads", image: #imageLiteral(resourceName: "downloads"))
+            generateNavigationController(with: ViewController(), title: "Downloads", image: #imageLiteral(resourceName: "downloads"))
         ]
     }
     
@@ -185,3 +214,5 @@ class MainTabBarController: UITabBarController {
         return navController
     }
 }
+
+

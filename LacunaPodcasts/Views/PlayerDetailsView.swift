@@ -140,8 +140,11 @@ class PlayerDetailsView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
         handleTapMaximize()
     }
+    
+    
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
@@ -335,8 +338,8 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var durationSliderContainer: UIView!
     @IBOutlet weak var playerControlsContainer: UIView!
     
-    @IBOutlet weak var maximizedHeader: UIView!
-    @IBOutlet weak var maximizedHeaderHeight: NSLayoutConstraint!
+    @IBOutlet weak var maxiHeader: UIView!
+    @IBOutlet weak var maxiHeaderHeight: NSLayoutConstraint!
 
     // MINI PLAYER
     @IBOutlet weak var miniPlayerView: UIView!
@@ -353,14 +356,14 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
             episodeImageView.roundCorners(cornerRadius: 16)
-            //episodeImageView.transform = shrunkenTransform // default
+            episodeImageView.transform = shrunkenTransform
         }
     }
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var currentTimeSlider: UISlider!
+    @IBOutlet weak var currentTimeSlider: DurationSlider!
     
     //MARK: - @IBActions
     
@@ -413,7 +416,6 @@ class PlayerDetailsView: UIView {
                 self.player.play()
             })
             isPlaying = true
-
             enlargeEpisodeImageView()
             
         } else {
