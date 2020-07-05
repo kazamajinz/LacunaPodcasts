@@ -16,7 +16,7 @@ class MainTabBarController: UITabBarController {
         tabBar.tintColor = .black
         setupViewControllers()
         setupPlayerDetailsView()
-        setupProgressBar()
+        setupMiniDurationBar()
     }
     
     //MARK: - ANIMATIONS: Maximize and Minimize Player
@@ -33,8 +33,9 @@ class MainTabBarController: UITabBarController {
     fileprivate func animateMiniPlayerView(type: AnimationType) {
         let delay: TimeInterval = type == .animateIn ? self.delay : 0
         let alpha: CGFloat = type == .animateIn ? 1 : 0
-        UIView.animate(withDuration: 0.1, delay: delay, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.05, delay: delay, options: .curveEaseOut, animations: {
             self.playerDetailsView.miniPlayerView.alpha = alpha
+            self.miniDurationBar.alpha = alpha
         }, completion: nil)
     }
     
@@ -142,21 +143,23 @@ class MainTabBarController: UITabBarController {
     
     
     
-    let progressBar = UIView()
-    fileprivate func setupProgressBar() {
-        view.insertSubview(progressBar, belowSubview: tabBar)
-        
-        progressBar.backgroundColor = .red
-        
+    
+    let miniDurationBar = UISlider()
+    fileprivate func setupMiniDurationBar() {
+
+        view.addSubview(miniDurationBar)
+        miniDurationBar.setThumbImage(UIImage(), for: .normal)
+        miniDurationBar.minimumTrackTintColor = .black
+        miniDurationBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+
         // AUTO-LAYOUT
-        progressBar.translatesAutoresizingMaskIntoConstraints = false
-        progressBar.heightAnchor.constraint(equalToConstant: 3.0).isActive = true
-        progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        progressBar.bottomAnchor.constraint(equalTo: playerDetailsView.topAnchor).isActive = true
+        miniDurationBar.translatesAutoresizingMaskIntoConstraints = false
+        miniDurationBar.bottomAnchor.constraint(equalTo: playerDetailsView.topAnchor).isActive = true
+        miniDurationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -2).isActive = true
+        miniDurationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 2).isActive = true
     }
     
-    // width  = percentage of duration played
+    
     
     
     

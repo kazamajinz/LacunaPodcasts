@@ -130,7 +130,7 @@ class PlayerDetailsView: UIView {
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
         let times = [NSValue(time: time)]
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
-            self?.enlargeEpisodeImageView()
+            //self?.enlargeEpisodeImageView()
         }
     }
     
@@ -316,12 +316,15 @@ class PlayerDetailsView: UIView {
     
     
     
-    fileprivate func updateCurrentTimeSlider() {
+    fileprivate func updateCurrentTimeSlider() {        
+        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
+
         let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
         let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 1))
         let percentage = currentTimeSeconds / durationSeconds
         DispatchQueue.main.async {
             self.currentTimeSlider.value = Float(percentage)
+            mainTabBarController.miniDurationBar.value = Float(percentage)
         }
     }
     
@@ -356,7 +359,7 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
             episodeImageView.roundCorners(cornerRadius: 16)
-            episodeImageView.transform = shrunkenTransform
+            //episodeImageView.transform = shrunkenTransform
         }
     }
     @IBOutlet weak var titleLabel: UILabel!
@@ -416,7 +419,7 @@ class PlayerDetailsView: UIView {
                 self.player.play()
             })
             isPlaying = true
-            enlargeEpisodeImageView()
+            //enlargeEpisodeImageView()
             
         } else {
             removeBoundaryTimeObserver()
@@ -424,7 +427,7 @@ class PlayerDetailsView: UIView {
                 self.player.pause()
             })
             isPlaying = false
-            shrinkEpisodeImageView()
+            //shrinkEpisodeImageView()
         }
     }
     
