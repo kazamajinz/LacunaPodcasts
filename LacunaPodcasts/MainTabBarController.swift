@@ -16,97 +16,149 @@ class MainTabBarController: UITabBarController {
         tabBar.tintColor = .black
         setupViewControllers()
         setupPlayerDetailsView()
-        setupMiniDurationBar()
+//        setupMiniDurationBar()
     }
     
-    //MARK: - ANIMATIONS: Maximize and Minimize Player
+    //MARK: - Animations
     
-    enum AnimationType {
-        case animateIn, animateOut
+    var maximizeAnimator: UIViewPropertyAnimator!
+    var minimizeAnimator: UIViewPropertyAnimator!
+    
+    var animationDuration: TimeInterval = 0.5
+    var shortAnimationDuration: TimeInterval = 0.2
+    var animationDelay: CGFloat {
+        return CGFloat(animationDuration * 0.5)
     }
     
-    let duration: TimeInterval = 0.5
-    var delay: TimeInterval {
-        return duration * 0.5
-    }
-    
-    fileprivate func animateMiniPlayerView(type: AnimationType) {
-        let delay: TimeInterval = type == .animateIn ? self.delay : 0
-        let alpha: CGFloat = type == .animateIn ? 1 : 0
-        UIView.animate(withDuration: 0.1, delay: delay, options: .curveEaseOut, animations: {
-            self.playerDetailsView.miniPlayerView.alpha = alpha
-            self.miniDurationBar.alpha = alpha
-        }, completion: nil)
-    }
-    
-    fileprivate func animatePlayerControls(type: AnimationType) {
+    private func setupMaximizeAnimator() {
         
-        let delay: TimeInterval = type == .animateIn ? self.delay : 0
-        let alpha: CGFloat = type == .animateIn ? 1 : 0
-        UIView.animate(withDuration: 0.1, delay: delay, options: .curveEaseOut, animations: {
-            self.playerDetailsView.maxiHeader.alpha = alpha
-            self.playerDetailsView.playerControlsContainer.alpha = alpha
-        }, completion: nil)
-    }
+        maximizeAnimator = UIViewPropertyAnimator(duration: animationDuration, dampingRatio: 1, animations: { [weak self] in
+            
+            guard let self = self else { return }
+            
+            // AUTO-LAYOUT
+            self.minimizedTopAnchorConstraint.isActive = false
+            self.maximizedTopAnchorConstraint.isActive = true
+            self.maximizedTopAnchorConstraint.constant = 0
+            self.bottomAnchorConstraint.constant = 0
 
-    fileprivate func configureEpisodeImageInPosition(maximize: Bool) {
+            let episodeImageContainerWidth = self.playerDetailsView.episodeImageContainer.bounds.width
+            
+            self.playerDetailsView.maxiHeaderHeight.constant = 64
+            self.playerDetailsView.episodeImageViewHeight.constant = episodeImageContainerWidth - 24 * 2
+            self.playerDetailsView.episodeImageViewLeading.constant = 24
+            self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 16)
 
-        let episodeImageContainerWidth = self.playerDetailsView.episodeImageContainer.bounds.width
-        let maximizedHeaderHeight: CGFloat = maximize ? 64 : 0
-        let episodeImageViewLeadingInset: CGFloat = maximize ? 24 : 0
-        let episodeImageViewHeight: CGFloat = maximize ? episodeImageContainerWidth - 24 * 2 : 64
-        let episodeImageCornerRadius: CGFloat = maximize ? 16 : 0
-        
-        self.playerDetailsView.maxiHeaderHeight.constant = maximizedHeaderHeight
-        self.playerDetailsView.episodeImageViewHeight.constant = episodeImageViewHeight
-        self.playerDetailsView.episodeImageViewLeading.constant = episodeImageViewLeadingInset
-        self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: episodeImageCornerRadius)
-    }
-    
-    private func maximizeEpisodeImage() {
-        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.configureEpisodeImageInPosition(maximize: true)
+            self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             self.hideTabBar()
-        }, completion: nil)
+            
+        })
+        
+        maximizeAnimator.startAnimation()
+        
+        // ANIMATE IN: Player Controls
+        maximizeAnimator.addAnimations({ [weak self] in
+            guard let self = self else { return }
+            self.playerDetailsView.maxiHeader.alpha = 1
+            self.playerDetailsView.playerControlsContainer.alpha = 1
+        }, delayFactor: self.animationDelay)
+        
+        // ANIMATE OUT:  Mini Player
+        maximizeAnimator.addAnimations({ [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: self.shortAnimationDuration, animations: {
+                self.playerDetailsView.miniPlayerView.alpha = 0
+            })
+        })
+        
+        // ADD COMPLETION
+        maximizeAnimator.addCompletion { [weak self] (position) in
+            guard let self = self else { return }
+            self.maximizeAnimator = nil
+        }
     }
     
-    private func minimizeEpisodeImage() {
-        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.configureEpisodeImageInPosition(maximize: false)
+    private func setupMinimizeAnimator() {
+        
+        minimizeAnimator = UIViewPropertyAnimator(duration: animationDuration, dampingRatio: 1, animations: { [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.maximizedTopAnchorConstraint.isActive = false
+            self.bottomAnchorConstraint.constant = self.view.frame.height
+            self.minimizedTopAnchorConstraint.isActive = true
+
+            self.playerDetailsView.maxiHeaderHeight.constant = 0
+            self.playerDetailsView.episodeImageViewHeight.constant = 64
+            self.playerDetailsView.episodeImageViewLeading.constant = 0
+            self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 0)
+            
+            self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             self.showTabBar()
-        }, completion: nil)
-    }
-
-    @objc func minimizePlayerDetails() {
-        maximizedTopAnchorConstraint.isActive = false
-        bottomAnchorConstraint.constant = view.frame.height
-        minimizedTopAnchorConstraint.isActive = true
+            
+        })
         
-        animatePlayerControls(type: .animateOut)
-        animateMiniPlayerView(type: .animateIn)
-        minimizeEpisodeImage()
+        minimizeAnimator.startAnimation()
+        
+        // ANIMATE OUT: Player Controls
+        minimizeAnimator.addAnimations({ [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: self.shortAnimationDuration, animations: {
+                self.playerDetailsView.maxiHeader.alpha = 0
+                self.playerDetailsView.playerControlsContainer.alpha = 0
+            })
+        })
+        
+        // ANIMATE IN: Mini Player
+        minimizeAnimator.addAnimations({ [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: self.shortAnimationDuration, animations: {
+                self.playerDetailsView.miniPlayerView.alpha = 1
+            })
+            }, delayFactor: self.animationDelay + 0.2)
+        
+        // ADD COMPLETION
+        minimizeAnimator.addCompletion { [weak self] (position) in
+            guard let self = self else { return }
+            self.minimizeAnimator = nil
+        }
     }
+    
+    
+    
+    
+    
 
     func maximizePlayerDetails(episode: Episode?) {
-        minimizedTopAnchorConstraint.isActive = false
-        maximizedTopAnchorConstraint.isActive = true
-        maximizedTopAnchorConstraint.constant = 0
-        bottomAnchorConstraint.constant = 0
-        
         if episode != nil {
             playerDetailsView.episode = episode
         }
         
-        animatePlayerControls(type: .animateIn)
-        animateMiniPlayerView(type: .animateOut)
-        maximizeEpisodeImage()
+        setupMaximizeAnimator()
     }
     
     
     
+    
+    
+    
+    
+    
+    
+    @objc func minimizePlayerDetails() {
+         setupMinimizeAnimator()
+    }
 
+    
+    
+    
+    
+
+    
+    
+    
     
     
     
@@ -149,9 +201,9 @@ class MainTabBarController: UITabBarController {
     
     
     
-    
-    let miniDurationBar = UISlider()
-    fileprivate func setupMiniDurationBar() {
+//
+//    let miniDurationBar = UISlider()
+//    fileprivate func setupMiniDurationBar() {
 //
 //        view.addSubview(miniDurationBar)
 //        miniDurationBar.isUserInteractionEnabled = false
@@ -164,8 +216,8 @@ class MainTabBarController: UITabBarController {
 //        miniDurationBar.bottomAnchor.constraint(equalTo: playerDetailsView.topAnchor).isActive = true
 //        miniDurationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -2).isActive = true
 //        miniDurationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 2).isActive = true
-    }
-    
+//    }
+//
 
 
     

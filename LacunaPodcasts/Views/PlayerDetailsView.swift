@@ -155,16 +155,20 @@ class PlayerDetailsView: UIView {
     
     //MARK: - Gesture Recognizers
     
-    var panGesture: UIPanGestureRecognizer!
-    var panGestureDown: UIPanGestureRecognizer!
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize))
+        return tapGesture
+    }()
+    
+    private lazy var panGesture: UIPanGestureRecognizer = {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        return panGesture
+    }()
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        addGestureRecognizer(tapGesture)
         addGestureRecognizer(panGesture)
-//        panGestureDown = UIPanGestureRecognizer(target: self, action: #selector(handlePanDown))
-//        addGestureRecognizer(panGestureDown)
     }
 
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -329,15 +333,13 @@ class PlayerDetailsView: UIView {
     
     
     
-    fileprivate func updateCurrentTimeSlider() {        
-        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
+    fileprivate func updateCurrentTimeSlider() {
 
         let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
         let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 1))
         let percentage = currentTimeSeconds / durationSeconds
         DispatchQueue.main.async {
             self.currentTimeSlider.value = Float(percentage)
-            mainTabBarController.miniDurationBar.value = Float(percentage)
         }
     }
     
@@ -383,10 +385,6 @@ class PlayerDetailsView: UIView {
     //MARK: - @IBActions
     
     @IBAction func didChangeCurrentTimeSlider(_ sender: Any) {
-        
-        // UPDATE MINI DURATION BAR
-        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
-        mainTabBarController.miniDurationBar.setValue(currentTimeSlider.value, animated: true)
     
         guard let duration = player.currentItem?.duration else { return }
         let percentage = currentTimeSlider.value
@@ -410,16 +408,13 @@ class PlayerDetailsView: UIView {
     }
     
     fileprivate func seekToCurrentTime(delta: Int64) {
-        
-        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
-        
+
         guard let duration = self.player.currentItem?.duration else { return }
         let seconds = CMTime(value: delta, timescale: 1)
         let seekTime = CMTimeAdd(player.currentTime(), seconds)
         let value = Float(CMTimeGetSeconds(seekTime) / CMTimeGetSeconds(duration))
         
         currentTimeSlider.setValue(value, animated: true)
-        mainTabBarController.miniDurationBar.setValue(currentTimeSlider.value, animated: true)
 
         currentTimeLabel.text = seekTime.toDisplayString()
         player.seek(to: seekTime)
