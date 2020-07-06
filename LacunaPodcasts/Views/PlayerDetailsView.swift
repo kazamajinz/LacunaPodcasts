@@ -155,6 +155,9 @@ class PlayerDetailsView: UIView {
     
     //MARK: - Gesture Recognizers
     
+    var animationProgress: CGFloat = 0
+    var dragStartPosition: CGFloat = 0
+    
     private lazy var tapGesture: UITapGestureRecognizer = {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize))
         return tapGesture
