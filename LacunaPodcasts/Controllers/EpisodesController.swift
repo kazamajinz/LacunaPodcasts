@@ -86,24 +86,14 @@ class EpisodesController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         let episode = self.episodes[indexPath.row]
-        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, miniPlayerIsVisible: miniPlayerIsVisible)
+        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes, miniPlayerIsVisible: miniPlayerIsVisible)
         
         if !miniPlayerIsVisible { miniPlayerIsVisible.toggle() }
         
         
 
         
-//        print("Trying to play episode:", episode.title)
-//
-//        let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
-//        let playerDetailsView = PlayerDetailsView()
-//        playerDetailsView.episode = episode
-//
-//        playerDetailsView.frame = self.view.frame
-//        window?.addSubview(playerDetailsView)
-//
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

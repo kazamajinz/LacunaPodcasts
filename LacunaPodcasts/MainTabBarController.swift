@@ -156,8 +156,10 @@ class MainTabBarController: UITabBarController {
     
     let episodesController = EpisodesController()
 
-    func maximizePlayerDetails(episode: Episode?, miniPlayerIsVisible: Bool?) {
+    func maximizePlayerDetails(episode: Episode?, playlistEpisodes: [Episode] = [], miniPlayerIsVisible: Bool?) {
         if episode != nil { playerDetailsView.episode = episode }
+        playerDetailsView.playlistEpisodes = playlistEpisodes
+        
         if miniPlayerIsVisible == false {
             playerDetailsView.miniPlayerView.alpha = 0
             playerDetailsView.miniDurationBar.alpha = 0
