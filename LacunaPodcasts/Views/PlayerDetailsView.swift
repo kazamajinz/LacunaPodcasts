@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import UIImageColors
+import MediaPlayer
 
 class PlayerDetailsView: UIView {
     
@@ -115,12 +116,48 @@ class PlayerDetailsView: UIView {
     
     
     
+    // BACKGROUND AUDIO
     
+    fileprivate func setupAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true, options: AVAudioSession.SetActiveOptions.notifyOthersOnDeactivation)
+        } catch let sessionErr {
+            print("Failed to activate session:", sessionErr)
+        }
+    }
     
+    // COMMAND CENTER AUDIO PLAYBACK
     
+    fileprivate func setupRemoteControl() {
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            self.player.play()
+            self.isPlaying = true
+            return .success
+        }
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            self.player.pause()
+            self.isPlaying = false
+            return .success
+        }
+        commandCenter.togglePlayPauseCommand.isEnabled = true
+        commandCenter.togglePlayPauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            self.handlePlayPause()
+            return .success
+        }
+        
+        
+    }
     
     func setup() {
-
+        setupRemoteControl()
+        setupAudioSession()
         observePlayerCurrentTime()
         
         // Observe when episodes start playing
@@ -132,6 +169,9 @@ class PlayerDetailsView: UIView {
             //self?.enlargeEpisodeImageView()
         }
     }
+    
+    
+    
     
     private func setupMiniDurationBar() {
         miniDurationBar.isUserInteractionEnabled = false
