@@ -14,7 +14,7 @@ import MediaPlayer
 class PlayerDetailsView: UIView {
     
     @IBOutlet var containerView: UIView!
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         initSubViews()
@@ -26,11 +26,11 @@ class PlayerDetailsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        initSubViews()
-//        setup()
-//    }
+    //    required init?(coder aDecoder: NSCoder) {
+    //        super.init(coder: aDecoder)
+    //        initSubViews()
+    //        setup()
+    //    }
     
     private func initSubViews() {
         let nib = UINib(nibName: String(describing: type(of: self)), bundle: .main)
@@ -75,31 +75,42 @@ class PlayerDetailsView: UIView {
             miniAuthorLabel.text = episode.author.uppercased()
             
             
-//            maximizedHeader.alpha = 0
-//            durationSliderContainer.alpha = 0
-//            playerControlsContainer.alpha = 0
-//            miniPlayerView.alpha = 0
+            //            maximizedHeader.alpha = 0
+            //            durationSliderContainer.alpha = 0
+            //            playerControlsContainer.alpha = 0
+            //            miniPlayerView.alpha = 0
             
             
             
-
+            setupNowPlayingInfo()
             playEpisode()
             
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
-            episodeImageView.sd_setImage(with: url)
-
-            //            if let colors = episodeImageView.image?.getColors() {
-            //                guard let backgroundColor = colors.background else { return }
-            //                guard let primaryColor = colors.primary else { return }
-            //                guard let secondaryColor = colors.secondary else { return }
-            //                guard let detailColor = colors.detail else { return }
-            //                setGradientBackground(colorOne: primaryColor, colorTwo: UIColor.black)
-            //            }
-            //
+            episodeImageView.sd_setImage(with: url) { (image, error, cache, url) in
+                guard let image = image else { return }
+                
+                // lockscreen artwork setup code
+                var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
+                
+                // modifications
+                let artwork = MPMediaItemArtwork(boundsSize: image.size) { (size) -> UIImage in
+                    return image
+                }
+                nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+            }
         }
     }
     
+    //MARK: - AUDIO
     
+    fileprivate func setupNowPlayingInfo() {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = episode.title
+        nowPlayingInfo[MPMediaItemPropertyArtist] = episode.author
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
     
     
     
@@ -127,7 +138,7 @@ class PlayerDetailsView: UIView {
         }
     }
     
-    // COMMAND CENTER AUDIO PLAYBACK
+    // COMMAND CENTER
     
     fileprivate func setupRemoteControl() {
         UIApplication.shared.beginReceivingRemoteControlEvents()
@@ -158,6 +169,7 @@ class PlayerDetailsView: UIView {
     func setup() {
         setupRemoteControl()
         setupAudioSession()
+        
         observePlayerCurrentTime()
         
         // Observe when episodes start playing
@@ -292,6 +304,13 @@ class PlayerDetailsView: UIView {
     private var fadeTimer: Timer?
     var timeObserverToken: Any?
     
+    func removeBoundaryTimeObserver() {
+        if let timeObserverToken = timeObserverToken {
+            player.removeTimeObserver(timeObserverToken)
+            self.timeObserverToken = nil
+        }
+    }
+    
     fileprivate func observePlayerCurrentTime() {
 
         // notify every half second
@@ -304,20 +323,35 @@ class PlayerDetailsView: UIView {
                 guard let duration = self.player.currentItem?.duration else { return }
                 let currentTime = self.player.currentTime()
                 let timeRemaining = duration - currentTime
+                
                 self.currentTimeLabel.text = currentTime.toDisplayString()
                 self.durationLabel.text = timeRemaining.toDisplayString()
+
+                self.setupLockscreenCurrentTime()
+                
                 
                 self.updateCurrentTimeSlider()
             }
         }
     }
     
-    func removeBoundaryTimeObserver() {
-        if let timeObserverToken = timeObserverToken {
-            player.removeTimeObserver(timeObserverToken)
-            self.timeObserverToken = nil
-        }
+    fileprivate func setupLockscreenCurrentTime() {
+        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
+        
+        // modifications
+        guard let currentItem = player.currentItem else { return }
+        let durationInSeconds = CMTimeGetSeconds(currentItem.duration)
+        let elapsedTime = CMTimeGetSeconds(player.currentTime())
+        
+        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
+        nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
+    
+    
+    
+    
     
     
     

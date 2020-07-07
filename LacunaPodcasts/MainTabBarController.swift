@@ -45,7 +45,7 @@ class MainTabBarController: UITabBarController {
         return UIViewPropertyAnimator(duration: animationDuration, dampingRatio: 1)
     }()
     
-    private var animationDuration: TimeInterval = 5.0
+    private var animationDuration: TimeInterval = 0.5
     private var shortAnimationDuration: TimeInterval {
         return animationDuration * 0.05
     }
