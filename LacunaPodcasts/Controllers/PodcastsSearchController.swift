@@ -23,10 +23,11 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         setupTableView()
         
         
+        // Removes Text from Back Button
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         searchBar(searchController.searchBar, textDidChange: "Reply All")
-        
-        
+
     }
     
     //MARK: - Setup

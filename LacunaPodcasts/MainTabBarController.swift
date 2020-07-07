@@ -28,7 +28,6 @@ class MainTabBarController: UITabBarController {
         tabBar.tintColor = .black
         setupViewControllers()
         setupPlayerDetailsView()
-//        setupMiniDurationBar()
     }
     
     //MARK: - Animations
@@ -46,9 +45,9 @@ class MainTabBarController: UITabBarController {
         return UIViewPropertyAnimator(duration: animationDuration, dampingRatio: 1)
     }()
     
-    private var animationDuration: TimeInterval = 0.5
+    private var animationDuration: TimeInterval = 5.0
     private var shortAnimationDuration: TimeInterval {
-        return animationDuration * 0.01
+        return animationDuration * 0.05
     }
     private var animationDelay: CGFloat = 0.5
 
@@ -88,6 +87,7 @@ class MainTabBarController: UITabBarController {
             guard let self = self else { return }
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.miniPlayerView.alpha = 0
+                self.playerDetailsView.miniDurationBar.alpha = 0
             })
         })
         
@@ -113,8 +113,9 @@ class MainTabBarController: UITabBarController {
             self.playerDetailsView.maxiHeaderHeight.constant = 0
             self.playerDetailsView.episodeImageViewHeight.constant = 64
             self.playerDetailsView.episodeImageViewLeading.constant = 0
+            self.playerDetailsView.episodeImageViewTop.constant = 2
             self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 0)
-            
+
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             self.showTabBar()
@@ -129,11 +130,12 @@ class MainTabBarController: UITabBarController {
             })
         })
         
-        // ANIMATE IN: Mini Player - - THIS NEEDS TO FADE OUT SOONER
+        // ANIMATE IN: Mini Player
         animator.addAnimations({ [weak self] in
             guard let self = self else { return }
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.miniPlayerView.alpha = 1
+                self.playerDetailsView.miniDurationBar.alpha = 1
             })
             }, delayFactor: self.animationDelay)
         
@@ -152,11 +154,13 @@ class MainTabBarController: UITabBarController {
     
     
     
-    
+    let episodesController = EpisodesController()
 
-    func maximizePlayerDetails(episode: Episode?) {
-        if episode != nil {
-            playerDetailsView.episode = episode
+    func maximizePlayerDetails(episode: Episode?, miniPlayerIsVisible: Bool?) {
+        if episode != nil { playerDetailsView.episode = episode }
+        if miniPlayerIsVisible == false {
+            playerDetailsView.miniPlayerView.alpha = 0
+            playerDetailsView.miniDurationBar.alpha = 0
         }
         maximize()
     }
@@ -170,7 +174,7 @@ class MainTabBarController: UITabBarController {
 
 
     @objc func minimizePlayerDetails() {
-        minimize()
+        minimize()    
     }
 
     
@@ -213,7 +217,7 @@ class MainTabBarController: UITabBarController {
         // AUTO-LAYOUT
         playerDetailsView.translatesAutoresizingMaskIntoConstraints = false
         maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
-        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
+        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -66)
         maximizedTopAnchorConstraint.isActive = true
         bottomAnchorConstraint = playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
         bottomAnchorConstraint.isActive = true
@@ -221,25 +225,6 @@ class MainTabBarController: UITabBarController {
         playerDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
-    
-    
-//
-//    let miniDurationBar = UISlider()
-//    fileprivate func setupMiniDurationBar() {
-//
-//        view.addSubview(miniDurationBar)
-//        miniDurationBar.isUserInteractionEnabled = false
-//        miniDurationBar.setThumbImage(UIImage(), for: .normal)
-//        miniDurationBar.minimumTrackTintColor = .black
-//        miniDurationBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-//
-//        // AUTO-LAYOUT
-//        miniDurationBar.translatesAutoresizingMaskIntoConstraints = false
-//        miniDurationBar.bottomAnchor.constraint(equalTo: playerDetailsView.topAnchor).isActive = true
-//        miniDurationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -2).isActive = true
-//        miniDurationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 2).isActive = true
-//    }
-//
 
 
     

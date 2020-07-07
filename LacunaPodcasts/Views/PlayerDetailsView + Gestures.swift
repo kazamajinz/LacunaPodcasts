@@ -11,45 +11,34 @@ import UIKit
 extension PlayerDetailsView {
     
     @objc func handleTapMaximize() {
-        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
-        mainTabBarController.maximizePlayerDetails(episode: nil)
+        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: nil, miniPlayerIsVisible: nil)
     }
     
     @objc func handlePan(gesture: UIPanGestureRecognizer) {
 
-        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
-        let animator = mainTabBarController.animator
-        let state = mainTabBarController.state
-
-        let translation = gesture.translation(in: self.superview)
-        let velocity = gesture.velocity(in: self.superview)
+        let translation = gesture.translation(in: superview)
+        let velocity = gesture.velocity(in: superview)
 
         switch gesture.state {
-        case .began:
-            
-            mainTabBarController.toggleState()
-            animator.pauseAnimation()
-            
         case .changed:
+//            var fraction = -transla tion.y / 500
+//            if state == .maximized { fraction *= -1 }
+//            animator.fractionComplete = fraction
             
-            var fraction = -translation.y / 500
-            if state == .maximized { fraction *= -1 }
-            animator.fractionComplete = fraction
-            
-            //print("Ended:", translation.y, velocity.y)
-            
+            self.transform = CGAffineTransform(translationX: 0, y: translation.y / 25)
+
+            print("Ended:", translation.y, velocity.y)
         case .ended:
             
-            print("GESTURE ENDED")
+            print("Ended:", translation.y)
             
-            if abs(translation.y) > 10 || abs(velocity.y) > 500 {
-                animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
-            } else {
-                animator.isReversed = true
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.transform = .identity
+            })
+            
+            if abs(translation.y) > 20 || abs(velocity.y) > 500 {
+                UIApplication.mainTabBarController()?.toggleState()
             }
-
-            
-
         default:
             break
         }

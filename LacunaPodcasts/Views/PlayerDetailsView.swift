@@ -18,6 +18,7 @@ class PlayerDetailsView: UIView {
         super.init(frame: frame)
         initSubViews()
         setup()
+        setupMiniDurationBar()
     }
     
     required init?(coder: NSCoder) {
@@ -62,18 +63,6 @@ class PlayerDetailsView: UIView {
             }
         }
     }
-    
-//    var isMaximized: Bool! {
-//        didSet {
-//            if isMaximized {
-//                panGestureUp.isEnabled = false
-//                panGestureDown.isEnabled = true
-//            } else {
-//                panGestureUp.isEnabled = true
-//                panGestureDown.isEnabled = false
-//            }
-//        }
-//    }
     
     var episode: Episode! {
         didSet {
@@ -144,6 +133,14 @@ class PlayerDetailsView: UIView {
         }
     }
     
+    private func setupMiniDurationBar() {
+        miniDurationBar.isUserInteractionEnabled = false
+        miniDurationBar.setThumbImage(UIImage(), for: .normal)
+        miniDurationBar.minimumTrackTintColor = .black
+        miniDurationBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        
+        print(miniDurationBar.frame.size.height)
+    }
     
     
     
@@ -177,6 +174,10 @@ class PlayerDetailsView: UIView {
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+    
+    
+    
+    
     
     
     
@@ -343,6 +344,7 @@ class PlayerDetailsView: UIView {
         let percentage = currentTimeSeconds / durationSeconds
         DispatchQueue.main.async {
             self.currentTimeSlider.value = Float(percentage)
+            self.miniDurationBar.value = Float(percentage)
         }
     }
     
@@ -363,6 +365,7 @@ class PlayerDetailsView: UIView {
 
     // MINI PLAYER
     @IBOutlet weak var miniPlayerView: UIView!
+    @IBOutlet weak var miniDurationBar: UISlider!
     @IBOutlet weak var miniTitleLabel: UILabel!
     @IBOutlet weak var miniAuthorLabel: UILabel!
     @IBOutlet weak var miniPlayPauseButton: UIButton! {
@@ -418,6 +421,7 @@ class PlayerDetailsView: UIView {
         let value = Float(CMTimeGetSeconds(seekTime) / CMTimeGetSeconds(duration))
         
         currentTimeSlider.setValue(value, animated: true)
+        miniDurationBar.setValue(value, animated: true)
 
         currentTimeLabel.text = seekTime.toDisplayString()
         player.seek(to: seekTime)
@@ -468,8 +472,7 @@ class PlayerDetailsView: UIView {
 
 
     @IBAction func didTapDismiss(_ sender: Any) {
-        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
-        mainTabBarController.minimizePlayerDetails()
+        UIApplication.mainTabBarController()?.minimizePlayerDetails()
     }
 }
 

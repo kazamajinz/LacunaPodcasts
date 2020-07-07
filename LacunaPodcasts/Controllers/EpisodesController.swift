@@ -63,11 +63,36 @@ class EpisodesController: UITableViewController {
     
     
     
+    let playerDetailsView = PlayerDetailsView()
+    
+    var miniPlayerIsVisible: Bool = false {
+        didSet {
+//            if !miniPlayerIsVisible {
+//                let miniPlayerViewHeight = UIApplication.mainTabBarController()?.minimizedTopAnchorConstraint.constant ?? 0
+//                let tabBarHeight = UIApplication.mainTabBarController()?.tabBar.frame.size.height ?? 0
+//                let offsetY = miniPlayerViewHeight + tabBarHeight
+//                
+//                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//                    self.view.layoutIfNeeded()
+//                })
+//            }
+        }
+    }
+   
+    
+    
+    
+    
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         let episode = self.episodes[indexPath.row]
-        guard let mainTabBarController = UIWindow.key?.rootViewController as? MainTabBarController else { return }
-        mainTabBarController.maximizePlayerDetails(episode: episode)
+        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, miniPlayerIsVisible: miniPlayerIsVisible)
+        
+        if !miniPlayerIsVisible { miniPlayerIsVisible.toggle() }
+        
+        
 
         
 //        print("Trying to play episode:", episode.title)

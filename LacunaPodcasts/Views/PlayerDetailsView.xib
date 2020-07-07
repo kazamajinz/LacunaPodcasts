@@ -23,6 +23,7 @@
                 <outlet property="maxiHeader" destination="Z3w-MM-LWC" id="oOr-fd-CSR"/>
                 <outlet property="maxiHeaderHeight" destination="BLf-50-9jH" id="yvE-Zc-qOE"/>
                 <outlet property="miniAuthorLabel" destination="x1D-Z9-aEh" id="HFj-MI-0eV"/>
+                <outlet property="miniDurationBar" destination="fme-rv-D3d" id="6Ae-yJ-WJR"/>
                 <outlet property="miniFastForwardButton" destination="gVR-RT-MFD" id="TCo-qs-6qP"/>
                 <outlet property="miniPlayPauseButton" destination="cPF-gQ-cOj" id="EWy-xI-xE5"/>
                 <outlet property="miniPlayerView" destination="M2N-et-AKj" id="VLl-gw-IBe"/>
@@ -230,6 +231,7 @@
                             </subviews>
                         </stackView>
                     </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="nro-da-0Qg" firstAttribute="leading" secondItem="qBE-Zl-Z5L" secondAttribute="leading" id="4Me-c0-XN1"/>
                         <constraint firstAttribute="bottom" secondItem="nro-da-0Qg" secondAttribute="bottom" id="KM8-gl-M8A"/>
@@ -310,9 +312,17 @@
                         <constraint firstItem="Oe3-Tf-26j" firstAttribute="top" secondItem="M2N-et-AKj" secondAttribute="top" id="uX2-CG-UdA"/>
                     </constraints>
                 </view>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fme-rv-D3d">
+                    <rect key="frame" x="-4" y="0.0" width="422" height="45"/>
+                    <connections>
+                        <action selector="didChangeCurrentTimeSlider:" destination="-1" eventType="valueChanged" id="D8b-oJ-ve6"/>
+                    </connections>
+                </slider>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="fme-rv-D3d" secondAttribute="trailing" constant="-2" id="3yg-sv-Kuz"/>
+                <constraint firstItem="M2N-et-AKj" firstAttribute="top" secondItem="fme-rv-D3d" secondAttribute="bottom" id="4ST-6e-iRE"/>
                 <constraint firstItem="M2N-et-AKj" firstAttribute="leading" secondItem="P4k-1P-gIS" secondAttribute="leading" id="D3u-na-8GH"/>
                 <constraint firstItem="M2N-et-AKj" firstAttribute="top" secondItem="P4k-1P-gIS" secondAttribute="top" id="EKb-Er-eyG"/>
                 <constraint firstItem="M2N-et-AKj" firstAttribute="trailing" secondItem="P4k-1P-gIS" secondAttribute="trailing" id="FLm-qc-UVa"/>
@@ -321,6 +331,8 @@
                 <constraint firstItem="M2N-et-AKj" firstAttribute="leading" secondItem="P4k-1P-gIS" secondAttribute="leading" id="alw-V7-jbS"/>
                 <constraint firstItem="M2N-et-AKj" firstAttribute="top" secondItem="P4k-1P-gIS" secondAttribute="top" id="gyL-gd-npN"/>
                 <constraint firstItem="P4k-1P-gIS" firstAttribute="trailing" secondItem="qBE-Zl-Z5L" secondAttribute="trailing" id="i7g-Fv-uT1"/>
+                <constraint firstItem="fme-rv-D3d" firstAttribute="leading" secondItem="b7P-f7-pmH" secondAttribute="leading" constant="-2" id="kv6-Nj-QoM"/>
+                <constraint firstItem="fme-rv-D3d" firstAttribute="top" secondItem="b7P-f7-pmH" secondAttribute="top" id="lO1-4g-L2f"/>
                 <constraint firstItem="qBE-Zl-Z5L" firstAttribute="leading" secondItem="P4k-1P-gIS" secondAttribute="leading" id="rbh-NI-UCs"/>
                 <constraint firstItem="M2N-et-AKj" firstAttribute="trailing" secondItem="P4k-1P-gIS" secondAttribute="trailing" id="zdO-bk-PpT"/>
             </constraints>
