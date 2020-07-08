@@ -94,7 +94,7 @@ class EpisodesController: UITableViewController {
         
 
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        //tableView.deselectRow(at: indexPath, animated: true)
     }
     
     

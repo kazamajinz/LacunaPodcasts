@@ -67,7 +67,10 @@ class PlayerDetailsView: UIView {
     
     var episode: Episode! {
         didSet {
-            isPlaying = true
+            
+            
+            
+            
             
             titleLabel.text = episode.title
             authorLabel.text = episode.author.uppercased()
@@ -75,15 +78,24 @@ class PlayerDetailsView: UIView {
             miniAuthorLabel.text = episode.author.uppercased()
             
             
-            //            maximizedHeader.alpha = 0
-            //            durationSliderContainer.alpha = 0
-            //            playerControlsContainer.alpha = 0
-            //            miniPlayerView.alpha = 0
-            
-            
             
             setupNowPlayingInfo()
+            
+            
+            
+            
+            
+            
             playEpisode()
+            isPlaying = true
+            
+            
+            
+            
+            
+            
+            
+            
             
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             //episodeImageView.sd_setImage(with: url)
@@ -109,7 +121,7 @@ class PlayerDetailsView: UIView {
     fileprivate func setupAudioSession() {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
         } catch let sessionErr {
             print("Failed to activate session:", sessionErr)
         }
@@ -372,9 +384,7 @@ class PlayerDetailsView: UIView {
     
     
     
-    deinit {
-        print("PlayerDetailsView memory being reclaimed...")
-    }
+    
     
     
     
@@ -391,13 +401,13 @@ class PlayerDetailsView: UIView {
     
     //MARK: - Set Gradient Background
     
-    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = containerView.bounds
-        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
-        gradientLayer.locations = [0.6, 1.8]
-        containerView.layer.insertSublayer(gradientLayer, at: 0)
-    }
+//    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = containerView.bounds
+//        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+//        gradientLayer.locations = [0.6, 1.8]
+//        containerView.layer.insertSublayer(gradientLayer, at: 0)
+//    }
     
     
     
@@ -425,16 +435,19 @@ class PlayerDetailsView: UIView {
         player.play()
     }
 
-    let player: AVPlayer = {
+    private var player: AVPlayer = {
         let avPlayer = AVPlayer()
         avPlayer.automaticallyWaitsToMinimizeStalling = false
         return avPlayer
     }()
     
     
-
     
+    deinit {
+        print("PlayerDetailsView memory being reclaimed...")
+    }
     
+        
     
     
     
@@ -487,14 +500,6 @@ class PlayerDetailsView: UIView {
     @IBAction func didFastForward(_ sender: Any) { seekToCurrentTime(delta: 15) }
     @IBAction func didRewind(_ sender: Any) { seekToCurrentTime(delta: -15) }
 
-
-    
-    
-    
-        
-    
-      
-    
     @IBAction func didChangeCurrentTimeSlider(_ sender: UISlider, forEvent event: UIEvent) {
         
         guard let duration = player.currentItem?.duration else { return }
@@ -547,46 +552,21 @@ class PlayerDetailsView: UIView {
 //        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
 //    }
     
-    var timer: Timer?
     fileprivate func seekToCurrentTime(delta: Int64) {
         let seconds = CMTime(value: delta, timescale: 1)
-        
-        
-        
-        
-        
-        
         let seekTime = CMTimeAdd(player.currentTime(), seconds)
         player.seek(to: seekTime)
     }
     
-    
-    
-    
-        
-    
-    
-    
-    
-    
-    
-    private var fadeTimer: Timer?
     @objc func handlePlayPause() {
         if player.timeControlStatus == .paused {
-            fadeTimer = player.fadeVolume(from: 0, to: 1, duration: 0.3, completion: {
-                self.player.play()
-            })
+            self.player.play()
             isPlaying = true
         } else {
-            fadeTimer = player.fadeVolume(from: player.volume, to: 0, duration: 0.3, completion: {
-                self.player.pause()
-            })
+            self.player.pause()
             isPlaying = false
         }
     }
-    
-    
-    
     
     @IBAction func didTapDismiss(_ sender: Any) {
         UIApplication.mainTabBarController()?.minimizePlayerDetails()
