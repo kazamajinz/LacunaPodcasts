@@ -137,7 +137,7 @@
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="thumbTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
-                                                                <action selector="didChangeCurrentTimeSlider:" destination="-1" eventType="valueChanged" id="NkD-NK-QeN"/>
+                                                                <action selector="didChangeCurrentTimeSlider:forEvent:" destination="-1" eventType="valueChanged" id="TC8-gF-fSs"/>
                                                             </connections>
                                                         </slider>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="m9j-j0-yvE">

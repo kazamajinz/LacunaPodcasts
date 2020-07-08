@@ -10,15 +10,18 @@ import Foundation
 import AVKit
 
 extension TimeInterval {
+    
     func convertToEpisodeDurationString() -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
         formatter.unitsStyle = .positional
         return formatter.string(from: self) ?? ""
     }
+    
 }
 
 extension CMTime {
+
     func toDisplayString() -> String {
         if CMTimeGetSeconds(self).isNaN {
             return "--:--"

@@ -109,7 +109,7 @@ class PlayerDetailsView: UIView {
     fileprivate func setupAudioSession() {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+            try AVAudioSession.sharedInstance().setActive(true)
         } catch let sessionErr {
             print("Failed to activate session:", sessionErr)
         }
@@ -237,26 +237,14 @@ class PlayerDetailsView: UIView {
     
     fileprivate func observeBoundaryTime() {
         // observe when episodes start playing
-        let time = CMTime(value: 1, timescale: 3) // every 0.3s
-//        let timeScale = CMTimeScale(NSEC_PER_SEC)
-//        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
+        let time = CMTime(seconds: 1, preferredTimescale: 3)
         let times = [NSValue(time: time)]
         boundaryTimeObserverToken = player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
             print("Episode started playing...")
-            //self?.setupLockscreenDuration()
         }
     }
     
-//    fileprivate func setupLockscreenDuration() {
-//        guard let duration = player.currentItem?.duration else { return }
-//        let durationInSeconds = CMTimeGetSeconds(duration)
-//        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
-//    }
-    
-    
-    
-    
-    func removeBoundaryTimeObserverToken() {
+    func removeBoundaryTimeObserver() {
         if let timeObserverToken = boundaryTimeObserverToken {
             print("Boundary Time Observer Removed")
             player.removeTimeObserver(timeObserverToken)
@@ -274,9 +262,7 @@ class PlayerDetailsView: UIView {
     
     fileprivate func observePlayerCurrentTime() {
         // notify every half second
-        let timeScale = CMTimeScale(NSEC_PER_SEC)
-        let interval = CMTime(seconds: 1.0, preferredTimescale: timeScale)
-        
+        let interval = CMTime(seconds: 1, preferredTimescale: 2)
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
             if let self = self {
                 let currentTime = self.player.currentTime()
@@ -292,14 +278,13 @@ class PlayerDetailsView: UIView {
         
         guard let duration = player.currentItem?.duration else { return }
         let durationInSeconds = CMTimeGetSeconds(duration)
-        
         let elapsedTime = CMTimeGetSeconds(player.currentTime())
+        
         nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
         nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
-    
     
     fileprivate func updateTimeLabels(_ currentTime: CMTime) {
         guard let duration = player.currentItem?.duration else { return }
@@ -309,16 +294,16 @@ class PlayerDetailsView: UIView {
     }
     
     fileprivate func updateCurrentTimeSlider() {
-        guard let duration = player.currentItem?.duration else { return }
         let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
-        let durationSeconds = CMTimeGetSeconds(duration)
+        let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
         let percentage = currentTimeSeconds / durationSeconds
         DispatchQueue.main.async {
-            self.currentTimeSlider.setValue(Float(percentage), animated: false)
-            self.miniDurationBar.setValue(Float(percentage), animated: false)
+            self.currentTimeSlider.value = Float(percentage)
+            self.miniDurationBar.value = Float(percentage)
         }
     }
     
+  
     
     
     
@@ -502,32 +487,55 @@ class PlayerDetailsView: UIView {
     @IBAction func didFastForward(_ sender: Any) { seekToCurrentTime(delta: 15) }
     @IBAction func didRewind(_ sender: Any) { seekToCurrentTime(delta: -15) }
 
-    fileprivate func updateTimeSliders(_ seekTime: CMTime) {
-        guard let duration = self.player.currentItem?.duration else { return }
-        let value = Float(CMTimeGetSeconds(seekTime) / CMTimeGetSeconds(duration))
-        currentTimeSlider.setValue(value, animated: true)
-        miniDurationBar.setValue(value, animated: true)
-    }
 
-    @IBAction func didChangeCurrentTimeSlider(_ sender: Any) {
+    
+    
+    
         
-        player.pause()
+    
+      
+    
+    @IBAction func didChangeCurrentTimeSlider(_ sender: UISlider, forEvent event: UIEvent) {
         
         guard let duration = player.currentItem?.duration else { return }
         let percentage = currentTimeSlider.value
-        let seekTimeInSeconds = Float64(percentage) * CMTimeGetSeconds(duration)
-        let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, preferredTimescale: Int32(NSEC_PER_SEC))
+        let durationInSeconds = CMTimeGetSeconds(duration)
+        let seekTimeInSeconds = Float64(percentage) * durationInSeconds
+        let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, preferredTimescale: 1)
         
-        updateTimeLabels(seekTime)
-        
-        player.seek(to: seekTime)
-
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
-            self.player.play()
-        })
-        
+        if let touchEvent = event.allTouches?.first {
+            switch touchEvent.phase {
+            case .began:
+                print("Touch Began")
+                self.removePeriodicTimeObserver()
+            case .moved:
+                print("Touch Moved")
+                updateTimeLabels(seekTime)
+            case .ended:
+                print("Touch Ended")
+                player.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] (value) in
+                    self?.observePlayerCurrentTime()
+                }
+            default:
+                break
+            }
+        }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -566,15 +574,12 @@ class PlayerDetailsView: UIView {
     @objc func handlePlayPause() {
         if player.timeControlStatus == .paused {
             fadeTimer = player.fadeVolume(from: 0, to: 1, duration: 0.3, completion: {
-                self.observePlayerCurrentTime()
                 self.player.play()
             })
             isPlaying = true
         } else {
             fadeTimer = player.fadeVolume(from: player.volume, to: 0, duration: 0.3, completion: {
                 self.player.pause()
-                self.removePeriodicTimeObserver()
-                
             })
             isPlaying = false
         }
