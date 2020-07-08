@@ -35,6 +35,12 @@
 		9E83738E24B239BF008CD566 /* PlayerDetailsView + Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */; };
 		9E83739024B27F84008CD566 /* UIPanGestureRecognizer + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738F24B27F84008CD566 /* UIPanGestureRecognizer + Extensions.swift */; };
 		9EDB908B24AD98B1004D8EB1 /* AVPlayer + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB908A24AD98B1004D8EB1 /* AVPlayer + Extensions.swift */; };
+		9EF3B27A24B61AE3005AC285 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF3B27924B61AE3005AC285 /* FavoritesController.swift */; };
+		9EF3B27C24B61F7C005AC285 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF3B27B24B61F7C005AC285 /* HomeController.swift */; };
+		9EF3B27F24B62EB3005AC285 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF3B27E24B62EB3005AC285 /* Constants.swift */; };
+		9EF3B28124B631A5005AC285 /* HomePodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF3B28024B631A5005AC285 /* HomePodcastCell.swift */; };
+		9EF3B28324B6326A005AC285 /* HomePodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EF3B28224B6326A005AC285 /* HomePodcastCell.xib */; };
+		9EF3B28524B646DA005AC285 /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF3B28424B646DA005AC285 /* FollowButton.swift */; };
 		9EFCB8C924AB89BF007B1F77 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFCB8C824AB89BF007B1F77 /* Episode.swift */; };
 		9EFCB8CC24AB8B73007B1F77 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFCB8CA24AB8B73007B1F77 /* EpisodeCell.swift */; };
 		9EFCB8CD24AB8B73007B1F77 /* EpisodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EFCB8CB24AB8B73007B1F77 /* EpisodeCell.xib */; };
@@ -75,6 +81,12 @@
 		9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView + Gestures.swift"; sourceTree = "<group>"; };
 		9E83738F24B27F84008CD566 /* UIPanGestureRecognizer + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPanGestureRecognizer + Extensions.swift"; sourceTree = "<group>"; };
 		9EDB908A24AD98B1004D8EB1 /* AVPlayer + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer + Extensions.swift"; sourceTree = "<group>"; };
+		9EF3B27924B61AE3005AC285 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
+		9EF3B27B24B61F7C005AC285 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		9EF3B27E24B62EB3005AC285 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9EF3B28024B631A5005AC285 /* HomePodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePodcastCell.swift; sourceTree = "<group>"; };
+		9EF3B28224B6326A005AC285 /* HomePodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePodcastCell.xib; sourceTree = "<group>"; };
+		9EF3B28424B646DA005AC285 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		9EFCB8C824AB89BF007B1F77 /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		9EFCB8CA24AB8B73007B1F77 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		9EFCB8CB24AB8B73007B1F77 /* EpisodeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpisodeCell.xib; sourceTree = "<group>"; };
@@ -124,6 +136,7 @@
 		9E00023A24A98E2100A1E796 /* LacunaPodcasts */ = {
 			isa = PBXGroup;
 			children = (
+				9EF3B27D24B62EA4005AC285 /* Constants */,
 				9E11F61B24AF59D800DB9D0A /* Services */,
 				9E4A2BF924AC140F005B36AC /* Extensions */,
 				9E33BA6B24AA32B500917EA1 /* API */,
@@ -145,8 +158,10 @@
 		9E00025324A99C5000A1E796 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9EF3B27B24B61F7C005AC285 /* HomeController.swift */,
 				9E00025124A99C4500A1E796 /* PodcastsSearchController.swift */,
 				9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */,
+				9EF3B27924B61AE3005AC285 /* FavoritesController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -186,10 +201,13 @@
 				9EFCB8CB24AB8B73007B1F77 /* EpisodeCell.xib */,
 				9EFCB8CE24AB96D4007B1F77 /* EpisodeHeader.swift */,
 				9EFCB8D024AB96DE007B1F77 /* EpisodeHeader.xib */,
+				9E83738B24B20867008CD566 /* DurationSlider.swift */,
+				9EF3B28024B631A5005AC285 /* HomePodcastCell.swift */,
+				9EF3B28224B6326A005AC285 /* HomePodcastCell.xib */,
 				9E4A2C0024ACD492005B36AC /* PlayerDetailsView.xib */,
 				9E4A2C0224ACD7BF005B36AC /* PlayerDetailsView.swift */,
 				9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */,
-				9E83738B24B20867008CD566 /* DurationSlider.swift */,
+				9EF3B28424B646DA005AC285 /* FollowButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -207,6 +225,14 @@
 				9E83738F24B27F84008CD566 /* UIPanGestureRecognizer + Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9EF3B27D24B62EA4005AC285 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				9EF3B27E24B62EB3005AC285 /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		DB37BE53F06350835C8078CD /* Frameworks */ = {
@@ -280,6 +306,7 @@
 				9E00024824A98E2600A1E796 /* LaunchScreen.storyboard in Resources */,
 				9E00024524A98E2600A1E796 /* Assets.xcassets in Resources */,
 				9EFCB8CD24AB8B73007B1F77 /* EpisodeCell.xib in Resources */,
+				9EF3B28324B6326A005AC285 /* HomePodcastCell.xib in Resources */,
 				9E33BA7224AA439A00917EA1 /* PodcastCell.xib in Resources */,
 				9EFCB8D124AB96DE007B1F77 /* EpisodeHeader.xib in Resources */,
 				9E4A2C0124ACD492005B36AC /* PlayerDetailsView.xib in Resources */,
@@ -341,11 +368,13 @@
 				9E4A2C0924ACDED1005B36AC /* UIImage + Extensions.swift in Sources */,
 				9E11F61F24AF689200DB9D0A /* UIWindow + Extensions.swift in Sources */,
 				9E00024024A98E2100A1E796 /* ViewController.swift in Sources */,
+				9EF3B27A24B61AE3005AC285 /* FavoritesController.swift in Sources */,
 				9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */,
 				9EDB908B24AD98B1004D8EB1 /* AVPlayer + Extensions.swift in Sources */,
 				9E33BA6D24AA32C400917EA1 /* APIService.swift in Sources */,
 				9E33BA7424AA45C900917EA1 /* PodcastCell.swift in Sources */,
 				9EFCB8CC24AB8B73007B1F77 /* EpisodeCell.swift in Sources */,
+				9EF3B27F24B62EB3005AC285 /* Constants.swift in Sources */,
 				9E4A2BFF24ACC4F5005B36AC /* RSSFeed.swift in Sources */,
 				9EFCB8CF24AB96D4007B1F77 /* EpisodeHeader.swift in Sources */,
 				9E4A2BFB24AC1423005B36AC /* String + Extensions.swift in Sources */,
@@ -356,8 +385,11 @@
 				9E00025024A98EC800A1E796 /* MainTabBarController.swift in Sources */,
 				9E00025224A99C4500A1E796 /* PodcastsSearchController.swift in Sources */,
 				9E11F62124AF9D7200DB9D0A /* UIViewController + Extensions.swift in Sources */,
+				9EF3B28124B631A5005AC285 /* HomePodcastCell.swift in Sources */,
 				9E00023E24A98E2100A1E796 /* SceneDelegate.swift in Sources */,
 				9E7F4F3424AA6898001C4AEE /* EpisodesController.swift in Sources */,
+				9EF3B27C24B61F7C005AC285 /* HomeController.swift in Sources */,
+				9EF3B28524B646DA005AC285 /* FollowButton.swift in Sources */,
 				9E83739024B27F84008CD566 /* UIPanGestureRecognizer + Extensions.swift in Sources */,
 				9E47AFFA24B3EEE800A7108C /* UIApplication + Extensions.swift in Sources */,
 				9E0D511E24AD1D3F0035BB90 /* Time + Extensions.swift in Sources */,

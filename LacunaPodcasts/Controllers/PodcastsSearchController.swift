@@ -75,7 +75,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
-        label.text = "Please enter a Search Term"
+        label.text = "Search for a Podcast"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
@@ -107,6 +107,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        K.podcastCellHeight
     }
 }

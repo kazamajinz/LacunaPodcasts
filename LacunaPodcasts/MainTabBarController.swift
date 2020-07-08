@@ -254,10 +254,34 @@ class MainTabBarController: UITabBarController {
     
     
     func setupViewControllers() {
+        
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionNumber, env) -> NSCollectionLayoutSection? in
+
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(150), heightDimension: .absolute(150))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16)
+            
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .absolute(150))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 32, trailing: 0)
+            section.orthogonalScrollingBehavior = .continuous
+            
+            section.boundarySupplementaryItems = [
+                .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: "categoryHeaderId", alignment: .topLeading)
+            ]
+            
+            return section
+        })
+        
+        let homeController = HomeController(collectionViewLayout: layout)
+        
         viewControllers = [
             generateNavigationController(with: PodcastsSearchController(), title: "Search", image: #imageLiteral(resourceName: "search")),
-            generateNavigationController(with: ViewController(), title: "Favourites", image: #imageLiteral(resourceName: "favorites")),
-            generateNavigationController(with: ViewController(), title: "Downloads", image: #imageLiteral(resourceName: "downloads"))
+            generateNavigationController(with: FavoritesController(), title: "Favourites", image: #imageLiteral(resourceName: "favorites")),
+            generateNavigationController(with: homeController, title: "Home", image: #imageLiteral(resourceName: "downloads"))
         ]
     }
     

@@ -90,11 +90,6 @@ class EpisodesController: UITableViewController {
         UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes, miniPlayerIsVisible: miniPlayerIsVisible)
         
         if !miniPlayerIsVisible { miniPlayerIsVisible.toggle() }
-        
-        
-
-        
-        //tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
@@ -149,13 +144,15 @@ class EpisodesController: UITableViewController {
     
     
     
+    
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        indexPath.section == 0 ? UITableView.automaticDimension : 100
+        indexPath.section == 0 ? UITableView.automaticDimension : K.episodeCellHeight
     }
     
     

@@ -213,7 +213,14 @@ class PlayerDetailsView: UIView {
 
     
     
-    
+    deinit {
+        // Don't forget to remove self as an observer.
+        // Otherwise, object will be forever retained.
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+        player.removeObserver(self, forKeyPath: "rate")
+        
+        print("PlayerDetailsView memory being reclaimed...")
+    }
     
     //MARK: - Notification Center
     
@@ -497,10 +504,7 @@ class PlayerDetailsView: UIView {
 
 
 
-    deinit {
-        print("PlayerDetailsView memory being reclaimed...")
-    }
-
+    
     //MARK: - User Actions
 
     // EPISODE IMAGE

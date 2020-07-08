@@ -22,7 +22,6 @@ struct Episode {
     
     init(feedItem: RSSFeedItem) {
         
-        
         self.title = feedItem.title ?? ""
         self.pubDate = feedItem.pubDate ?? Date()
         self.description = feedItem.description ?? ""
