@@ -217,7 +217,7 @@ class PlayerDetailsView: UIView {
     
     //MARK: - Notification Center
     
-    fileprivate func setupInterruptionObserver() {
+    fileprivate func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
     }
     
@@ -235,6 +235,30 @@ class PlayerDetailsView: UIView {
         }
     }
     
+    fileprivate func setupObservers() {
+        player.addObserver(self, forKeyPath: "rate", options: [.old, .new], context: nil)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "rate" {
+            if player.rate == 0 { isPlaying = false }
+        }
+    }
+    
+    
+    
+    
+    
+        
+        
+        
+            
+
+    
+    
+    
+    
+    
     
     
     //MARK: - Setup
@@ -245,10 +269,11 @@ class PlayerDetailsView: UIView {
         setupRemoteControl()
         
         
-        setupInterruptionObserver()
+        setupNotifications()
         
         observePlayerCurrentTime()
         observeBoundaryTime()
+        setupObservers()
     }
     
     private func setupMiniDurationBar() {
