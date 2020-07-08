@@ -22,11 +22,10 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         setupSearchBar()
         setupTableView()
         
-        
         // Removes Text from Back Button
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        searchBar(searchController.searchBar, textDidChange: "Reply All")
+        searchBar(searchController.searchBar, textDidChange: "Gimlet")
 
     }
     
@@ -34,7 +33,8 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     fileprivate func setupSearchBar() {
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.delegate = self
     }
     
@@ -92,7 +92,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? 100 : 0
+        return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? 80 : 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -107,6 +107,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 80
     }
 }

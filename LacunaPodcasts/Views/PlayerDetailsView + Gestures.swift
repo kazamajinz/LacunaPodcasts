@@ -25,7 +25,7 @@ extension PlayerDetailsView {
 //            if state == .maximized { fraction *= -1 }
 //            animator.fractionComplete = fraction
             
-            self.transform = CGAffineTransform(translationX: 0, y: translation.y / 25)
+            self.transform = CGAffineTransform(translationX: 0, y: translation.y / 5)
 
             print("Ended:", translation.y, velocity.y)
         case .ended:
@@ -36,7 +36,7 @@ extension PlayerDetailsView {
                 self.transform = .identity
             })
             
-            if abs(translation.y) > 20 || abs(velocity.y) > 500 {
+            if abs(velocity.y) > 500 { // abs(translation.y) > 20 
                 UIApplication.mainTabBarController()?.toggleState()
             }
         default:

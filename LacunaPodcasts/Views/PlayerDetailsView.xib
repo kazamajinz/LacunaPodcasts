@@ -93,7 +93,7 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="bmW-ko-lIt" firstAttribute="leading" secondItem="Z3w-MM-LWC" secondAttribute="leading" constant="8" id="4m0-dv-o90"/>
                                 <constraint firstAttribute="height" constant="64" id="BLf-50-9jH"/>
@@ -129,11 +129,11 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KmR-PR-KdL">
                                             <rect key="frame" x="48" y="32" width="318" height="348"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ka6-iA-PDf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="318" height="48"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ka6-iA-PDf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="318" height="36"/>
                                                     <subviews>
                                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vTu-mf-7Cc" customClass="DurationSlider" customModule="LacunaPodcasts" customModuleProvider="target">
-                                                            <rect key="frame" x="-2" y="0.0" width="322" height="30.5"/>
+                                                            <rect key="frame" x="-2" y="0.0" width="322" height="23"/>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="thumbTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
@@ -141,17 +141,17 @@
                                                             </connections>
                                                         </slider>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="m9j-j0-yvE">
-                                                            <rect key="frame" x="0.0" y="31.5" width="318" height="16.5"/>
+                                                            <rect key="frame" x="0.0" y="22" width="318" height="14"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QAe-lq-vMu">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="159" height="16.5"/>
-                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="159" height="14"/>
+                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="-:--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu7-5A-h3v">
-                                                                    <rect key="frame" x="159" y="0.0" width="159" height="16.5"/>
-                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                                    <rect key="frame" x="159" y="0.0" width="159" height="14"/>
+                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -159,11 +159,11 @@
                                                         </stackView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="48" id="JnX-hy-XfJ"/>
+                                                        <constraint firstAttribute="height" constant="36" id="JnX-hy-XfJ"/>
                                                     </constraints>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4H1-Ku-1f2">
-                                                    <rect key="frame" x="0.0" y="48" width="318" height="256"/>
+                                                    <rect key="frame" x="0.0" y="36" width="318" height="256"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oYf-rj-FwY">
                                                             <rect key="frame" x="32" y="0.0" width="254" height="256"/>
@@ -214,7 +214,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5uQ-a2-nPY">
-                                                    <rect key="frame" x="0.0" y="304" width="318" height="44"/>
+                                                    <rect key="frame" x="0.0" y="292" width="318" height="56"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 </view>
                                             </subviews>
@@ -229,9 +229,10 @@
                                     </constraints>
                                 </view>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="nro-da-0Qg" firstAttribute="leading" secondItem="qBE-Zl-Z5L" secondAttribute="leading" id="4Me-c0-XN1"/>
                         <constraint firstAttribute="bottom" secondItem="nro-da-0Qg" secondAttribute="bottom" id="KM8-gl-M8A"/>
@@ -316,6 +317,7 @@
                     <rect key="frame" x="-4" y="0.0" width="422" height="45"/>
                     <connections>
                         <action selector="didChangeCurrentTimeSlider:" destination="-1" eventType="valueChanged" id="D8b-oJ-ve6"/>
+                        <action selector="didChangeCurrentTimeSlider:forEvent:" destination="-1" eventType="valueChanged" id="xN7-vT-mFq"/>
                     </connections>
                 </slider>
             </subviews>

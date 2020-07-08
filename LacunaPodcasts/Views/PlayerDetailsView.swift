@@ -19,18 +19,17 @@ class PlayerDetailsView: UIView {
         super.init(frame: frame)
         initSubViews()
         setup()
-        setupMiniDurationBar()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //    required init?(coder aDecoder: NSCoder) {
-    //        super.init(coder: aDecoder)
-    //        initSubViews()
-    //        setup()
-    //    }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        initSubViews()
+//        setup()
+//    }
     
     private func initSubViews() {
         let nib = UINib(nibName: String(describing: type(of: self)), bundle: .main)
@@ -68,10 +67,8 @@ class PlayerDetailsView: UIView {
     var episode: Episode! {
         didSet {
             
-            
-            
-            
-            
+            isPlaying = true
+
             titleLabel.text = episode.title
             authorLabel.text = episode.author.uppercased()
             miniTitleLabel.text = episode.title
@@ -80,14 +77,11 @@ class PlayerDetailsView: UIView {
             
             
             setupNowPlayingInfo()
-            
-            
-            
-            
-            
-            
+            setupAudioSession()
             playEpisode()
-            isPlaying = true
+            
+            
+            
             
             
             
@@ -106,6 +100,8 @@ class PlayerDetailsView: UIView {
                 })
                 MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artworkItem
             }
+
+            //let colors = episodeImageView.image?.getColors()
         }
     }
     
@@ -219,18 +215,38 @@ class PlayerDetailsView: UIView {
     
     
     
+    //MARK: - Notification Center
+    
+    fileprivate func setupInterruptionObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    @objc fileprivate func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let type = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
+        if type == AVAudioSession.InterruptionType.began.rawValue {
+            isPlaying = false
+        } else {
+            guard let options = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+            if options == AVAudioSession.InterruptionOptions.shouldResume.rawValue {
+                player.play()
+                isPlaying = true
+            }
+        }
+    }
     
     
     
-    
-    
-    
-    
-    
+    //MARK: - Setup
     
     func setup() {
+        setupMiniDurationBar()
+        
         setupRemoteControl()
-        setupAudioSession()
+        
+        
+        setupInterruptionObserver()
+        
         observePlayerCurrentTime()
         observeBoundaryTime()
     }
@@ -401,13 +417,13 @@ class PlayerDetailsView: UIView {
     
     //MARK: - Set Gradient Background
     
-//    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = containerView.bounds
-//        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
-//        gradientLayer.locations = [0.6, 1.8]
-//        containerView.layer.insertSublayer(gradientLayer, at: 0)
-//    }
+    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = containerView.bounds
+        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+        gradientLayer.locations = [0.6, 1.8]
+        containerView.layer.insertSublayer(gradientLayer, at: 0)
+    }
     
     
     
@@ -443,14 +459,23 @@ class PlayerDetailsView: UIView {
     
     
     
+
+
+
+
+
+
+
+
+
+
+
+
+
     deinit {
         print("PlayerDetailsView memory being reclaimed...")
     }
-    
-        
-    
-    
-    
+
     //MARK: - User Actions
 
     // EPISODE IMAGE
@@ -519,6 +544,7 @@ class PlayerDetailsView: UIView {
             case .ended:
                 print("Touch Ended")
                 player.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] (value) in
+                    self?.miniDurationBar.value = Float(percentage)
                     self?.observePlayerCurrentTime()
                 }
             default:
@@ -526,31 +552,6 @@ class PlayerDetailsView: UIView {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-//    fileprivate func updateElapsedTime() {
-//        let elapsedTime = CMTimeGetSeconds(player.currentTime())
-//        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
-//    }
     
     fileprivate func seekToCurrentTime(delta: Int64) {
         let seconds = CMTime(value: delta, timescale: 1)

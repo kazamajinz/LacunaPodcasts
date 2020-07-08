@@ -10,8 +10,9 @@ import UIKit
 
 class DurationSlider: UISlider {
 
-    @IBInspectable var trackHeight: CGFloat = 2
-    @IBInspectable var thumbRadius: CGFloat = 10
+    @IBInspectable var trackHeight: CGFloat = 4
+    @IBInspectable var thumbRadius: CGFloat = 12
+    @IBInspectable var thumbSelectedRadius: CGFloat = 14
 
     // Custom thumb view which will be converted to UIImage
     // and set as thumb. You can customize it's colors, border, etc.
@@ -26,12 +27,13 @@ class DurationSlider: UISlider {
     override func awakeFromNib() {
         super.awakeFromNib()
         let thumb = thumbImage(diameter: thumbRadius)
+        let thumbSelected = thumbImage(diameter: thumbSelectedRadius)
         setThumbImage(UIImage(), for: .normal)
         setThumbImage(thumb, for: .normal)
-        setThumbImage(thumb, for: .selected)
-        setThumbImage(thumb, for: .highlighted)
+        setThumbImage(thumbSelected, for: .selected)
+        setThumbImage(thumbSelected, for: .highlighted)
     }
-
+    
     private func thumbImage(diameter: CGFloat) -> UIImage {
         // Set proper frame
         // y: diameter / 2 will correctly offset the thumb
