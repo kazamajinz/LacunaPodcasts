@@ -13,6 +13,12 @@ struct K {
     static let podcastCellHeight: CGFloat = 80
     static let episodeCellHeight: CGFloat = 100
     
-    static let followedPodcastKey = "followedPodcastKey"
+    
+    struct UserDefaults {
+        static let savedPodcastKey = "savedPodcastKey"
+    }
+    
+    
+    
 
 }

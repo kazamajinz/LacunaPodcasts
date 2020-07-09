@@ -30,6 +30,7 @@ class PodcastCell: UITableViewCell {
             episodeCountLabel.text = "\(podcast.trackCount ?? 0) Episodes"
 
             guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
+            podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
             
 //            URLSession.shared.dataTask(with: url) { (data, response, error) in
 //                guard let data = data else { return }
@@ -37,9 +38,6 @@ class PodcastCell: UITableViewCell {
 //                    self.podcastImageView.image = UIImage(data: data)
 //                }
 //            }.resume()
-            
-            //podcastImageView.sd_setImage(with: url, completed: nil)
-            podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
         }
     }
 }

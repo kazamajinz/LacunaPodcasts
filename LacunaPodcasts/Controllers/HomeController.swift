@@ -47,6 +47,7 @@ class HomeController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        setupGestures()
     }
     
     fileprivate func setupCollectionView() {
@@ -54,6 +55,20 @@ class HomeController: UICollectionViewController {
         collectionView.register(HomePodcastCell.self, forCellWithReuseIdentifier: HomePodcastCell.reuseIdentifier)
         collectionView.register(Header.self, forSupplementaryViewOfKind: "categoryHeaderId", withReuseIdentifier: "headerId")
     }
+    
+    fileprivate func setupGestures() {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        collectionView.addGestureRecognizer(gesture)
+    }
+    
+    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
+        
+        let location = gesture.location(in: collectionView)
+        let selectedIndexPath = collectionView.indexPathForItem(at: location)
+        print(selectedIndexPath?.row)
+    }
+    
+    
     
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -72,6 +87,7 @@ class HomeController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomePodcastCell.reuseIdentifier, for: indexPath) as? HomePodcastCell else { fatalError() }
+        cell.backgroundColor = .yellow
 //        let podcast = podcasts[indexPath.row]
 //        cell.podcast = podcast
         return cell

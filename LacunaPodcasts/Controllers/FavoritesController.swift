@@ -10,6 +10,8 @@ import UIKit
 
 class FavoritesController: UITableViewController {
     
+    var podcasts = UserDefaults.standard.savedPodcasts()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -32,16 +34,39 @@ class FavoritesController: UITableViewController {
     //MARK: - UITableView
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        podcasts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PodcastCell.reuseIdentifier, for: indexPath) as? PodcastCell else { fatalError() }
+        let podcast = self.podcasts[indexPath.row]
+        cell.podcast = podcast
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         K.podcastCellHeight
+    }
+    
+    //MARK: - Swipe Actions
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        //DELETE ACTION
+        let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
+            
+            let selectedPodcast = self.podcasts[indexPath.row]
+            
+            self.podcasts.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // remove from UserDefaults
+            UserDefaults.standard.deletePodcast(podcast: selectedPodcast)
+            
+            completionHandler(true)
+        }
+        let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
+        return swipe
     }
     
 }

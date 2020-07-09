@@ -58,23 +58,19 @@ class EpisodesController: UITableViewController {
     @objc fileprivate func handleFetchSavedPodcasts() {
         print("Fetching saved Podcasts from UserDefaults")
         
-        //let value = UserDefaults.standard.value(forKey: K.followedPodcastKey) as? String
-        //print(value ?? "")
+//        guard let data = UserDefaults.standard.data(forKey: K.UserDefaults.savedPodcastKey) else { return }
+//        do {
+//            let savedPodcasts = try JSONDecoder().decode([Podcast].self, from: data)
+        //            savedPodcasts.forEach { (podcast) in
+        //                print(podcast.trackName ?? "")
+        //            }
+        //        } catch let decodeErr { print("Failed to decode Saved Podcasts:", decodeErr) }
         
-        guard let data = UserDefaults.standard.data(forKey: K.followedPodcastKey) else { return }
-        do {
-            let podcast = try JSONDecoder().decode(Podcast.self, from: data)
-            
-            print(podcast)
-            
-            
-        } catch let decodeErr {
-            print("Failed to decode Podcast:", decodeErr)
+        let listOfPodcasts = UserDefaults.standard.savedPodcasts()
+        listOfPodcasts.forEach { (podcast) in
+            print(podcast.trackName ?? "")
         }
     }
-
-
-
 
     
     

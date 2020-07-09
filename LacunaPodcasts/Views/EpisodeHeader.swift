@@ -54,22 +54,22 @@ class EpisodeHeader: UITableViewCell {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
+    
     @IBAction func didPressFollow(_ sender: UIButton) {
-        followButton.isSelected.toggle()
-
-        // USER DEFAULTS
-        print("Saving info into UserDefaults...")
         
-        if let podcast = podcast {
-            do {
-                let data = try JSONEncoder().encode(podcast)
-                UserDefaults.standard.set(data, forKey: K.followedPodcastKey)
-                print("Successfully Encoded")
-            } catch let encodeErr {
-                print("Failed to encode Podcast:", encodeErr)
-            }
-        }
+        followButton.isSelected.toggle()
+        
+        print("Saving info into UserDefaults...")
+        guard let podcast = podcast else { return }
+        var listOfPodcasts = UserDefaults.standard.savedPodcasts()
+        listOfPodcasts.append(podcast)
+        do {
+            let data = try JSONEncoder().encode(listOfPodcasts)
+            UserDefaults.standard.set(data, forKey: K.UserDefaults.savedPodcastKey)
+        } catch let encodeErr { print("Failed to encode Saved Podcasts:", encodeErr) }
     }
+    
+    
     
     
     
