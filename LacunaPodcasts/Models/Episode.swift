@@ -10,7 +10,9 @@ import Foundation
 import FeedKit
 
 struct Episode: Codable {
-
+    
+    var collectionId: Int
+    
     let title: String
     let pubDate: Date
     let description: String
@@ -20,6 +22,9 @@ struct Episode: Codable {
     var imageUrl: String?
     
     init(feedItem: RSSFeedItem) {
+        
+        self.collectionId = 0
+        
         self.title = feedItem.title ?? ""
         self.pubDate = feedItem.pubDate ?? Date()
         self.description = feedItem.description ?? ""

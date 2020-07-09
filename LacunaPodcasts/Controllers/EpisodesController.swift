@@ -13,24 +13,29 @@ class EpisodesController: UITableViewController {
     
     var podcast: Podcast? {
         didSet {
-            DispatchQueue.main.async {
-                self.navigationItem.title = self.podcast?.trackName
-            }
+            fetchEpisodes()
+            self.navigationItem.title = self.podcast?.trackName
         }
     }
     
     fileprivate func fetchEpisodes() {
+        
+        if let podcast = podcast {
+            selectedPodcast = podcast
+        }
+        
         print("Looking for episodes at feed url:", podcast?.feedUrl ?? "")
         guard let feedUrl = podcast?.feedUrl else { return }
-        APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, podcast) in
+        APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
             self.episodes = episodes
-            self.podcast?.description = podcast.description
+            self.selectedPodcast.description = pod.description
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
 
+    var selectedPodcast = Podcast()
     var episodes = [Episode]()
     
     override func viewDidLoad() {
@@ -39,7 +44,8 @@ class EpisodesController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        fetchEpisodes()
+        
+        tableView.reloadData()
     }
     
     //MARK: - Setup
@@ -149,7 +155,7 @@ class EpisodesController: UITableViewController {
 
         if indexPath.section == 0 {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
-            header.podcast = podcast
+            header.podcast = selectedPodcast
 
             // Expand and Collapse Podcast Description
             let tapGesture = ExpandCollapseTapGestureRecognizer(target: self, action: #selector(didTapExpandCollapse(_:)))
@@ -158,9 +164,15 @@ class EpisodesController: UITableViewController {
             tapGesture.header = header
                         
             return header
+        
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
             cell.episode = episodes[indexPath.row]
+            
+            if let collectionId = podcast?.collectionId {
+                cell.episode.collectionId = collectionId
+            }
+            
             return cell
         }
     }

@@ -22,12 +22,17 @@ extension UserDefaults {
     }
     
     func downloadEpisode(episode: Episode) {
-        do {
-            var downloadedEpisodes = fetchDownloadedEpisodes()
-            
+        
+        // check to see if episode is already saved
+        var downloadedEpisodes = fetchDownloadedEpisodes()
+        
+        if !downloadedEpisodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {
             // insert episode at the front of the list
             downloadedEpisodes.insert(episode, at: 0)
-            
+        }
+
+        // ENCODE
+        do {
             let data = try JSONEncoder().encode(downloadedEpisodes)
             UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodeKey)
         } catch let encodeErr { print("Failed to encode downloaded episode:", encodeErr) }
@@ -36,11 +41,10 @@ extension UserDefaults {
     func deleteEpisode(episode: Episode) {
         let episodes = fetchDownloadedEpisodes()
         let filteredEpisodes = episodes.filter { (e) -> Bool in
-            
-            
-            
-            return true
+            return e.title != episode.title || (e.title == episode.title && e.collectionId != episode.collectionId)
         }
+        
+        // ENCODE
         do {
             let data = try JSONEncoder().encode(filteredEpisodes)
             UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodeKey)
@@ -65,11 +69,33 @@ extension UserDefaults {
         let filteredPodcasts = podcasts.filter { (p) -> Bool in
             return p.collectionId != podcast.collectionId
         }
+        
+        // ENCODE
         do {
             let data = try JSONEncoder().encode(filteredPodcasts)
             UserDefaults.standard.set(data, forKey: K.UserDefaults.savedPodcastKey)
         } catch let encodeErr { print("Failed to delete Podcast:", encodeErr) }
     }
+    
+    func savePodcast(podcast: Podcast) {
+        
+        // check to see if podcast is already saved
+        var savedPodcasts = fetchSavedPodcasts()
+        
+        if savedPodcasts.contains(where: { $0.collectionId == podcast.collectionId }) {
+            deletePodcast(podcast: podcast)
+        } else {
+            savedPodcasts.append(podcast)
+            
+            // ENCODE
+            do {
+                let data = try JSONEncoder().encode(savedPodcasts)
+                UserDefaults.standard.set(data, forKey: K.UserDefaults.savedPodcastKey)
+            } catch let encodeErr { print("Failed to encode Saved Podcasts:", encodeErr) }
+        }
+    }
+    
+    
     
     
 

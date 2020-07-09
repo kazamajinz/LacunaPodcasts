@@ -48,11 +48,11 @@ class EpisodeHeader: UITableViewCell {
             // IMAGE
             guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
             podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
-            
+
             // FOLLOW BUTTON
             let savedPodcasts = UserDefaults.standard.fetchSavedPodcasts()
-            if savedPodcasts.contains(podcast) {
-                followButton.isSelected = true
+            if let podcast = podcast {
+                followButton.isSelected = savedPodcasts.contains(podcast) ? true : false
             }
         }
     }
@@ -66,31 +66,10 @@ class EpisodeHeader: UITableViewCell {
     
     
     @IBAction func didPressFollow(_ sender: UIButton) {
-
         guard let podcast = podcast else { return }
+        UserDefaults.standard.savePodcast(podcast: podcast)
         
-        // check to see if podcast is already saved
-        var savedPodcasts = UserDefaults.standard.fetchSavedPodcasts()
-        
-        if savedPodcasts.contains(where: { $0.collectionId == self.podcast.collectionId }) {
-            UserDefaults.standard.deletePodcast(podcast: podcast)
-        } else {
-            
-            // just appends to the end
-            savedPodcasts.append(podcast)
-            
-            do {
-                let data = try JSONEncoder().encode(savedPodcasts)
-                UserDefaults.standard.set(data, forKey: K.UserDefaults.savedPodcastKey)
-            } catch let encodeErr { print("Failed to encode Saved Podcasts:", encodeErr) }
-        }
         followButton.isSelected.toggle()
     }
-    
-    
-    
-    
-    
-    
-    
+ 
 }
