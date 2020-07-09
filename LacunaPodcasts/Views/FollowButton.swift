@@ -28,6 +28,9 @@ class FollowButton: UIButton {
         transform = .identity
         
         // Text
+        setTitle("FOLLOW", for: .normal)
+        setTitle("FOLLOWING", for: .selected)
+        
         setTitleColor(.black, for: .normal)
         setTitleColor(.black, for: .highlighted)
         setTitleColor(.black, for: .selected)
@@ -44,17 +47,14 @@ class FollowButton: UIButton {
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = isSelected ? .black : .clear
-            setTitle("FOLLOWING", for: .normal)
-            setTitle("FOLLOWING", for: .highlighted)
-            setTitle("FOLLOWING", for: .selected)
+            layer.borderColor = isSelected ? UIColor.black.cgColor : UIColor.lightGray.cgColor
         }
     }
     
     
     override var isHighlighted: Bool {
         didSet {
-            layer.borderColor = isHighlighted ? UIColor.lightGray.cgColor : UIColor.black.cgColor
+            isSelected ? setTitle("FOLLOWING", for: .highlighted) : setTitle("FOLLOW", for: .highlighted)
             transform =  isHighlighted ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
         }
     }

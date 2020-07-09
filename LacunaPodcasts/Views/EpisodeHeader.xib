@@ -64,6 +64,9 @@
                                     <state key="normal" title="FOLLOW">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="didPressFollow:" destination="EVo-M3-1Oy" eventType="touchUpInside" id="zDB-rI-HBu"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SGJ-sL-LGQ">
                                     <rect key="frame" x="0.0" y="286.66666666666669" width="127.33333333333333" height="16.333333333333314"/>
@@ -94,6 +97,7 @@
             <connections>
                 <outlet property="artistNameLabel" destination="4K2-qI-ePQ" id="PCN-3W-Th9"/>
                 <outlet property="descriptionLabel" destination="SGJ-sL-LGQ" id="jhJ-h1-r1s"/>
+                <outlet property="followButton" destination="cu5-GF-GYe" id="CZB-xC-ktB"/>
                 <outlet property="podcastImageView" destination="KzN-OW-a80" id="enN-Eb-frr"/>
                 <outlet property="trackNameLabel" destination="SBN-Bj-WLa" id="vSE-L8-LSp"/>
             </connections>

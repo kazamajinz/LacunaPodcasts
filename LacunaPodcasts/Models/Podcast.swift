@@ -16,8 +16,13 @@ struct Podcast: Codable {
     var trackCount: Int?
     var feedUrl: String?
     
+//    private enum CodingKeys: String, CodingKey {
+//        case podcastDescription = "description"
+//        case trackName, artistName, artworkUrl600, trackCount, feedUrl
+//    }
+    
     var description: String?
     var link: String?
-    var categories: Set<String>?
+    //var categories: Set<String>?
     
 }

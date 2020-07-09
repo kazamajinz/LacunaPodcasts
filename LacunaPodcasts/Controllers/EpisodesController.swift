@@ -39,9 +39,50 @@ class EpisodesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupNavigationBarButtons()
     }
     
     //MARK: - Setup
+    
+    fileprivate func setupNavigationBarButtons() {
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .plain, target: self, action: #selector(handleDownloads)),
+            UIBarButtonItem(title: "Fetch", style: .plain, target: self, action: #selector(handleFetchSavedPodcasts))
+        ]
+    }
+    
+    @objc fileprivate func handleDownloads() {
+        
+    }
+    
+    @objc fileprivate func handleFetchSavedPodcasts() {
+        print("Fetching saved Podcasts from UserDefaults")
+        
+        //let value = UserDefaults.standard.value(forKey: K.followedPodcastKey) as? String
+        //print(value ?? "")
+        
+        guard let data = UserDefaults.standard.data(forKey: K.followedPodcastKey) else { return }
+        do {
+            let podcast = try JSONDecoder().decode(Podcast.self, from: data)
+            
+            print(podcast)
+            
+            
+        } catch let decodeErr {
+            print("Failed to decode Podcast:", decodeErr)
+        }
+    }
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
     
     fileprivate func setupTableView() {
         tableView.tableFooterView = UIView()
