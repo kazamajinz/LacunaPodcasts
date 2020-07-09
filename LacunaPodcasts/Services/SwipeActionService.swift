@@ -22,12 +22,8 @@ struct SwipeActionService {
         createBasicSwipeAction(style: .destructive, title: "Trash", image: UIImage(systemName: "trash"), backgroundColor: .systemRed, handler: handler)
     }
     
-    static func createEditAction(handler: @escaping UIContextualAction.Handler) -> UIContextualAction {
-        createBasicSwipeAction(style: .normal, title: "Edit", image: UIImage(systemName: "square.and.pencil"), backgroundColor: nil, handler: handler)
-    }
-    
-    static func createPrioritizeAction(handler: @escaping UIContextualAction.Handler) -> UIContextualAction {
-        createBasicSwipeAction(style: .normal, title: "Edit", image: UIImage(systemName: "star"), backgroundColor: .systemYellow, handler: handler)
+    static func createDownloadAction(handler: @escaping UIContextualAction.Handler) -> UIContextualAction {
+        createBasicSwipeAction(style: .normal, title: "Download", image: UIImage(systemName: "square.and.arrow.down"), backgroundColor: nil, handler: handler)
     }
 
 }

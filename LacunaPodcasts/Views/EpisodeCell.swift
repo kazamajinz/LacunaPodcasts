@@ -21,9 +21,18 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var pubDateLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    
+    @IBOutlet weak var episodeImageView: UIImageView!
+
     var episode: Episode! {
         didSet {
+            
+            // IMAGE
+            guard let url = URL(string: episode.imageUrl ?? "") else { return }
+            episodeImageView.sd_setImage(with: url)
+            episodeImageView.isHidden = true
+
+            
+            
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description.stripOutHtml()
 

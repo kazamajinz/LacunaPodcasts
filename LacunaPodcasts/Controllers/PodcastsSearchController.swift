@@ -67,8 +67,8 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let episodesController = EpisodesController()
         let podcast = self.podcasts[indexPath.row]
+        let episodesController = EpisodesController()
         episodesController.podcast = podcast
         navigationController?.pushViewController(episodesController, animated: true)
     }
@@ -101,8 +101,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? PodcastCell else { fatalError() }
-        let podcast = self.podcasts[indexPath.row]
-        cell.podcast = podcast
+        cell.podcast = self.podcasts[indexPath.row]
         return cell
     }
     

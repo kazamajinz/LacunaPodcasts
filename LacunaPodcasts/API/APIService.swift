@@ -14,8 +14,6 @@ class APIService {
     
     static let shared = APIService()
     
-    
-    // TODO: PARSE THE PODCAST INFORMATION FIRST SO THAT IT APPEARS FIRST?
     func fetchEpisodes(feedUrl: String, completionHandler: @escaping ([Episode], Podcast) -> Void) {
         
         //let secureFeedUrl = feedUrl.contains("https") ? feedUrl : feedUrl.replacingOccurrences(of: "http", with: "https")
@@ -33,10 +31,11 @@ class APIService {
                 case .success(let feed):
                     guard let feed = feed.rssFeed else { return }
                     
-                    // Get Podcast Detail
-                    let podcast = feed.toPodcast()
-
-                    // Get Episodes
+                    // Podcast Details
+                    var podcast = Podcast()
+                    podcast.description = feed.description
+                    
+                    // Episodes
                     let episodes = feed.toEpisodes()
                     completionHandler(episodes, podcast)
 
@@ -46,6 +45,10 @@ class APIService {
             }
         }
     }
+    
+    
+    
+    
     
     
     

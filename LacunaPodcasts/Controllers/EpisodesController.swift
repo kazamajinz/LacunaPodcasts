@@ -13,8 +13,9 @@ class EpisodesController: UITableViewController {
     
     var podcast: Podcast? {
         didSet {
-            navigationItem.title = podcast?.trackName
-            fetchEpisodes()
+            DispatchQueue.main.async {
+                self.navigationItem.title = self.podcast?.trackName
+            }
         }
     }
     
@@ -23,54 +24,57 @@ class EpisodesController: UITableViewController {
         guard let feedUrl = podcast?.feedUrl else { return }
         APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, podcast) in
             self.episodes = episodes
-            self.selectedPodcast = podcast
+            self.podcast?.description = podcast.description
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
-    
-    fileprivate let cellId = "cellId"
-    fileprivate let headerId = "headerId"
 
-    var selectedPodcast = Podcast()
     var episodes = [Episode]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setupNavigationBarButtons()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchEpisodes()
     }
     
     //MARK: - Setup
     
-    fileprivate func setupNavigationBarButtons() {
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .plain, target: self, action: #selector(handleDownloads)),
-            UIBarButtonItem(title: "Fetch", style: .plain, target: self, action: #selector(handleFetchSavedPodcasts))
-        ]
-    }
+    var downloadsButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+        button.sizeToFit()
+        return button
+    }()
     
-    @objc fileprivate func handleDownloads() {
-        
-    }
     
-    @objc fileprivate func handleFetchSavedPodcasts() {
-        print("Fetching saved Podcasts from UserDefaults")
-        
-//        guard let data = UserDefaults.standard.data(forKey: K.UserDefaults.savedPodcastKey) else { return }
-//        do {
-//            let savedPodcasts = try JSONDecoder().decode([Podcast].self, from: data)
-        //            savedPodcasts.forEach { (podcast) in
-        //                print(podcast.trackName ?? "")
-        //            }
-        //        } catch let decodeErr { print("Failed to decode Saved Podcasts:", decodeErr) }
-        
-        let listOfPodcasts = UserDefaults.standard.savedPodcasts()
-        listOfPodcasts.forEach { (podcast) in
-            print(podcast.trackName ?? "")
-        }
-    }
+    
+
+    
+    
+    
+    
+    
+//    @objc fileprivate func handleFetchSavedPodcasts() {
+//        print("Fetching saved Podcasts from UserDefaults")
+//
+////        guard let data = UserDefaults.standard.data(forKey: K.UserDefaults.savedPodcastKey) else { return }
+////        do {
+////            let savedPodcasts = try JSONDecoder().decode([Podcast].self, from: data)
+//        //            savedPodcasts.forEach { (podcast) in
+//        //                print(podcast.trackName ?? "")
+//        //            }
+//        //        } catch let decodeErr { print("Failed to decode Saved Podcasts:", decodeErr) }
+//
+//        let listOfPodcasts = UserDefaults.standard.fetchSavedPodcasts()
+//        listOfPodcasts.forEach { (podcast) in
+//            print(podcast.trackName ?? "")
+//        }
+//    }
 
     
     
@@ -82,8 +86,8 @@ class EpisodesController: UITableViewController {
     
     fileprivate func setupTableView() {
         tableView.tableFooterView = UIView()
-        tableView.register(EpisodeHeader.nib, forCellReuseIdentifier: headerId)
-        tableView.register(EpisodeCell.nib, forCellReuseIdentifier: cellId)
+        tableView.register(EpisodeHeader.nib, forCellReuseIdentifier: EpisodeHeader.reuseIdentifier)
+        tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
     }
     
     //MARK: - UITableView
@@ -128,12 +132,7 @@ class EpisodesController: UITableViewController {
         
         if !miniPlayerIsVisible { miniPlayerIsVisible.toggle() }
     }
-    
-    
-    
-    
-    
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -143,26 +142,25 @@ class EpisodesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
+        0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if indexPath.section == 0 {
-            let header = tableView.dequeueReusableCell(withIdentifier: headerId, for: indexPath) as! EpisodeHeader
-            header.podcast = selectedPodcast
+            guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
+            header.podcast = podcast
 
             // Expand and Collapse Podcast Description
-            let expandCollapseTap = ExpandCollapseTapGestureRecognizer(target: self, action: #selector(didTapExpandCollapse(_:)))
+            let tapGesture = ExpandCollapseTapGestureRecognizer(target: self, action: #selector(didTapExpandCollapse(_:)))
             header.descriptionLabel.isUserInteractionEnabled = true
-            header.descriptionLabel.addGestureRecognizer(expandCollapseTap)
-            expandCollapseTap.header = header
+            header.descriptionLabel.addGestureRecognizer(tapGesture)
+            tapGesture.header = header
                         
             return header
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? EpisodeCell else { fatalError() }
-            let episode = episodes[indexPath.row]
-            cell.episode = episode
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
+            cell.episode = episodes[indexPath.row]
             return cell
         }
     }
@@ -191,6 +189,24 @@ class EpisodesController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         indexPath.section == 0 ? UITableView.automaticDimension : K.episodeCellHeight
     }
+    
+    //MARK: - Swipe Actions
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        // DOWNLOAD ACTION
+        let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
+            let episode = self.episodes[indexPath.row]
+            UserDefaults.standard.downloadEpisode(episode: episode)
+            completionHandler(true)
+        }
+        let swipe = UISwipeActionsConfiguration(actions: [downloadAction])
+        return swipe
+    }
+    
+    
+    
+    
     
     
     

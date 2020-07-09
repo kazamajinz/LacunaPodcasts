@@ -16,6 +16,7 @@ struct K {
     
     struct UserDefaults {
         static let savedPodcastKey = "savedPodcastKey"
+        static let downloadedEpisodeKey = "downloadedEpisodeKey"
     }
     
     
