@@ -44,7 +44,6 @@ class EpisodesController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         tableView.reloadData()
     }
     
@@ -211,6 +210,11 @@ class EpisodesController: UITableViewController {
             let episode = self.episodes[indexPath.row]
             UserDefaults.standard.downloadEpisode(episode: episode)
             completionHandler(true)
+            
+            // download episode using Alamofire
+            APIService.shared.downloadEpisode(episode: episode)
+            
+            
         }
         let swipe = UISwipeActionsConfiguration(actions: [downloadAction])
         return swipe

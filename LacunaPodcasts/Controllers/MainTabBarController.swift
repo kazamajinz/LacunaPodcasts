@@ -155,7 +155,7 @@ class MainTabBarController: UITabBarController {
     
     
     
-    func maximizePlayerDetails(episode: Episode?, playlistEpisodes: [Episode] = [], miniPlayerIsVisible: Bool?) {
+    func maximizePlayerDetails(episode: Episode?, playlistEpisodes: [Episode] = [], miniPlayerIsVisible: Bool = false) {
         if episode != nil { playerDetailsView.episode = episode }
         playerDetailsView.playlistEpisodes = playlistEpisodes
         

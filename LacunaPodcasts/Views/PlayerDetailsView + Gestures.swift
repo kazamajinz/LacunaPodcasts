@@ -11,7 +11,7 @@ import UIKit
 extension PlayerDetailsView {
     
     @objc func handleTapMaximize() {
-        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: nil, miniPlayerIsVisible: nil)
+        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: nil)
     }
     
     @objc func handlePan(gesture: UIPanGestureRecognizer) {
