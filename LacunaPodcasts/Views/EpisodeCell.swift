@@ -22,7 +22,8 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
-
+    @IBOutlet weak var progressLabel: UILabel!
+    
     var episode: Episode! {
         didSet {
             

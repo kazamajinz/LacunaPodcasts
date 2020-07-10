@@ -101,11 +101,19 @@
                                     <constraint firstAttribute="trailing" secondItem="JVH-GC-4KC" secondAttribute="trailing" id="i9f-NH-UmQ"/>
                                 </constraints>
                             </stackView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojp-iL-p8H">
+                                <rect key="frame" x="28.5" y="40.5" width="43" height="19.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8wQ-uk-Mwd" secondAttribute="trailing" id="6VB-E5-zYb"/>
                             <constraint firstItem="8wQ-uk-Mwd" firstAttribute="leading" secondItem="xdo-eM-8RI" secondAttribute="leading" id="Dmj-7t-RrN"/>
+                            <constraint firstItem="ojp-iL-p8H" firstAttribute="centerX" secondItem="Rvb-TR-Ocs" secondAttribute="centerX" id="Qa7-ya-6as"/>
+                            <constraint firstItem="ojp-iL-p8H" firstAttribute="centerY" secondItem="Rvb-TR-Ocs" secondAttribute="centerY" id="X2Y-lS-le6"/>
                             <constraint firstItem="8wQ-uk-Mwd" firstAttribute="top" secondItem="xdo-eM-8RI" secondAttribute="top" id="hdl-4Z-zcf"/>
                             <constraint firstAttribute="bottom" secondItem="8wQ-uk-Mwd" secondAttribute="bottom" id="p8t-EX-hZ4"/>
                         </constraints>
@@ -123,6 +131,7 @@
                 <outlet property="descriptionLabel" destination="Wi7-Uc-Rc0" id="UzG-4j-ozd"/>
                 <outlet property="durationLabel" destination="CKD-jC-evC" id="oxw-hv-DHy"/>
                 <outlet property="episodeImageView" destination="Rvb-TR-Ocs" id="QX8-Zl-ZgQ"/>
+                <outlet property="progressLabel" destination="ojp-iL-p8H" id="WeH-Qx-RFK"/>
                 <outlet property="pubDateLabel" destination="qMM-gz-4nh" id="7zG-YN-UgH"/>
                 <outlet property="titleLabel" destination="OAk-7I-n8C" id="Yvl-5C-jiy"/>
             </connections>

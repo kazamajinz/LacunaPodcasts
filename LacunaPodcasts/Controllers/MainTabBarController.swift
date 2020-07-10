@@ -87,7 +87,7 @@ class MainTabBarController: UITabBarController {
             guard let self = self else { return }
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.miniPlayerView.alpha = 0
-                self.playerDetailsView.miniDurationBar.alpha = 0
+                self.playerDetailsView.miniProgressBar.alpha = 0
             })
         })
         
@@ -135,7 +135,7 @@ class MainTabBarController: UITabBarController {
             guard let self = self else { return }
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.miniPlayerView.alpha = 1
-                self.playerDetailsView.miniDurationBar.alpha = 1
+                self.playerDetailsView.miniProgressBar.alpha = 1
             })
             }, delayFactor: self.animationDelay)
         
@@ -161,7 +161,7 @@ class MainTabBarController: UITabBarController {
         
         if miniPlayerIsVisible == false {
             playerDetailsView.miniPlayerView.alpha = 0
-            playerDetailsView.miniDurationBar.alpha = 0
+            playerDetailsView.miniProgressBar.alpha = 0
         }
         maximize()
     }

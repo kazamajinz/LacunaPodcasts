@@ -284,10 +284,10 @@ class PlayerDetailsView: UIView {
     }
     
     private func setupMiniDurationBar() {
-        miniDurationBar.isUserInteractionEnabled = false
-        miniDurationBar.setThumbImage(UIImage(), for: .normal)
-        miniDurationBar.minimumTrackTintColor = .black
-        miniDurationBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        miniProgressBar.isUserInteractionEnabled = false
+        miniProgressBar.setThumbImage(UIImage(), for: .normal)
+        miniProgressBar.minimumTrackTintColor = .black
+        miniProgressBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     
     //MARK: - Time Observers
@@ -359,7 +359,7 @@ class PlayerDetailsView: UIView {
         let percentage = currentTimeSeconds / durationSeconds
         DispatchQueue.main.async {
             self.currentTimeSlider.value = Float(percentage)
-            self.miniDurationBar.value = Float(percentage)
+            self.miniProgressBar.value = Float(percentage)
         }
     }
     
@@ -473,9 +473,28 @@ class PlayerDetailsView: UIView {
     
     
     
-    
+    //MARK: - Play Episode
     
     fileprivate func playEpisode() {
+        episode.fileUrl != nil ? playEpisodeUsingFileUrl() : playEpisodeUsingStreamURL()
+    }
+    
+    fileprivate func playEpisodeUsingFileUrl() {
+        print("Attempt to play episode with file url:", episode.fileUrl ?? "")
+        
+        guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
+        let fileName = fileUrl.lastPathComponent
+        guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        trueLocation.appendPathComponent(fileName)
+        
+        print("True location:", trueLocation.absoluteString)
+        
+        let playerItem = AVPlayerItem(url: trueLocation)
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
+    }
+    
+    fileprivate func playEpisodeUsingStreamURL() {
         print("Trying to play episode at url:", episode.streamUrl)
         guard let url = URL(string: episode.streamUrl) else { return }
         let playerItem = AVPlayerItem(url: url)
@@ -527,7 +546,7 @@ class PlayerDetailsView: UIView {
 
     // MINI PLAYER
     @IBOutlet weak var miniPlayerView: UIView!
-    @IBOutlet weak var miniDurationBar: UISlider!
+    @IBOutlet weak var miniProgressBar: UISlider!
     @IBOutlet weak var miniTitleLabel: UILabel!
     @IBOutlet weak var miniAuthorLabel: UILabel!
     @IBOutlet weak var miniPlayPauseButton: UIButton! {
@@ -573,7 +592,7 @@ class PlayerDetailsView: UIView {
             case .ended:
                 print("Touch Ended")
                 player.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] (value) in
-                    self?.miniDurationBar.value = Float(percentage)
+                    self?.miniProgressBar.value = Float(percentage)
                     self?.observePlayerCurrentTime()
                 }
             default:
