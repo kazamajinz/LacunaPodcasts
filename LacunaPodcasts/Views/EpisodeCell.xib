@@ -26,7 +26,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Rvb-TR-Ocs" secondAttribute="height" id="6zy-BJ-uw7"/>
-                                            <constraint firstAttribute="height" constant="100" id="DJm-Zf-rzR"/>
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVH-GC-4KC">
@@ -93,12 +92,19 @@
                                             <constraint firstItem="xtX-Rh-Cxg" firstAttribute="centerY" secondItem="JVH-GC-4KC" secondAttribute="centerY" id="n6N-XH-dfe"/>
                                         </constraints>
                                     </view>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3c-bl-iRp">
+                                        <rect key="frame" x="374" y="39" width="64" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="64" id="sfK-9a-qqd"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="x.circle" catalog="system"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="JVH-GC-4KC" firstAttribute="top" secondItem="8wQ-uk-Mwd" secondAttribute="top" id="G1Y-Az-RP0"/>
-                                    <constraint firstAttribute="bottom" secondItem="JVH-GC-4KC" secondAttribute="bottom" id="Jgy-Jg-pYz"/>
-                                    <constraint firstItem="JVH-GC-4KC" firstAttribute="leading" secondItem="Rvb-TR-Ocs" secondAttribute="trailing" id="OvB-NQ-hmK"/>
-                                    <constraint firstAttribute="trailing" secondItem="JVH-GC-4KC" secondAttribute="trailing" id="i9f-NH-UmQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="JVH-GC-4KC" secondAttribute="bottom" id="3ew-C0-dfm"/>
+                                    <constraint firstItem="JVH-GC-4KC" firstAttribute="top" secondItem="8wQ-uk-Mwd" secondAttribute="top" id="97C-jA-8b6"/>
+                                    <constraint firstItem="JVH-GC-4KC" firstAttribute="leading" secondItem="Rvb-TR-Ocs" secondAttribute="trailing" id="zcb-cu-9j6"/>
                                 </constraints>
                             </stackView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojp-iL-p8H">
@@ -128,6 +134,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="cancelDownloadButton" destination="c3c-bl-iRp" id="62C-ka-GhX"/>
                 <outlet property="descriptionLabel" destination="Wi7-Uc-Rc0" id="UzG-4j-ozd"/>
                 <outlet property="durationLabel" destination="CKD-jC-evC" id="oxw-hv-DHy"/>
                 <outlet property="episodeImageView" destination="Rvb-TR-Ocs" id="QX8-Zl-ZgQ"/>
@@ -140,5 +147,6 @@
     </objects>
     <resources>
         <image name="hexagon.fill" catalog="system" width="128" height="124"/>
+        <image name="x.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>

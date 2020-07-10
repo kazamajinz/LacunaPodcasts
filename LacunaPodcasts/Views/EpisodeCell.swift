@@ -23,9 +23,13 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var cancelDownloadButton: UIButton!
     
     var episode: Episode! {
         didSet {
+            
+            // CANCEL DOWNLOAD BUTTON
+            
             
             // IMAGE
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
@@ -45,8 +49,6 @@ class EpisodeCell: UITableViewCell {
             durationLabel.text = episode.duration.convertToEpisodeDurationString()
         }
     }
-    
-    
     
     
     

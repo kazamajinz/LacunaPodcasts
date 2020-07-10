@@ -21,31 +21,28 @@ class APIService {
     let baseiTunesSearchURL = "https://itunes.apple.com/search?"
     
     static let shared = APIService()
-    
+
     func downloadEpisode(episode: Episode) {
         
         print("Downloading episode using Alamofire at stream url:", episode.streamUrl)
-        
+
         let downloadRequest = DownloadRequest.suggestedDownloadDestination()
         AF.download(episode.streamUrl, interceptor: nil, to: downloadRequest).downloadProgress { (progress) in
-        
-            //print("Download Progress:", progress.fractionCompleted)
 
             // Notify DownloadsController About Download Progress
             NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
 
         }.response { (response) in
             //debugPrint(response)
+            print(response.fileURL?.path ?? "")
             
-            print(response.fileURL?.absoluteString ?? "")
-            
-            let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.absoluteString ?? "", episode.title)
+            let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.path ?? "", episode.title)
             NotificationCenter.default.post(name: .downloadComplete, object: episodeDownloadComplete, userInfo: nil)
             
             // Update UserDefaults
             var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
             guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.collectionId == episode.collectionId} ) else { return }
-            downloadedEpisodes[index].fileUrl = response.fileURL?.absoluteString ?? ""
+            downloadedEpisodes[index].fileUrl = response.fileURL?.path ?? ""
             
             do {
                 let data = try JSONEncoder().encode(downloadedEpisodes)
@@ -53,12 +50,37 @@ class APIService {
             } catch let err {
                 print("Failed to encode downloaded episodes with file url update:", err)
             }
-            
-            
-
         }
-        
     }
+    
+    func cancelDownload(episode: Episode) {
+        
+        AF.session.getTasksWithCompletionHandler { (dataTasks, uploadTasks, downloadTasks) in
+            for task in downloadTasks {
+                if task.originalRequest?.url?.path == episode.streamUrl {
+                    task.cancel()
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

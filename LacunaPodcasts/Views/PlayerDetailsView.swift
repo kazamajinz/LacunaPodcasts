@@ -52,6 +52,23 @@ class PlayerDetailsView: UIView {
         super.awakeFromNib()
     }
     
+    deinit {
+        // Don't forget to remove self as an observer.
+        // Otherwise, object will be forever retained.
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+        player.removeObserver(self, forKeyPath: "rate")
+        
+        print("PlayerDetailsView memory being reclaimed...")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     var isPlaying: Bool! {
         didSet {
             if isPlaying {
@@ -213,14 +230,7 @@ class PlayerDetailsView: UIView {
 
     
     
-    deinit {
-        // Don't forget to remove self as an observer.
-        // Otherwise, object will be forever retained.
-        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
-        player.removeObserver(self, forKeyPath: "rate")
-        
-        print("PlayerDetailsView memory being reclaimed...")
-    }
+    
     
     //MARK: - Notification Center
     
@@ -476,32 +486,39 @@ class PlayerDetailsView: UIView {
     //MARK: - Play Episode
     
     fileprivate func playEpisode() {
-        episode.fileUrl != nil ? playEpisodeUsingFileUrl() : playEpisodeUsingStreamURL()
-    }
-    
-    fileprivate func playEpisodeUsingFileUrl() {
-        print("Attempt to play episode with file url:", episode.fileUrl ?? "")
+        var trackUrl: URL
         
-        guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
-        let fileName = fileUrl.lastPathComponent
-        guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-        trueLocation.appendPathComponent(fileName)
-        
-        print("True location:", trueLocation.absoluteString)
-        
-        let playerItem = AVPlayerItem(url: trueLocation)
+        if episode.fileUrl != nil {
+            print("Playing episode with file url:", episode.fileUrl ?? "")
+            guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
+            let fileName = fileUrl.lastPathComponent
+            trueLocation.appendPathComponent(fileName)
+            
+            print("True location:", trueLocation.path)
+            trackUrl = trueLocation
+        } else {
+            print("Playing episode with stream url:", episode.streamUrl)
+            guard let url = URL(string: episode.streamUrl) else { return }
+            trackUrl = url
+        }
+        let playerItem = AVPlayerItem(url: trackUrl)
         player.replaceCurrentItem(with: playerItem)
         player.play()
     }
     
-    fileprivate func playEpisodeUsingStreamURL() {
-        print("Trying to play episode at url:", episode.streamUrl)
-        guard let url = URL(string: episode.streamUrl) else { return }
-        let playerItem = AVPlayerItem(url: url)
-        player.replaceCurrentItem(with: playerItem)
-        player.play()
-    }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private var player: AVPlayer = {
         let avPlayer = AVPlayer()
         avPlayer.automaticallyWaitsToMinimizeStalling = false

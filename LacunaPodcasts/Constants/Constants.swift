@@ -11,7 +11,10 @@ import UIKit
 struct K {
     
     static let podcastCellHeight: CGFloat = 80
+    
+    static let downloadEpisodeCellHeight: CGFloat = 80
     static let episodeCellHeight: CGFloat = 100
+    
     
     
     struct UserDefaults {

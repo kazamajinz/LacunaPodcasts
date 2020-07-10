@@ -139,7 +139,7 @@ class EpisodesController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -155,15 +155,16 @@ class EpisodesController: UITableViewController {
         if indexPath.section == 0 {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
             header.podcast = selectedPodcast
-
+            
             // Expand and Collapse Podcast Description
-            let tapGesture = ExpandCollapseTapGestureRecognizer(target: self, action: #selector(didTapExpandCollapse(_:)))
-            header.descriptionLabel.isUserInteractionEnabled = true
-            header.descriptionLabel.addGestureRecognizer(tapGesture)
-            tapGesture.header = header
-                        
-            return header
+            header.descriptionLabelAction = { [weak self] in
+                header.descriptionLabel.numberOfLines = header.descriptionLabel.numberOfLines == 0 ? 3 : 0
+                UIView.animate(withDuration: 1.0) {
+                    self?.tableView.reloadData()
+                }
+            }
         
+            return header
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
             cell.episode = episodes[indexPath.row]
@@ -173,14 +174,6 @@ class EpisodesController: UITableViewController {
             }
             
             return cell
-        }
-    }
-    
-    @objc func didTapExpandCollapse(_ sender: ExpandCollapseTapGestureRecognizer) {
-        let header = sender.header
-        header.descriptionLabel.numberOfLines = header.descriptionLabel.numberOfLines == 0 ? 3 : 0
-        UIView.animate(withDuration: 1.0) {
-            self.tableView.reloadData()
         }
     }
     

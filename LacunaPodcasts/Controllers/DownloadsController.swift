@@ -22,6 +22,33 @@ class DownloadsController: UITableViewController {
         setupObservers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchDownloadedEpisodes()
+    }
+    
+    fileprivate func fetchDownloadedEpisodes() {
+        episodes = UserDefaults.standard.fetchDownloadedEpisodes()
+        tableView.reloadData()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //MARK: - Setup
+    
+    fileprivate func setupTableView() {
+        tableView.tableFooterView = UIView()
+        tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
+    }
+    
+    //MARK: - Setup Observers
+    
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
@@ -36,42 +63,34 @@ class DownloadsController: UITableViewController {
         
         guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
         guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
+        
+        // Update UI
+        cell.cancelDownloadButton.isHidden = false
         cell.progressLabel.isHidden = false
         cell.progressLabel.text = "\(Int(progress * 100))%"
-        
-        if progress == 1 { cell.progressLabel.isHidden = true }
+        cell.cancelDownloadButton.addTarget(self, action: #selector(handleDownloadCancel), for: .touchUpInside)
+
+        if progress == 1 {
+            cell.progressLabel.isHidden = true
+            cell.cancelDownloadButton.isHidden = true
+        }
     }
+    
+    @objc fileprivate func handleDownloadCancel() {
+        print("Canceling download...")        
+        
+        //APIService.shared.cancelDownload(episode: Episode)
+    }
+    
+    
+    
+    
+    
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
         guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
         self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchDownloadedEpisodes()
-    }
-    
-    fileprivate func fetchDownloadedEpisodes() {
-        episodes = UserDefaults.standard.fetchDownloadedEpisodes()
-        tableView.reloadData()
-    }
-    
-    
-    //MARK: - Setup
-    
-    fileprivate func setupTableView() {
-        tableView.tableFooterView = UIView()
-        tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
     }
     
     //MARK: - TableView
@@ -101,19 +120,54 @@ class DownloadsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        K.episodeCellHeight
+        K.downloadEpisodeCellHeight
     }
     
     //MARK: - Swipe Actions
     
+    var timer: Timer?
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
-        //DELETE ACTION
+        // Delete Action
         let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
             let selectedEpisode = self.episodes[indexPath.row]
-            self.episodes.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-            UserDefaults.standard.deleteEpisode(episode: selectedEpisode)
+
+            // Delete Local File
+            guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
+            let fileName = fileUrl.lastPathComponent
+            trueLocation.appendPathComponent(fileName)
+        
+            if FileManager.default.fileExists(atPath: trueLocation.path) {
+                do {
+                    try FileManager.default.removeItem(at: trueLocation)
+                } catch { print("Failed to delete the episode file:", error) }
+                
+                // 1. Check If Episode Has Been Deleted
+                // 2. Check Storage Space
+                if !FileManager.default.fileExists(atPath: trueLocation.path) {
+                    // Remove Episode
+                    self.episodes.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    UserDefaults.standard.deleteEpisode(episode: selectedEpisode)
+                } else {
+                    print("Failed to delete the episode file")
+                }
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             completionHandler(true)
         }
         let swipe = UISwipeActionsConfiguration(actions: [deleteAction])

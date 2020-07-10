@@ -27,17 +27,36 @@ class EpisodeHeader: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var followButton: FollowButton!
     
+    var descriptionLabelAction: (() -> Void)?
+
+    
+    
+    
     var podcast: Podcast! {
         didSet {
 
             trackNameLabel.text = podcast.trackName
             artistNameLabel.text = podcast.artistName
             
+            // Podcast Description
             descriptionLabel.text = podcast.description
             if descriptionLabel.numberOfLines != 0 {
                     let collapsedText = descriptionLabel.text?.collapseText(to: 120)
                     descriptionLabel.text = collapsedText
             }
+            
+            
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDescriptionTap))
+            descriptionLabel.isUserInteractionEnabled = true
+            descriptionLabel.addGestureRecognizer(tapGesture)
+            
+            
+            
+
+            
+            
+            
             
             
 //            let tap = UITapGestureRecognizer(target: self, action: #selector(didClickLink))
@@ -59,6 +78,19 @@ class EpisodeHeader: UITableViewCell {
 
     //MARK: - User Actions
     
+    @objc func handleDescriptionTap() {
+        descriptionLabelAction?()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //    @objc func didClickLink() {
 //        guard let url = URL(string: podcast.link ?? "") else { return }
 //        UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -68,8 +100,7 @@ class EpisodeHeader: UITableViewCell {
     @IBAction func didPressFollow(_ sender: UIButton) {
         guard let podcast = podcast else { return }
         UserDefaults.standard.savePodcast(podcast: podcast)
-        
-        followButton.isSelected.toggle()
+        sender.isSelected.toggle()
     }
  
 }
