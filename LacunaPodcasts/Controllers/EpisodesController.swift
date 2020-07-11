@@ -40,6 +40,7 @@ class EpisodesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        APIService.shared.delegate = self
         setupTableView()
     }
     
@@ -198,16 +199,26 @@ class EpisodesController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
-        // DOWNLOAD ACTION
+        // Download Action
         let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
             let episode = self.episodes[indexPath.row]
             UserDefaults.standard.downloadEpisode(episode: episode)
             completionHandler(true)
             
-            // download episode using Alamofire
-            APIService.shared.downloadEpisode(episode: episode)
+            // Download Episode using Alamofire
+            // Update UI - ???
+            APIService.shared.startDownload(episode)
+
             
             
+            
+            
+            
+            
+            
+            
+            
+
         }
         let swipe = UISwipeActionsConfiguration(actions: [downloadAction])
         return swipe
@@ -228,6 +239,36 @@ class EpisodesController: UITableViewController {
 
 
 
-class ExpandCollapseTapGestureRecognizer: UITapGestureRecognizer {
-    var header = EpisodeHeader()
+
+
+
+extension EpisodesController: APIServiceProtocol {
+    func didFinishDownloading(episode: Episode, to fileUrl: String) {
+        print("Finished downloading episode: \(episode.title), to \(fileUrl)")
+        
+        
+        
+        
+        
+        
+    }
+    
+    func progress(episode: Episode, _ fractionCompleted: Double) {
+        print("Progress:", fractionCompleted)
+        
+        let url = episode.streamUrl
+        guard let download = APIService.shared.activeDownloads[url] else { return }
+        download.progress = fractionCompleted
+
+        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+        DispatchQueue.main.async {
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell {
+                cell.updateDisplay(progress: download.progress)
+            }
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
 }

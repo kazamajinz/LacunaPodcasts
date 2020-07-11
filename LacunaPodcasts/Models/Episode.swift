@@ -23,6 +23,8 @@ struct Episode: Codable {
     var fileUrl: String?
     var imageUrl: String?
     
+    var isDownloaded = false
+    
     init(feedItem: RSSFeedItem) {
         
         self.collectionId = 0

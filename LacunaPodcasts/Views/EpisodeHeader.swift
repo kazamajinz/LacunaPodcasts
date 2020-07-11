@@ -29,9 +29,6 @@ class EpisodeHeader: UITableViewCell {
     
     var descriptionLabelAction: (() -> Void)?
 
-    
-    
-    
     var podcast: Podcast! {
         didSet {
 

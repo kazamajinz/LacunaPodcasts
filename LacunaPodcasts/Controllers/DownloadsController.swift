@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class DownloadsController: UITableViewController {
     
@@ -43,6 +44,8 @@ class DownloadsController: UITableViewController {
     //MARK: - Setup
     
     fileprivate func setupTableView() {
+        
+//        APIService.shared.delegate = self
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
     }
@@ -50,51 +53,60 @@ class DownloadsController: UITableViewController {
     //MARK: - Setup Observers
     
     fileprivate func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
     }
-    
-    @objc fileprivate func handleDownloadProgress(notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: Any] else { return }
-        guard let progress = userInfo["progress"] as? Double else { return }
-        guard let title = userInfo["title"] as? String else { return }
+//
+//    @objc fileprivate func handleDownloadProgress(notification: Notification) {
+//        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+//        guard let progress = userInfo["progress"] as? Double else { return }
+//        guard let title = userInfo["title"] as? String else { return }
+//
+//        print(progress, title)
         
-        print(progress, title)
-        
-        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
-        
-        // Update UI
-        cell.cancelDownloadButton.isHidden = false
-        cell.progressLabel.isHidden = false
-        cell.progressLabel.text = "\(Int(progress * 100))%"
-        cell.cancelDownloadButton.addTarget(self, action: #selector(handleDownloadCancel), for: .touchUpInside)
 
-        if progress == 1 {
-            cell.progressLabel.isHidden = true
-            cell.cancelDownloadButton.isHidden = true
-        }
-    }
+//            
+//            guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
+//            guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
+//
+//            // Update UI
+//            cell.cancelDownloadButton.isHidden = false
+//            cell.progressLabel.isHidden = false
+//            cell.progressLabel.text = "\(Int(progress * 100))%"
+//
+//            cell.cancelDownloadButtonAction = {
+//                APIService.shared.cancelDownload(episode: cell.episode)
+//            }
+//
+//            if progress == 1 {
+//                cell.progressLabel.isHidden = true
+//                cell.cancelDownloadButton.isHidden = true
+//            }
+//    }
     
-    @objc fileprivate func handleDownloadCancel() {
-        print("Canceling download...")        
-        
-        //APIService.shared.cancelDownload(episode: Episode)
-    }
     
     
     
     
     
     
-    @objc fileprivate func handleDownloadComplete(notification: Notification) {
-        guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
-        guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
-        self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
-    }
+    
+    
+    
+    
+    
+    
+//    @objc fileprivate func handleDownloadComplete(notification: Notification) {
+//        guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
+//        guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
+//        self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
+//
+//        print("Finished downloading episode:", episodeDownloadComplete.episodeTitle)
+//        print("url:", episodeDownloadComplete.fileUrl)
+//    }
     
     //MARK: - TableView
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episode = episodes[indexPath.row]
         
@@ -138,6 +150,8 @@ class DownloadsController: UITableViewController {
             guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
             let fileName = fileUrl.lastPathComponent
             trueLocation.appendPathComponent(fileName)
+            
+            print(trueLocation)
         
             if FileManager.default.fileExists(atPath: trueLocation.path) {
                 do {
@@ -176,3 +190,53 @@ class DownloadsController: UITableViewController {
     
     
 }
+
+
+
+
+
+
+
+
+
+//extension DownloadsController: APIServiceProtocol {
+//
+//    func progress(episode: Episode, _ fractionCompleted: Double) {
+//        print("Downloading Episode: \(episode.title), progress: \(fractionCompleted)")
+//
+//        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+//        DispatchQueue.main.async {
+//            if let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell {
+//                cell.updateDisplay(progress: fractionCompleted)
+//            }
+//        }
+//    }
+//
+//    func didFinishDownloading(episode: Episode, to fileUrl: String) {
+//        print("Finished downloading episode: \(episode.title), to \(fileUrl)")
+//
+////        let sourceUrl = episode.streamUrl
+////        let download = APIService.shared.activeDownloads[sourceUrl]
+////        APIService.shared.activeDownloads[sourceUrl] = nil
+////        download?.episode.downloaded = true
+//
+//        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+//        var downloadedEpisode = self.episodes[index]
+//        downloadedEpisode.fileUrl = episode.fileUrl
+//        downloadedEpisode.isDownloaded = true
+//    }
+//
+//    func didFailWithError(error: Error) {
+//        print(error)
+//    }
+//}
+
+
+
+
+
+
+
+//guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
+//guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
+//self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl

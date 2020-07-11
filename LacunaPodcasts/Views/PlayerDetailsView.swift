@@ -459,13 +459,13 @@ class PlayerDetailsView: UIView {
     
     //MARK: - Set Gradient Background
     
-    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = containerView.bounds
-        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
-        gradientLayer.locations = [0.6, 1.8]
-        containerView.layer.insertSublayer(gradientLayer, at: 0)
-    }
+//    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = containerView.bounds
+//        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+//        gradientLayer.locations = [0.6, 1.8]
+//        containerView.layer.insertSublayer(gradientLayer, at: 0)
+//    }
     
     
     
@@ -494,8 +494,6 @@ class PlayerDetailsView: UIView {
             guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
             let fileName = fileUrl.lastPathComponent
             trueLocation.appendPathComponent(fileName)
-            
-            print("True location:", trueLocation.path)
             trackUrl = trueLocation
         } else {
             print("Playing episode with stream url:", episode.streamUrl)
