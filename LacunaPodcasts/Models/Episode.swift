@@ -9,6 +9,13 @@
 import Foundation
 import FeedKit
 
+enum DownloadStatus: String, Codable {
+    case none
+    case inProgress
+    case completed
+    case failed
+}
+
 struct Episode: Codable {
     
     var collectionId: Int
@@ -23,9 +30,14 @@ struct Episode: Codable {
     var fileUrl: String?
     var imageUrl: String?
     
-    var isDownloaded = false
+    
+    
+    var isDownloaded: Bool = false
+    var downloadStatus: DownloadStatus = .none
     
     init(feedItem: RSSFeedItem) {
+        
+        
         
         self.collectionId = 0
         

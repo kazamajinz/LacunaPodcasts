@@ -22,20 +22,20 @@
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8wQ-uk-Mwd">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rvb-TR-Ocs">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rvb-TR-Ocs">
+                                        <rect key="frame" x="0.0" y="50" width="0.0" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Rvb-TR-Ocs" secondAttribute="height" id="6zy-BJ-uw7"/>
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVH-GC-4KC">
-                                        <rect key="frame" x="100" y="0.0" width="274" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="xtX-Rh-Cxg">
-                                                <rect key="frame" x="16" y="22.5" width="242" height="55"/>
+                                                <rect key="frame" x="16" y="22.5" width="342" height="55"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lQI-ZB-W85">
-                                                        <rect key="frame" x="0.0" y="0.0" width="242" height="55"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="342" height="55"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="mNx-PE-1ls">
                                                                 <rect key="frame" x="0.0" y="0.0" width="154.5" height="33"/>
@@ -99,6 +99,9 @@
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="x.circle" catalog="system"/>
+                                        <connections>
+                                            <action selector="didTapCancel:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="41D-fh-KR0"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -108,7 +111,7 @@
                                 </constraints>
                             </stackView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojp-iL-p8H">
-                                <rect key="frame" x="50" y="50" width="0.0" height="0.0"/>
+                                <rect key="frame" x="0.0" y="50" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -134,7 +137,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="cancelDownloadButton" destination="c3c-bl-iRp" id="62C-ka-GhX"/>
+                <outlet property="cancelButton" destination="c3c-bl-iRp" id="62C-ka-GhX"/>
                 <outlet property="descriptionLabel" destination="Wi7-Uc-Rc0" id="UzG-4j-ozd"/>
                 <outlet property="durationLabel" destination="CKD-jC-evC" id="oxw-hv-DHy"/>
                 <outlet property="episodeImageView" destination="Rvb-TR-Ocs" id="QX8-Zl-ZgQ"/>

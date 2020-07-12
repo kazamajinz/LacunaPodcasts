@@ -11,9 +11,8 @@ import Alamofire
 import FeedKit
 
 protocol APIServiceProtocol: class {
-    func didFinishDownloading(episode: Episode, to fileUrl: String)
     func progress(episode: Episode, _ fractionCompleted: Double)
-    func didFailWithError(error: Error)
+    func didCancelDownloading(episode: Episode)
 }
 
 extension Notification.Name {
@@ -24,60 +23,56 @@ extension Notification.Name {
 class APIService {
     
     static let shared = APIService()
-    weak var delegate: APIServiceProtocol?
-    
-    let baseiTunesSearchURL = "https://itunes.apple.com/search?"
 
     //MARK: - Variables and Properties
-    
+
+    weak var delegate: APIServiceProtocol?
+    let baseiTunesSearchURL = "https://itunes.apple.com/search?"
     var activeDownloads: [String: Download] = [:]
-    //typealias EpisodeDownloadCompleteTuple = (fileUrl: String, episodeTitle: String)
+    typealias EpisodeDownloadCompleteTuple = (fileUrl: String, episodeTitle: String, streamUrl: String)
     
     //MARK: - Internal Methods
 
     func startDownload(_ episode: Episode) {
-
         print("Downloading episode using Alamofire at stream url:", episode.streamUrl)
-        print("Current Active Downloads:", activeDownloads)
+        print("Active Downloads:", activeDownloads)
         
         let download = Download(episode: episode)
-        let downloadRequest = DownloadRequest.suggestedDownloadDestination()
-        download.task = AF.download(episode.streamUrl, interceptor: nil, to: downloadRequest).downloadProgress { (progress) in
-            download.isDownloading = true
+        let destination = DownloadRequest.suggestedDownloadDestination()
+        download.task = AF.download(episode.streamUrl, interceptor: nil, to: destination).downloadProgress { (progress) in
             self.activeDownloads[download.episode.streamUrl] = download
             self.delegate?.progress(episode: episode, progress.fractionCompleted)
 
-//            // Notify DownloadsController About Download Progress
-//            NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
-            
+///            NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
+
         }.response { (response) in
             //debugPrint(response)
             
-            guard let fileUrl = response.fileURL?.path else { return }
-            self.delegate?.didFinishDownloading(episode: episode, to: fileUrl)
-
-//            let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.path ?? "", episode.title)
-//            NotificationCenter.default.post(name: .downloadComplete, object: episodeDownloadComplete, userInfo: nil)
-            
-            
-            
-            
-            
-            
-            
-            // Update UserDefaults
-            var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
-            guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.collectionId == episode.collectionId} ) else { return }
-            downloadedEpisodes[index].fileUrl = response.fileURL?.path ?? ""
-            
-            do {
-                let data = try JSONEncoder().encode(downloadedEpisodes)
-                UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodeKey)
-            } catch let err {
+            // if download is cancelled
+            if response.error != nil {
                 
-                //self.delegate?.didFailWithError(error: error!)
+                print("The download for episode, \(episode.title), has been cancelled.")
+                self.delegate?.didCancelDownloading(episode: episode)
                 
-                print("Failed to encode downloaded episodes with file url update:", err)
+            } else {
+                
+                print("Finished downloading episode: \(episode.title), to \(response.fileURL?.path ?? "")")
+                
+                let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.path ?? "", episode.title, episode.streamUrl)
+                NotificationCenter.default.post(name: .downloadComplete, object: episodeDownloadComplete, userInfo: nil)
+                
+                // Update UserDefaults
+                var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
+                guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.collectionId == episode.collectionId} ) else { return }
+                downloadedEpisodes[index].fileUrl = response.fileURL?.absoluteString ?? ""
+                downloadedEpisodes[index].downloadStatus = .completed
+                
+                do {
+                    let data = try JSONEncoder().encode(downloadedEpisodes)
+                    UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
+                } catch {
+                    print("Failed to encode downloaded episodes with file url update:", error)
+                }
             }
         }
     }
@@ -87,26 +82,6 @@ class APIService {
         download.task?.cancel()
         activeDownloads[episode.streamUrl] = nil
     }
-    
-    
-    
-    
-    
-//    func cancelDownload(episode: Episode) {
-//        
-//        print("Cancelling Episode:", episode.title)
-//        print("Stream URL:", episode.streamUrl)
-//        
-//        // TODO: FIGURE OUT HOW TO CANCEL THE SPECIFIC DOWNLOAD TASK
-//        
-//        AF.session.getAllTasks { (sessionTasks) in
-//            for task in sessionTasks {
-//                if task.currentRequest?.url?.path == episode.streamUrl {
-//                    print("Task exists here")
-//                }
-//            }
-//        }
-//    }
     
     
     

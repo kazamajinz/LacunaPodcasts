@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol EpisodeCellDelegate {
+    func didTapCancel(_ cell: EpisodeCell)
+}
+
 class EpisodeCell: UITableViewCell {
+    
+    var delegate: EpisodeCellDelegate?
     
     static var reuseIdentifier: String { String(describing: self) }
     static var nib: UINib { return UINib(nibName: String(describing: self), bundle: nil) }
@@ -19,69 +25,65 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
-    @IBOutlet weak var cancelDownloadButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
-    var cancelDownloadButtonAction: (() -> Void)?
+    //var cancelDownloadButtonAction: (() -> Void)?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancelButton.isHidden = true
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        cancelDownloadButton.addTarget(self, action: #selector(handleCancelDownloadButtonTap), for: .touchUpInside)
+        //cancelDownloadButton.addTarget(self, action: #selector(handleCancelDownloadButtonTap), for: .touchUpInside)
     }
     
-    @objc func handleCancelDownloadButtonTap() {
-        cancelDownloadButtonAction?()
+    @IBAction func didTapCancel(_ sender: Any) {
+        delegate?.didTapCancel(self)
     }
     
     
     
-    
-    
+    //    @objc func handleCancelDownloadButtonTap() {
+//        cancelDownloadButtonAction?()
+//    }
+
+    var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, yyyy"
+        return formatter
+    }()
+
     var episode: Episode! {
         didSet {
-            
-            // Episode Image
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
-            episodeImageView.isHidden = true
-            
-            
             
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description.stripOutHtml()
-            
-            // PUB DATE
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM dd, yyyy"
             pubDateLabel.text = dateFormatter.string(from: episode.pubDate).uppercased()
-            
             durationLabel.text = episode.duration.convertToEpisodeDurationString()
+
+            // Non-nil Download object means a download is in progress
+            if let _ = APIService.shared.activeDownloads[episode.streamUrl] {
+                
+            }
         }
     }
-    
-    
-    
-    
     
     func updateDisplay(progress: Double) {
-        cancelDownloadButton.isHidden = false
-        //progressLabel.isHidden = false
-        //progressLabel.text = "\(Int(progress * 100))%"
+        cancelButton.isHidden = false
         pubDateLabel.text = "Downloading... \(Int(progress * 100))%"
-        
-        // Download Finished
-        if progress == 1 {
-            //progressLabel.isHidden = true
-            cancelDownloadButton.isHidden = true
-        }
     }
-    
-    
-    
-    
-    
-    
 }
+
+
+
+
+
+
+
 
 
 

@@ -19,7 +19,6 @@ class EpisodesController: UITableViewController {
     }
     
     fileprivate func fetchEpisodes() {
-        
         if let podcast = podcast {
             selectedPodcast = podcast
         }
@@ -42,6 +41,7 @@ class EpisodesController: UITableViewController {
         super.viewDidLoad()
         APIService.shared.delegate = self
         setupTableView()
+        setupObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,12 +50,41 @@ class EpisodesController: UITableViewController {
     
     //MARK: - Setup
     
+    fileprivate func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
+    }
+
+    @objc fileprivate func handleDownloadComplete(notification: Notification) {
+        guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
+        guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
+        self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
+        self.episodes[index].downloadStatus = .completed
+        
+        // Remove from Active Downloads
+        APIService.shared.activeDownloads[episodeDownloadComplete.streamUrl] = nil
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .none)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     var downloadsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
         button.sizeToFit()
         return button
     }()
+    
+    
     
     
     
@@ -110,6 +139,9 @@ class EpisodesController: UITableViewController {
     
     
     
+    
+    
+    
     let playerDetailsView = PlayerDetailsView()
     
     var miniPlayerIsVisible: Bool = false {
@@ -133,10 +165,11 @@ class EpisodesController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let episode = self.episodes[indexPath.row]
-        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes, miniPlayerIsVisible: miniPlayerIsVisible)
-        
-        if !miniPlayerIsVisible { miniPlayerIsVisible.toggle() }
+        if indexPath.section != 0 {
+            let episode = episodes[indexPath.row]
+            UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
+        }
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -168,18 +201,15 @@ class EpisodesController: UITableViewController {
             return header
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
+            cell.delegate = self
             cell.episode = episodes[indexPath.row]
-            
+
             if let collectionId = podcast?.collectionId {
                 cell.episode.collectionId = collectionId
             }
-            
             return cell
         }
     }
-    
-    
-    
     
     
     
@@ -198,77 +228,73 @@ class EpisodesController: UITableViewController {
     //MARK: - Swipe Actions
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let episode = self.episodes[indexPath.row]
+        
+        if indexPath.section != 0 {
+            
+            if episode.downloadStatus == .none {
 
-        // Download Action
-        let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
-            let episode = self.episodes[indexPath.row]
-            UserDefaults.standard.downloadEpisode(episode: episode)
-            completionHandler(true)
+                // Download Action
+                let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
+                    
+                    // Check if Episode is already downloaded
+                    if UserDefaults.standard.downloadEpisode(episode: episode) {
+                        APIService.shared.startDownload(episode)
+                    }
+                    
+                    completionHandler(true)
+                }
+                let swipe = UISwipeActionsConfiguration(actions: [downloadAction])
+                return swipe
+                
+            } else {
+                print("Episode is either downloading or already downloaded...")
+                
+                // Delete Action
+                let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
+                    print("Delete Downloaded Episode...")
+                    completionHandler(true)
+                }
+                let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
+                return swipe
+            }
             
-            // Download Episode using Alamofire
-            // Update UI - ???
-            APIService.shared.startDownload(episode)
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-        }
-        let swipe = UISwipeActionsConfiguration(actions: [downloadAction])
-        return swipe
+        } else { return nil }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 }
 
 
 
 
-
-
-
+//MARK: - APIService Protocol
 
 extension EpisodesController: APIServiceProtocol {
-    func didFinishDownloading(episode: Episode, to fileUrl: String) {
-        print("Finished downloading episode: \(episode.title), to \(fileUrl)")
+    func progress(episode: Episode, _ fractionCompleted: Double) {
+        //print("Progress:", fractionCompleted)
+        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
         
-        
-        
-        
-        
-        
+        DispatchQueue.main.async {
+            cell.updateDisplay(progress: fractionCompleted)
+        }   
     }
     
-    func progress(episode: Episode, _ fractionCompleted: Double) {
-        print("Progress:", fractionCompleted)
-        
-        let url = episode.streamUrl
-        guard let download = APIService.shared.activeDownloads[url] else { return }
-        download.progress = fractionCompleted
-
+    func didCancelDownloading(episode: Episode) {
         guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
-        DispatchQueue.main.async {
-            if let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell {
-                cell.updateDisplay(progress: download.progress)
-            }
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .none)
         }
     }
-    
-    func didFailWithError(error: Error) {
-        print(error)
+}
+
+//MARK: - Episode Cell Delegate
+
+extension EpisodesController: EpisodeCellDelegate {
+    func didTapCancel(_ cell: EpisodeCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            let episode = episodes[indexPath.row]
+            APIService.shared.cancelDownload(episode)
+            //tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
 }

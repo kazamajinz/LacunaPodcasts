@@ -490,13 +490,18 @@ class PlayerDetailsView: UIView {
         
         if episode.fileUrl != nil {
             print("Playing episode with file url:", episode.fileUrl ?? "")
-            guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            
+            // find episode file name
             guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
             let fileName = fileUrl.lastPathComponent
+            
+            guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
             trueLocation.appendPathComponent(fileName)
             trackUrl = trueLocation
+               
         } else {
             print("Playing episode with stream url:", episode.streamUrl)
+            
             guard let url = URL(string: episode.streamUrl) else { return }
             trackUrl = url
         }

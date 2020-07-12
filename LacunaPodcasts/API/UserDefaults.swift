@@ -13,30 +13,34 @@ extension UserDefaults {
     //MARK: - Episodes
     
     func fetchDownloadedEpisodes() -> [Episode] {
-        guard let data = UserDefaults.standard.data(forKey: K.UserDefaults.downloadedEpisodeKey) else { return [] }
+        guard let episodesData = data(forKey: K.UserDefaults.downloadedEpisodesKey) else { return [] }
         do {
-            let downloadedEpisodes = try JSONDecoder().decode([Episode].self, from: data)
-            return downloadedEpisodes
-        } catch let decodeErr { print("Failed to decode downloaded episodes:", decodeErr) }
+            let episodes = try JSONDecoder().decode([Episode].self, from: episodesData)
+            return episodes
+        } catch { print("Failed to decode downloaded episodes:", error) }
         return []
     }
     
-    func downloadEpisode(episode: Episode) {
-        
-        // check to see if episode is already saved
-        var downloadedEpisodes = fetchDownloadedEpisodes()
-        
-        if !downloadedEpisodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {
-            // insert episode at the front of the list
-            downloadedEpisodes.insert(episode, at: 0)
-        }
+    func downloadEpisode(episode: Episode) -> Bool {
+
+        var episodes = fetchDownloadedEpisodes()
+        if !episodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {
+            episodes.insert(episode, at: 0)
+        } else { return false }
 
         // ENCODE
         do {
-            let data = try JSONEncoder().encode(downloadedEpisodes)
-            UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodeKey)
-        } catch let encodeErr { print("Failed to encode downloaded episode:", encodeErr) }
+            let data = try JSONEncoder().encode(episodes)
+            UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
+        } catch { print("Failed to encode downloaded episode:", error) }
+        
+        return true
     }
+    
+    
+    
+    
+    
     
     func deleteEpisode(episode: Episode) {
         let episodes = fetchDownloadedEpisodes()
@@ -47,8 +51,8 @@ extension UserDefaults {
         // ENCODE
         do {
             let data = try JSONEncoder().encode(filteredEpisodes)
-            UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodeKey)
-        } catch let encodeErr { print("Failed to delete Episode:", encodeErr) }
+            UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
+        } catch { print("Failed to delete Episode:", error) }
     }
     
     
@@ -60,7 +64,7 @@ extension UserDefaults {
         do {
             let savedPodcasts = try JSONDecoder().decode([Podcast].self, from: data)
             return savedPodcasts
-        } catch let decodeErr { print("Failed to decode Saved Podcasts:", decodeErr) }
+        } catch { print("Failed to decode Saved Podcasts:", error) }
         return []
     }
     
@@ -74,7 +78,7 @@ extension UserDefaults {
         do {
             let data = try JSONEncoder().encode(filteredPodcasts)
             UserDefaults.standard.set(data, forKey: K.UserDefaults.savedPodcastKey)
-        } catch let encodeErr { print("Failed to delete Podcast:", encodeErr) }
+        } catch { print("Failed to delete Podcast:", error) }
     }
     
     func savePodcast(podcast: Podcast) {
@@ -91,7 +95,7 @@ extension UserDefaults {
             do {
                 let data = try JSONEncoder().encode(savedPodcasts)
                 UserDefaults.standard.set(data, forKey: K.UserDefaults.savedPodcastKey)
-            } catch let encodeErr { print("Failed to encode Saved Podcasts:", encodeErr) }
+            } catch { print("Failed to encode Saved Podcasts:", error) }
         }
     }
     
