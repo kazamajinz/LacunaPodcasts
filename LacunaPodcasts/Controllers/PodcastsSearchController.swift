@@ -13,8 +13,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     var podcasts = [Podcast]()
     
-    let cellId = "cellId"
-    
     let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
@@ -22,16 +20,20 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         setupSearchBar()
         setupTableView()
         
-        // Removes Text from Back Button
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        
+        
+        
+        
         
         searchBar(searchController.searchBar, textDidChange: "Gimlet")
-
     }
     
     //MARK: - Setup
     
     fileprivate func setupSearchBar() {
+        // Removes Text from Back Button
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.hidesNavigationBarDuringPresentation = false
@@ -40,7 +42,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     fileprivate func setupTableView() {
         tableView.tableFooterView = UIView()
-        tableView.register(PodcastCell.nib, forCellReuseIdentifier: cellId)
+        tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
     }
     
     var timer: Timer?
@@ -64,7 +66,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     
     //MARK: - TableView
-    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let podcast = self.podcasts[indexPath.row]
@@ -100,7 +101,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? PodcastCell else { fatalError() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PodcastCell.reuseIdentifier, for: indexPath) as? PodcastCell else { fatalError() }
         cell.podcast = self.podcasts[indexPath.row]
         return cell
     }

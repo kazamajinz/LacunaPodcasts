@@ -47,7 +47,7 @@ extension UIImage {
     
 }
 
-extension UIImageView {
+extension UIView {
     public func roundCorners(cornerRadius: CGFloat) {
         self.layer.cornerRadius = cornerRadius
         //self.layer.masksToBounds = true

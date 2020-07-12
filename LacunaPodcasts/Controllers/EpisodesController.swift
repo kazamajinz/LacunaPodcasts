@@ -45,14 +45,20 @@ class EpisodesController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        handlePlayerDetailsMinimize()
         tableView.reloadData()
     }
     
-    //MARK: - Setup
+    //MARK: - Setup Observers
+    
+    fileprivate func reload(_ row: Int) {
+        tableView.reloadRows(at: [IndexPath(row: row, section: 1)], with: .none)
+    }
     
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
     }
 
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
@@ -66,7 +72,7 @@ class EpisodesController: UITableViewController {
         
         // Update UI
         DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .none)
+            self?.reload(index)
         }
     }
     
@@ -84,13 +90,19 @@ class EpisodesController: UITableViewController {
         }
     }
     
+    @objc fileprivate func handlePlayerDetailsMinimize() {
+        if UIApplication.mainTabBarController()?.miniPlayerIsVisible == true {
+            let miniPlayerViewHeight = UIApplication.mainTabBarController()?.minimizedTopAnchorConstraint.constant ?? 0
+            let tabBarHeight = UIApplication.mainTabBarController()?.tabBar.frame.size.height ?? 0
+            let offsetY = abs(miniPlayerViewHeight) + tabBarHeight
+            print(miniPlayerViewHeight, tabBarHeight, offsetY)
+            
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+        }
+    }
     
-    
-    
-    
-    
-    
-    
+    //MARK: - Setup
     
     var downloadsButton: UIButton = {
         let button = UIButton()
@@ -137,26 +149,6 @@ class EpisodesController: UITableViewController {
     }
     
     
-    
-    
-    
-    
-    let playerDetailsView = PlayerDetailsView()
-    
-    var miniPlayerIsVisible: Bool = false {
-        didSet {
-//            if !miniPlayerIsVisible {
-//                let miniPlayerViewHeight = UIApplication.mainTabBarController()?.minimizedTopAnchorConstraint.constant ?? 0
-//                let tabBarHeight = UIApplication.mainTabBarController()?.tabBar.frame.size.height ?? 0
-//                let offsetY = miniPlayerViewHeight + tabBarHeight
-//                
-//                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-//                    self.view.layoutIfNeeded()
-//                })
-//            }
-        }
-    }
-   
     
     
     
@@ -283,3 +275,7 @@ extension EpisodesController: EpisodeCellDelegate {
         }
     }
 }
+
+
+
+

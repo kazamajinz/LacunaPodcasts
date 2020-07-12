@@ -10,6 +10,10 @@ import UIKit
 
 class LibraryController: UITableViewController {
     
+    deinit {
+        print("LibraryController memory being reclaimed...")
+    }
+    
     var podcasts = UserDefaults.standard.fetchSavedPodcasts()
     
     override func viewDidLoad() {

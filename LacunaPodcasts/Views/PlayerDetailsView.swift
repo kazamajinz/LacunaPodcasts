@@ -12,7 +12,7 @@ import UIImageColors
 import MediaPlayer
 
 class PlayerDetailsView: UIView {
-    
+
     @IBOutlet var containerView: UIView!
     
     override init(frame: CGRect) {
@@ -546,14 +546,23 @@ class PlayerDetailsView: UIView {
 
     
     //MARK: - User Actions
+    
+    let episodeImageContainerRadius: CGFloat = 16.0
+    
+    // EPISODE DESCRIPTION
+    @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView! {
+        didSet {
+            episodeDescriptionTextView.layer.cornerRadius = episodeImageContainerRadius
+        }
+    }
+    @IBOutlet weak var episodeDescriptionTextViewLeading: NSLayoutConstraint!
 
     // EPISODE IMAGE
     @IBOutlet weak var episodeImageContainer: UIView!
-    @IBOutlet weak var episodeImageViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var episodeImageViewTop: NSLayoutConstraint!
     @IBOutlet weak var episodeImageViewLeading: NSLayoutConstraint!
     @IBOutlet weak var episodeImageViewBottom: NSLayoutConstraint!
-    @IBOutlet weak var episodeImageViewTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var playerControlsContainer: UIView!
     @IBOutlet weak var playPauseButton: UIButton! {
@@ -580,7 +589,7 @@ class PlayerDetailsView: UIView {
 
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
-            episodeImageView.roundCorners(cornerRadius: 16)
+            episodeImageView.roundCorners(cornerRadius: episodeImageContainerRadius)
         }
     }
     @IBOutlet weak var titleLabel: UILabel!

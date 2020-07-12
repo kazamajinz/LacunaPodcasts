@@ -8,6 +8,10 @@
 
 import UIKit
 
+extension Notification.Name {
+    static let minimizePlayerDetails = NSNotification.Name("minimizePlayerDetails")
+}
+
 enum State {
     case maximized
     case minimized
@@ -39,6 +43,7 @@ class MainTabBarController: UITabBarController {
         }
     }
     
+    var miniPlayerIsVisible = false
     var state: State = .minimized
 
     lazy var animator: UIViewPropertyAnimator = {
@@ -66,7 +71,9 @@ class MainTabBarController: UITabBarController {
             let episodeImageContainerWidth = self.playerDetailsView.episodeImageContainer.bounds.width
             
             self.playerDetailsView.maxiHeaderHeight.constant = 64
-            self.playerDetailsView.episodeImageViewHeight.constant = episodeImageContainerWidth - 36 * 2
+            self.playerDetailsView.episodeImageContainerHeight.constant = episodeImageContainerWidth - 36 * 2
+            self.playerDetailsView.episodeDescriptionTextViewLeading.constant = 36
+            self.playerDetailsView.episodeDescriptionTextView.roundCorners(cornerRadius: 16)
             self.playerDetailsView.episodeImageViewLeading.constant = 36
             self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 16)
             
@@ -109,11 +116,11 @@ class MainTabBarController: UITabBarController {
             self.maximizedTopAnchorConstraint.isActive = false
             self.bottomAnchorConstraint.constant = self.view.frame.height
             self.minimizedTopAnchorConstraint.isActive = true
-            
             self.playerDetailsView.maxiHeaderHeight.constant = 0
-            self.playerDetailsView.episodeImageViewHeight.constant = 64
+            self.playerDetailsView.episodeImageContainerHeight.constant = 64
+            self.playerDetailsView.episodeDescriptionTextViewLeading.constant = 0
+            self.playerDetailsView.episodeDescriptionTextView.roundCorners(cornerRadius: 0)
             self.playerDetailsView.episodeImageViewLeading.constant = 0
-            self.playerDetailsView.episodeImageViewTop.constant = 2
             self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 0)
 
             self.view.setNeedsLayout()
@@ -155,7 +162,7 @@ class MainTabBarController: UITabBarController {
     
     
     
-    func maximizePlayerDetails(episode: Episode?, playlistEpisodes: [Episode] = [], miniPlayerIsVisible: Bool = false) {
+    func maximizePlayerDetails(episode: Episode?, playlistEpisodes: [Episode] = []) {
         if episode != nil { playerDetailsView.episode = episode }
         playerDetailsView.playlistEpisodes = playlistEpisodes
         
@@ -163,19 +170,17 @@ class MainTabBarController: UITabBarController {
             playerDetailsView.miniPlayerView.alpha = 0
             playerDetailsView.miniProgressBar.alpha = 0
         }
+        
+        miniPlayerIsVisible = true
+
+
         maximize()
     }
     
-    
-    
-    
-    
-    
-    
-
-
     @objc func minimizePlayerDetails() {
-        minimize()    
+        minimize()
+        
+        NotificationCenter.default.post(name: .minimizePlayerDetails, object: nil, userInfo: nil)
     }
 
     
@@ -218,7 +223,7 @@ class MainTabBarController: UITabBarController {
         // AUTO-LAYOUT
         playerDetailsView.translatesAutoresizingMaskIntoConstraints = false
         maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
-        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -66)
+        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
         maximizedTopAnchorConstraint.isActive = true
         bottomAnchorConstraint = playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
         bottomAnchorConstraint.isActive = true
