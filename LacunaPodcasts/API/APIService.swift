@@ -11,8 +11,6 @@ import Alamofire
 import FeedKit
 
 protocol APIServiceProtocol: class {
-    func progress(episode: Episode, _ fractionCompleted: Double)
-    func didCancelDownloading(episode: Episode)
 }
 
 extension Notification.Name {
@@ -23,10 +21,10 @@ extension Notification.Name {
 class APIService {
     
     static let shared = APIService()
+    weak var delegate: APIServiceProtocol?
 
     //MARK: - Variables and Properties
 
-    weak var delegate: APIServiceProtocol?
     let baseiTunesSearchURL = "https://itunes.apple.com/search?"
     var activeDownloads: [String: Download] = [:]
     typealias EpisodeDownloadCompleteTuple = (fileUrl: String, episodeTitle: String, streamUrl: String)
@@ -41,19 +39,17 @@ class APIService {
         let destination = DownloadRequest.suggestedDownloadDestination()
         download.task = AF.download(episode.streamUrl, interceptor: nil, to: destination).downloadProgress { (progress) in
             self.activeDownloads[download.episode.streamUrl] = download
-            self.delegate?.progress(episode: episode, progress.fractionCompleted)
+            
+            //self.delegate?.progress(episode: episode, progress.fractionCompleted)
 
-///            NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
+            NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
 
         }.response { (response) in
             //debugPrint(response)
             
             // if download is cancelled
             if response.error != nil {
-                
                 print("The download for episode, \(episode.title), has been cancelled.")
-                self.delegate?.didCancelDownloading(episode: episode)
-                
             } else {
                 
                 print("Finished downloading episode: \(episode.title), to \(response.fileURL?.path ?? "")")

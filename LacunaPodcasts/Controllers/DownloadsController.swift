@@ -26,10 +26,6 @@ class DownloadsController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchDownloadedEpisodes()
-    }
-    
-    fileprivate func fetchDownloadedEpisodes() {
         episodes = UserDefaults.standard.fetchDownloadedEpisodes()
         tableView.reloadData()
     }
@@ -41,20 +37,21 @@ class DownloadsController: UITableViewController {
     
     
     
-    
     //MARK: - Setup
     
     fileprivate func setupTableView() {
-        
-//        APIService.shared.delegate = self
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
     }
     
     //MARK: - Setup Observers
     
+    fileprivate func reload(_ row: Int) {
+      tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+    }
+    
     fileprivate func setupObservers() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
     }
     
@@ -67,21 +64,29 @@ class DownloadsController: UITableViewController {
         // Remove from Active Downloads
         APIService.shared.activeDownloads[episodeDownloadComplete.streamUrl] = nil
         
+        // Update UI
         DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+            self?.reload(index)
         }
     }
 
-//    @objc fileprivate func handleDownloadProgress(notification: Notification) {
-//        guard let userInfo = notification.userInfo as? [String: Any] else { return }
-//        guard let progress = userInfo["progress"] as? Double else { return }
-//        guard let title = userInfo["title"] as? String else { return }
-//        print(progress, title)
-//    }
+    @objc fileprivate func handleDownloadProgress(notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let progress = userInfo["progress"] as? Double else { return }
+        guard let title = userInfo["title"] as? String else { return }
+        
+        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
+        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
+
+        // Update UI
+        DispatchQueue.main.async {
+            cell.updateDisplay(progress: progress)
+        }
+    }
     
     
     
-    
+
     
     
     
@@ -187,24 +192,6 @@ class DownloadsController: UITableViewController {
 //MARK: - APIService Protocol
 
 extension DownloadsController: APIServiceProtocol {
-    
-    func didCancelDownloading(episode: Episode) {
-        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .none)
-        }
-    }
-    
-    func progress(episode: Episode, _ fractionCompleted: Double) {
-        print("Progress:", fractionCompleted)
-        
-        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
-        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
-        
-        DispatchQueue.main.async {
-            cell.updateDisplay(progress: fractionCompleted)
-        }
-    }
 }
 
 //MARK: - Episode Cell Delegate
@@ -214,7 +201,11 @@ extension DownloadsController: EpisodeCellDelegate {
         if let indexPath = tableView.indexPath(for: cell) {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
-            //tableView.reloadRows(at: [indexPath], with: .none)
+            
+            // Remove Episode and Update UserDefaults
+            self.episodes.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            UserDefaults.standard.deleteEpisode(episode: episode)
         }
     }
 }

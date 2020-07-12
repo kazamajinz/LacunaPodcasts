@@ -21,20 +21,18 @@ extension UserDefaults {
         return []
     }
     
-    func downloadEpisode(episode: Episode) -> Bool {
+    func downloadEpisode(episode: Episode) {
 
         var episodes = fetchDownloadedEpisodes()
         if !episodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {
             episodes.insert(episode, at: 0)
-        } else { return false }
+        }
 
         // ENCODE
         do {
             let data = try JSONEncoder().encode(episodes)
             UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
         } catch { print("Failed to encode downloaded episode:", error) }
-        
-        return true
     }
     
     

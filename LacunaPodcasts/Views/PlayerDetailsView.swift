@@ -485,19 +485,20 @@ class PlayerDetailsView: UIView {
     
     //MARK: - Play Episode
     
+    fileprivate let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    fileprivate func localFilePath(for url: URL) -> URL {
+      return documentsPath.appendingPathComponent(url.lastPathComponent)
+    }
+    
     fileprivate func playEpisode() {
         var trackUrl: URL
         
         if episode.fileUrl != nil {
             print("Playing episode with file url:", episode.fileUrl ?? "")
-            
-            // find episode file name
+
             guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
-            let fileName = fileUrl.lastPathComponent
-            
-            guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-            trueLocation.appendPathComponent(fileName)
-            trackUrl = trueLocation
+            let url = localFilePath(for: fileUrl)
+            trackUrl = url
                
         } else {
             print("Playing episode with stream url:", episode.streamUrl)
