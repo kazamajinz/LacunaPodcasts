@@ -44,10 +44,6 @@ class SearchResultsController: UITableViewController {
         dismiss(animated: true) {
             self.delegate?.didSelectSearchResult(episode)
         }
-        
-        
-        
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

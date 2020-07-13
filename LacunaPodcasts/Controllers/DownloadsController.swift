@@ -59,6 +59,7 @@ class DownloadsController: UITableViewController {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
         guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
         self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
+        self.episodes[index].isDownloaded = true
         self.episodes[index].downloadStatus = .completed
 
         // Remove from Active Downloads

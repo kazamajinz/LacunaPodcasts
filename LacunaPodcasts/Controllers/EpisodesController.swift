@@ -93,6 +93,7 @@ class EpisodesController: UITableViewController {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
         guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
         self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
+        self.episodes[index].isDownloaded = true
         self.episodes[index].downloadStatus = .completed
         
         // Remove from Active Downloads
@@ -153,7 +154,7 @@ class EpisodesController: UITableViewController {
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Episodes"
+        searchController.searchBar.placeholder = "Search episodes"
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
@@ -231,7 +232,6 @@ class EpisodesController: UITableViewController {
             let episode = episodes[indexPath.row]
             UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
         }
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -293,7 +293,7 @@ class EpisodesController: UITableViewController {
         let episode = self.episodes[indexPath.row]
         
         if indexPath.section != 0 {
-            if episode.downloadStatus == .none {
+            if !episode.isDownloaded {
 
                 // Download Action
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
@@ -355,18 +355,14 @@ extension EpisodesController: EpisodeCellDelegate {
 
 extension EpisodesController: SearchResultsControllerDelegate {
     func didSelectSearchResult(_ episode: Episode) {
+        self.searchController.searchBar.text = ""
         guard let index = episodes.firstIndex(where: {$0.title == episode.title}) else { return }
-        tableView.selectRow(at: IndexPath(row: index, section: 1), animated: true, scrollPosition: .middle)
+        let indexPath = IndexPath(row: index, section: 1)
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
     }
 }
 
 extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdating {
-    
-    func didDismissSearchController(_ searchController: UISearchController) {
-        print("Did dismiss search controller")
-    }
-    
-    
     func filterContentForSearchText(_ searchText: String) {
         filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
             return episode.title.lowercased().contains(searchText.lowercased()) || episode.description.lowercased().contains(searchText.lowercased())
@@ -388,8 +384,3 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
 
 extension EpisodesController: UISearchBarDelegate {
 }
-
-
-//var isSearchBarEmpty: Bool {
-//  return searchController.searchBar.text?.isEmpty ?? true
-//}

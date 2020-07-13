@@ -407,6 +407,8 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     var animationProgress: CGFloat = 0
     var dragStartPosition: CGFloat = 0
     
+    @IBOutlet weak var miniPlayerMinusControls: UIStackView!
+    
     private lazy var tapGesture: UITapGestureRecognizer = {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize))
         return tapGesture
@@ -419,7 +421,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        addGestureRecognizer(tapGesture)
+        miniPlayerMinusControls.addGestureRecognizer(tapGesture)
         addGestureRecognizer(panGesture)
     }
 
