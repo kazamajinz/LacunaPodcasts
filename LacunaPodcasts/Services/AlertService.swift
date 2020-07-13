@@ -11,11 +11,9 @@ import UIKit
 class AlertService {
     private init() {}
     
-    public static func showActivityIndicator(completionHandler: (UIActivityIndicatorView) -> Void) -> UIActivityIndicatorView {
+    public static func showActivityIndicator() -> UIActivityIndicatorView {
         let activityIndicatorView = UIActivityIndicatorView(style: .medium)
         activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.startAnimating()
-        completionHandler(activityIndicatorView)
         return activityIndicatorView
     }
     

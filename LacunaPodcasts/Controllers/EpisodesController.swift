@@ -11,6 +11,20 @@ import FeedKit
 
 class EpisodesController: UITableViewController {
     
+    //MARK: - Variables and Properties
+    //SEARCH BAR
+    
+    var filteredEpisodes: [Episode] = []
+    var timer: Timer?
+    let searchController = UISearchController(searchResultsController: SearchResultsController())
+    var isSearchBarEmpty: Bool {
+      return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    
+    
+    
+    
     var podcast: Podcast? {
         didSet {
             fetchEpisodes()
@@ -33,6 +47,8 @@ class EpisodesController: UITableViewController {
             }
         }
     }
+    
+    //MARK: - Lifecycles
 
     var selectedPodcast = Podcast()
     var episodes = [Episode]()
@@ -41,7 +57,9 @@ class EpisodesController: UITableViewController {
         super.viewDidLoad()
         APIService.shared.delegate = self
         setupTableView()
+        setupSearchBar()
         setupObservers()
+        setupGestures()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,37 +129,77 @@ class EpisodesController: UITableViewController {
         return button
     }()
     
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
     fileprivate func setupTableView() {
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeHeader.nib, forCellReuseIdentifier: EpisodeHeader.reuseIdentifier)
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
     }
     
+    fileprivate func setupSearchBar() {
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Episodes"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //MARK: - Setup Gestures
+    
+    fileprivate func setupGestures() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        tableView.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
+        let location = gesture.location(in: tableView)
+        guard let selectedIndexPath = tableView.indexPathForRow(at: location) else { return }
+        print("Long Press at:", selectedIndexPath.row)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //MARK: - UITableView
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        AlertService.showActivityIndicator { (activityIndicator) in
-            episodes.isEmpty ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-        }
+        let activityIndicator = AlertService.showActivityIndicator()
+        episodes.isEmpty ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        return activityIndicator
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -158,7 +216,6 @@ class EpisodesController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section != 0 {
             let episode = episodes[indexPath.row]
-            
             UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
         }
         self.tableView.deselectRow(at: indexPath, animated: true)
@@ -233,6 +290,10 @@ class EpisodesController: UITableViewController {
                     if !episodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {
                         APIService.shared.startDownload(episode)
                         UserDefaults.standard.downloadEpisode(episode: episode)
+                        
+                        // Waiting for download...
+                        guard let cell = tableView.cellForRow(at: indexPath) as? EpisodeCell else { return }
+                        cell.pubDateLabel.text = "Waiting for download..."
                     }
                     completionHandler(true)
                 }
@@ -253,6 +314,7 @@ class EpisodesController: UITableViewController {
             
         } else { return nil }
     }
+    
 }
 
 
@@ -276,6 +338,31 @@ extension EpisodesController: EpisodeCellDelegate {
     }
 }
 
+//MARK: - SearchBar Delegate
 
+extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdating {
+    
+    func filterContentForSearchText(_ searchText: String) {
+        filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
+            return episode.title.lowercased().contains(searchText.lowercased()) || episode.description.lowercased().contains(searchText.lowercased())
+        }
+        tableView.reloadData()
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        self.filterContentForSearchText(searchBar.text!)
 
+        guard let resultsController = searchController.searchResultsController as? SearchResultsController else { return }
+        if filteredEpisodes.isEmpty {
+            resultsController.noResults = true
+        }
+        resultsController.filteredEpisodes = filteredEpisodes
+        resultsController.tableView.reloadData()
+    }
+}
 
+extension EpisodesController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    }
+}

@@ -63,7 +63,7 @@ class EpisodeCell: UITableViewCell {
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description//.stripOutHtml()
             pubDateLabel.text = dateFormatter.string(from: episode.pubDate).uppercased()
-            durationLabel.text = episode.duration.convertToEpisodeDurationString()
+            durationLabel.text = episode.duration.toDisplayString()
 
             // Non-nil Download object means a download is in progress
             if let _ = APIService.shared.activeDownloads[episode.streamUrl] {

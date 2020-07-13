@@ -87,9 +87,9 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        AlertService.showActivityIndicator { (activityIndicator) in
-            podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-        }
+        let activityIndicator = AlertService.showActivityIndicator()
+        podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        return activityIndicator
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

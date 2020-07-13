@@ -40,10 +40,8 @@ class APIService {
         download.task = AF.download(episode.streamUrl, interceptor: nil, to: destination).downloadProgress { (progress) in
             self.activeDownloads[download.episode.streamUrl] = download
             
-            //self.delegate?.progress(episode: episode, progress.fractionCompleted)
-
             NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
-
+            
         }.response { (response) in
             //debugPrint(response)
             

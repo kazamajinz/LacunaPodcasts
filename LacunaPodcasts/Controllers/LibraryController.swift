@@ -10,6 +10,10 @@ import UIKit
 
 class LibraryController: UITableViewController {
     
+    var timer: Timer?
+    let searchController = UISearchController(searchResultsController: nil)
+    var episodes = [Episode]()
+    
     deinit {
         print("LibraryController memory being reclaimed...")
     }
@@ -19,12 +23,23 @@ class LibraryController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupSearchBar()
         setupNavigationBarButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchSavedPodcasts()
+        podcasts = UserDefaults.standard.fetchSavedPodcasts()
+        tableView.reloadData()
+    }
+    
+    //MARK: - Setup
+    
+    fileprivate func setupSearchBar() {
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
     }
     
     fileprivate func setupTableView() {
@@ -33,12 +48,7 @@ class LibraryController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
     }
-    
-    fileprivate func fetchSavedPodcasts() {
-        podcasts = UserDefaults.standard.fetchSavedPodcasts()
-        tableView.reloadData()
-    }
-    
+
     fileprivate func setupNavigationBarButtons() {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .plain, target: self, action: #selector(handleDownloads))
@@ -130,4 +140,15 @@ class LibraryController: UITableViewController {
         return swipe
     }
     
+}
+
+
+
+
+
+extension LibraryController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    }
+
 }
