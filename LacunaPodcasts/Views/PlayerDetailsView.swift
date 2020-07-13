@@ -11,7 +11,7 @@ import AVKit
 import UIImageColors
 import MediaPlayer
 
-class PlayerDetailsView: UIView {
+class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
 
     @IBOutlet var containerView: UIView!
     
@@ -89,7 +89,7 @@ class PlayerDetailsView: UIView {
             
             // MAKE INTO ATTRIBUTED STRING?
             if let description = episode.contentEncoded {
-                episodeDescriptionTextView.attributedText = description.convertHtml()
+                episodeDescriptionTextView.attributedText = description.convertHtml(family: "Helvetica", size: 10.0)
             }
             
             
@@ -454,7 +454,6 @@ class PlayerDetailsView: UIView {
     
     
     
-    
 
     
     //MARK: - Set Gradient Background
@@ -552,8 +551,17 @@ class PlayerDetailsView: UIView {
         return tapGesture
     }()
     
+    private lazy var episodeDescriptionTapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEpisodeImageTap))
+        return tapGesture
+    }()
+    
     @objc fileprivate func handleEpisodeImageTap() {
-        print("tapped image")
+        DispatchQueue.main.async {
+            if self.episodeDescriptionTextViewContainer.alpha == 1 {
+                self.episodeDescriptionTextViewContainer.alpha = 0
+            } else { self.episodeDescriptionTextViewContainer.alpha = 1 }
+        }
     }
     
     let episodeImageContainerRadius: CGFloat = 16.0
@@ -565,7 +573,11 @@ class PlayerDetailsView: UIView {
             episodeDescriptionTextViewContainer.layer.cornerRadius = episodeImageContainerRadius
         }
     }
-    @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView!
+    @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView! {
+        didSet {
+            episodeDescriptionTextView.addGestureRecognizer(episodeDescriptionTapGesture)
+        }
+    }
     @IBOutlet weak var episodeDescriptionTextViewLeading: NSLayoutConstraint!
     
     // Episode Image
@@ -664,14 +676,6 @@ class PlayerDetailsView: UIView {
         UIApplication.mainTabBarController()?.minimizePlayerDetails()
     }
 }
-
-
-
-
-
-
-
-
 
 
 

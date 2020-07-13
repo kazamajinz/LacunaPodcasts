@@ -6,7 +6,7 @@
 //  Copyright © 2020 Priscilla Ip. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension String {
 
@@ -35,24 +35,25 @@ extension String {
     
     //MARK: - HTML
     
-    func convertHtml() -> NSAttributedString {
+    func convertHtml(family: String?, size: CGFloat) -> NSAttributedString? {
         
-        let font = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \">%@</span>"
-        
-        let modifiedFont = String(format: font, self)
-
-        guard let data = modifiedFont.data(using: String.Encoding.utf8) else { return NSAttributedString() }
         do {
-            return try NSAttributedString(data: data, options:
-                [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
-                 NSAttributedString.DocumentReadingOptionKey.characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)], documentAttributes: nil)
+            let htmlCSSString = "<style>" +
+                "html *" +
+                "{" +
+                "font-size: \(size)pt !important;" +
+                "font-family: \(family ?? "Helvetica"), Helvetica !important;" +
+                "line-height: 1.5" +
+            "}</style> \(self)"
             
-            
-        } catch {
-            print("Failed to convert HTML to attributed string:", error.localizedDescription)
-            return NSAttributedString()
+            guard let data = htmlCSSString.data(using: String.Encoding.utf8) else { return nil }
+                
+                return try NSAttributedString(data: data,
+                                              options: [.documentType: NSAttributedString.DocumentType.html,
+                                                        .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)], documentAttributes: nil)
+            } catch {
+                print("Failed to convert HTML to attributed string:", error.localizedDescription)
+                return nil
+            }
         }
-    }
-    
-    
 }

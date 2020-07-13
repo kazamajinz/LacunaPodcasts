@@ -51,8 +51,6 @@ struct Episode: Codable {
         
         // Encoded
         self.contentEncoded = feedItem.content?.contentEncoded ?? ""
-        
-        
     }
     
 }

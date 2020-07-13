@@ -22,6 +22,7 @@
 		9E11F61F24AF689200DB9D0A /* UIWindow + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E11F61E24AF689200DB9D0A /* UIWindow + Extensions.swift */; };
 		9E11F62124AF9D7200DB9D0A /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E11F62024AF9D7200DB9D0A /* UIViewController + Extensions.swift */; };
 		9E15E48824BBD34900060A57 /* EpisodeDescriptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15E48724BBD34900060A57 /* EpisodeDescriptionTextView.swift */; };
+		9E15E48A24BCA4B500060A57 /* UIColor + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15E48924BCA4B500060A57 /* UIColor + Extensions.swift */; };
 		9E33BA6D24AA32C400917EA1 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33BA6C24AA32C400917EA1 /* APIService.swift */; };
 		9E33BA7224AA439A00917EA1 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E33BA7124AA439A00917EA1 /* PodcastCell.xib */; };
 		9E33BA7424AA45C900917EA1 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33BA7324AA45C900917EA1 /* PodcastCell.swift */; };
@@ -75,6 +76,7 @@
 		9E11F61E24AF689200DB9D0A /* UIWindow + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow + Extensions.swift"; sourceTree = "<group>"; };
 		9E11F62024AF9D7200DB9D0A /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		9E15E48724BBD34900060A57 /* EpisodeDescriptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDescriptionTextView.swift; sourceTree = "<group>"; };
+		9E15E48924BCA4B500060A57 /* UIColor + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extensions.swift"; sourceTree = "<group>"; };
 		9E33BA6C24AA32C400917EA1 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		9E33BA7124AA439A00917EA1 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
 		9E33BA7324AA45C900917EA1 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				9E11F61E24AF689200DB9D0A /* UIWindow + Extensions.swift */,
 				9E11F62024AF9D7200DB9D0A /* UIViewController + Extensions.swift */,
 				9E4A2C0824ACDED1005B36AC /* UIImage + Extensions.swift */,
+				9E15E48924BCA4B500060A57 /* UIColor + Extensions.swift */,
 				9E4A2BFA24AC1423005B36AC /* String + Extensions.swift */,
 				9E0D511D24AD1D3F0035BB90 /* Time + Extensions.swift */,
 				9EDB908A24AD98B1004D8EB1 /* AVPlayer + Extensions.swift */,
@@ -411,6 +414,7 @@
 				9E00025024A98EC800A1E796 /* MainTabBarController.swift in Sources */,
 				9E00025224A99C4500A1E796 /* PodcastsSearchController.swift in Sources */,
 				9E15E48824BBD34900060A57 /* EpisodeDescriptionTextView.swift in Sources */,
+				9E15E48A24BCA4B500060A57 /* UIColor + Extensions.swift in Sources */,
 				9EF3B28724B6D356005AC285 /* UserDefaults.swift in Sources */,
 				9E11F62124AF9D7200DB9D0A /* UIViewController + Extensions.swift in Sources */,
 				9EF3B28124B631A5005AC285 /* HomePodcastCell.swift in Sources */,

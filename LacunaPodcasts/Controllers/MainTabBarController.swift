@@ -87,6 +87,10 @@ class MainTabBarController: UITabBarController {
             guard let self = self else { return }
             self.playerDetailsView.maxiHeader.alpha = 1
             self.playerDetailsView.playerControlsContainer.alpha = 1
+            
+            
+            
+            
         }, delayFactor: self.animationDelay)
         
         // ANIMATE OUT:  Mini Player - THIS NEEDS TO FADE OUT SOONER!!!!!
@@ -95,6 +99,9 @@ class MainTabBarController: UITabBarController {
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.miniPlayerView.alpha = 0
                 self.playerDetailsView.miniProgressBar.alpha = 0
+                
+                
+                
             })
         })
         
@@ -134,6 +141,10 @@ class MainTabBarController: UITabBarController {
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.maxiHeader.alpha = 0
                 self.playerDetailsView.playerControlsContainer.alpha = 0
+                
+                
+                
+                self.playerDetailsView.episodeDescriptionTextViewContainer.alpha = 0
             })
         })
         

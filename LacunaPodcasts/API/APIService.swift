@@ -126,19 +126,11 @@ class APIService {
                     // Podcast Details
                     var podcast = Podcast()
                     podcast.description = feed.description
-                    
-                    
-                    
-                    
+
                     // Episodes
                     let episodes = feed.toEpisodes()
                     completionHandler(episodes, podcast)
                     
-                    
-                    
-                    
-                    
-
                 case .failure(let error):
                     print("Failed to parse XML feed:", error)
                 }

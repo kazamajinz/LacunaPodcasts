@@ -108,7 +108,13 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kpM-8Q-kCe">
                             <rect key="frame" x="0.0" y="64" width="414" height="342"/>
                             <subviews>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sye-th-Zat">
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="appicon" translatesAutoresizingMaskIntoConstraints="NO" id="ex2-q4-h1q">
+                                    <rect key="frame" x="36" y="0.0" width="342" height="342"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="ex2-q4-h1q" secondAttribute="height" id="f2c-lT-ajw"/>
+                                    </constraints>
+                                </imageView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sye-th-Zat">
                                     <rect key="frame" x="36" y="0.0" width="342" height="342"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UAk-uZ-ydu" customClass="EpisodeDescriptionTextView" customModule="LacunaPodcasts" customModuleProvider="target">
@@ -123,7 +129,7 @@
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="UAk-uZ-ydu" secondAttribute="bottom" constant="16" id="I8l-y0-7ce"/>
                                         <constraint firstItem="UAk-uZ-ydu" firstAttribute="top" secondItem="Sye-th-Zat" secondAttribute="top" constant="16" id="NJX-xG-Lfc"/>
@@ -131,12 +137,6 @@
                                         <constraint firstAttribute="trailing" secondItem="UAk-uZ-ydu" secondAttribute="trailing" constant="16" id="g1d-vk-3T1"/>
                                     </constraints>
                                 </view>
-                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="appicon" translatesAutoresizingMaskIntoConstraints="NO" id="ex2-q4-h1q">
-                                    <rect key="frame" x="36" y="0.0" width="342" height="342"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="ex2-q4-h1q" secondAttribute="height" id="f2c-lT-ajw"/>
-                                    </constraints>
-                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
