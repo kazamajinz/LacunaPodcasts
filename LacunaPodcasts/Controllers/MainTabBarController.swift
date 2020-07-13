@@ -177,13 +177,12 @@ class MainTabBarController: UITabBarController {
         if episode != nil { playerDetailsView.episode = episode }
         playerDetailsView.playlistEpisodes = playlistEpisodes
         
-        if miniPlayerIsVisible == false {
-            playerDetailsView.miniPlayerView.alpha = 0
-            playerDetailsView.miniProgressBar.alpha = 0
-        }
+//        if miniPlayerIsVisible == false {
+//            playerDetailsView.miniPlayerView.alpha = 0
+//            playerDetailsView.miniProgressBar.alpha = 0
+//        }
         
         miniPlayerIsVisible = true
-
 
         maximize()
     }

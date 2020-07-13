@@ -16,6 +16,7 @@
                 <outlet property="durationLabel" destination="Hu7-5A-h3v" id="Lnu-fn-PuY"/>
                 <outlet property="episodeDescriptionTextView" destination="UAk-uZ-ydu" id="neR-Xs-Vu6"/>
                 <outlet property="episodeDescriptionTextViewContainer" destination="Sye-th-Zat" id="900-uf-xbW"/>
+                <outlet property="episodeDescriptionTextViewContainerTop" destination="Gde-FL-qrj" id="Xu3-4l-RSf"/>
                 <outlet property="episodeDescriptionTextViewLeading" destination="x8j-wO-tx9" id="DRg-7p-bA8"/>
                 <outlet property="episodeImageContainer" destination="kpM-8Q-kCe" id="ipU-rk-rHu"/>
                 <outlet property="episodeImageContainerHeight" destination="kVd-vq-kjH" id="dNC-kh-vpe"/>

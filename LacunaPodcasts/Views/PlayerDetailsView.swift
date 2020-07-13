@@ -566,15 +566,18 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    let episodeImageContainerRadius: CGFloat = 16.0
+    
     
     // EPISODE DESCRIPTION
+    let episodeImageContainerRadius: CGFloat = 16.0
     
     @IBOutlet weak var episodeDescriptionTextViewContainer: UIView! {
         didSet {
+            episodeDescriptionTextViewContainer.alpha = 0
             episodeDescriptionTextViewContainer.layer.cornerRadius = episodeImageContainerRadius
         }
     }
+    @IBOutlet weak var episodeDescriptionTextViewContainerTop: NSLayoutConstraint!
     @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView! {
         didSet {
             episodeDescriptionTextView.addGestureRecognizer(episodeDescriptionTapGesture)
