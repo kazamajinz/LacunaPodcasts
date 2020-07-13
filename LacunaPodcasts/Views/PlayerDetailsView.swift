@@ -566,8 +566,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    
-    
     // EPISODE DESCRIPTION
     let episodeImageContainerRadius: CGFloat = 16.0
     

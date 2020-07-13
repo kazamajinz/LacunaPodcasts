@@ -301,6 +301,9 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="696-V1-HaX" firstAttribute="leading" secondItem="biX-tA-T1B" secondAttribute="trailing" constant="8" id="Alw-cL-hN9"/>
+                                    </constraints>
                                 </stackView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCh-61-AUI">
                                     <rect key="frame" x="238" y="8" width="48" height="48"/>

@@ -7,8 +7,6 @@ target 'LacunaPodcasts' do
 
   # Pods for LacunaPodcasts
   
-  pod 'RealmSwift'
-  
   pod 'Alamofire', '~> 5.2'
   pod 'SDWebImage', '~> 5.0'
   pod 'FeedKit', '~> 9.1'
