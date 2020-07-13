@@ -21,7 +21,26 @@ class EpisodeDescriptionTextView: UITextView {
     }
     
     private func setupTextView() {
-        //font = .systemFont(ofSize: 24)
-        textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        
+        // Insets
+        textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 32, right: 16)
+        
+        // Text Attributes
+        linkTextAttributes = [.foregroundColor: UIColor.systemPink]
+        
+        
+        
+        
+        
+        
+        //        let attributes: [NSAttributedString.Key: Any] = [
+        //            .strikethroughStyle: 1,
+        //            .foregroundColor: UIColor.black]
+        
+        
+        
+        
+        
+        
     }
 }

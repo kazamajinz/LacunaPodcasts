@@ -25,12 +25,6 @@ class PlayerDetailsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        initSubViews()
-//        setup()
-//    }
-    
     private func initSubViews() {
         let nib = UINib(nibName: String(describing: type(of: self)), bundle: .main)
         nib.instantiate(withOwner: self, options: nil)
@@ -83,7 +77,6 @@ class PlayerDetailsView: UIView {
     
     var episode: Episode! {
         didSet {
-            
             isPlaying = true
 
             titleLabel.text = episode.title
@@ -93,20 +86,28 @@ class PlayerDetailsView: UIView {
             
             
             
+            
+            // MAKE INTO ATTRIBUTED STRING?
+            if let description = episode.contentEncoded {
+                episodeDescriptionTextView.attributedText = description.convertHtml()
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             setupNowPlayingInfo()
             setupAudioSession()
             playEpisode()
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             //episodeImageView.sd_setImage(with: url)
@@ -117,7 +118,6 @@ class PlayerDetailsView: UIView {
                 })
                 MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artworkItem
             }
-
             //let colors = episodeImageView.image?.getColors()
         }
     }
@@ -547,19 +547,36 @@ class PlayerDetailsView: UIView {
     
     //MARK: - User Actions
     
+    private lazy var episodeImageTapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEpisodeImageTap))
+        return tapGesture
+    }()
+    
+    @objc fileprivate func handleEpisodeImageTap() {
+        print("tapped image")
+    }
+    
     let episodeImageContainerRadius: CGFloat = 16.0
     
     // EPISODE DESCRIPTION
-    @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView! {
+    
+    @IBOutlet weak var episodeDescriptionTextViewContainer: UIView! {
         didSet {
-            episodeDescriptionTextView.layer.cornerRadius = episodeImageContainerRadius
+            episodeDescriptionTextViewContainer.layer.cornerRadius = episodeImageContainerRadius
         }
     }
+    @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView!
     @IBOutlet weak var episodeDescriptionTextViewLeading: NSLayoutConstraint!
-
-    // EPISODE IMAGE
+    
+    // Episode Image
     @IBOutlet weak var episodeImageContainer: UIView!
     @IBOutlet weak var episodeImageContainerHeight: NSLayoutConstraint!
+    @IBOutlet weak var episodeImageView: UIImageView! {
+        didSet {
+            episodeImageView.roundCorners(cornerRadius: episodeImageContainerRadius)
+            episodeImageView.addGestureRecognizer(episodeImageTapGesture)
+        }
+    }
     @IBOutlet weak var episodeImageViewTop: NSLayoutConstraint!
     @IBOutlet weak var episodeImageViewLeading: NSLayoutConstraint!
     @IBOutlet weak var episodeImageViewBottom: NSLayoutConstraint!
@@ -587,11 +604,7 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var miniRewindButton: UIButton!
     @IBOutlet weak var miniFastForwardButton: UIButton!
 
-    @IBOutlet weak var episodeImageView: UIImageView! {
-        didSet {
-            episodeImageView.roundCorners(cornerRadius: episodeImageContainerRadius)
-        }
-    }
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!

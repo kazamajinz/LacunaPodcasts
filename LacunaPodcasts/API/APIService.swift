@@ -120,15 +120,24 @@ class APIService {
 
                 switch result {
                 case .success(let feed):
+                    
                     guard let feed = feed.rssFeed else { return }
                     
                     // Podcast Details
                     var podcast = Podcast()
                     podcast.description = feed.description
                     
+                    
+                    
+                    
                     // Episodes
                     let episodes = feed.toEpisodes()
                     completionHandler(episodes, podcast)
+                    
+                    
+                    
+                    
+                    
 
                 case .failure(let error):
                     print("Failed to parse XML feed:", error)

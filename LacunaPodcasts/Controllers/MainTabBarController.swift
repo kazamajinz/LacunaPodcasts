@@ -73,7 +73,7 @@ class MainTabBarController: UITabBarController {
             self.playerDetailsView.maxiHeaderHeight.constant = 64
             self.playerDetailsView.episodeImageContainerHeight.constant = episodeImageContainerWidth - 36 * 2
             self.playerDetailsView.episodeDescriptionTextViewLeading.constant = 36
-            self.playerDetailsView.episodeDescriptionTextView.roundCorners(cornerRadius: 16)
+            self.playerDetailsView.episodeDescriptionTextViewContainer.roundCorners(cornerRadius: 16)
             self.playerDetailsView.episodeImageViewLeading.constant = 36
             self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 16)
             
@@ -119,7 +119,7 @@ class MainTabBarController: UITabBarController {
             self.playerDetailsView.maxiHeaderHeight.constant = 0
             self.playerDetailsView.episodeImageContainerHeight.constant = 64
             self.playerDetailsView.episodeDescriptionTextViewLeading.constant = 0
-            self.playerDetailsView.episodeDescriptionTextView.roundCorners(cornerRadius: 0)
+            self.playerDetailsView.episodeDescriptionTextViewContainer.roundCorners(cornerRadius: 0)
             self.playerDetailsView.episodeImageViewLeading.constant = 0
             self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 0)
 

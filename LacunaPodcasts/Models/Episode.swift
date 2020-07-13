@@ -31,14 +31,14 @@ struct Episode: Codable {
     var imageUrl: String?
     
     
+    var contentEncoded: String?
+    
     
     var isDownloaded: Bool = false
     var downloadStatus: DownloadStatus = .none
     
     init(feedItem: RSSFeedItem) {
-        
-        
-        
+
         self.collectionId = 0
         
         self.title = feedItem.title ?? ""
@@ -48,6 +48,11 @@ struct Episode: Codable {
         self.duration = feedItem.iTunes?.iTunesDuration ?? 0
         self.imageUrl = feedItem.iTunes?.iTunesImage?.attributes?.href
         self.streamUrl = feedItem.enclosure?.attributes?.url ?? ""
+        
+        // Encoded
+        self.contentEncoded = feedItem.content?.contentEncoded ?? ""
+        
+        
     }
     
 }

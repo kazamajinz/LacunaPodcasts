@@ -61,7 +61,7 @@ class EpisodeCell: UITableViewCell {
             episodeImageView.sd_setImage(with: url)
             
             titleLabel.text = episode.title
-            descriptionLabel.text = episode.description.stripOutHtml()
+            descriptionLabel.text = episode.description//.stripOutHtml()
             pubDateLabel.text = dateFormatter.string(from: episode.pubDate).uppercased()
             durationLabel.text = episode.duration.convertToEpisodeDurationString()
 

@@ -33,8 +33,26 @@ extension String {
     }
     
     
-
+    //MARK: - HTML
     
+    func convertHtml() -> NSAttributedString {
+        
+        let font = "<span style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \">%@</span>"
+        
+        let modifiedFont = String(format: font, self)
+
+        guard let data = modifiedFont.data(using: String.Encoding.utf8) else { return NSAttributedString() }
+        do {
+            return try NSAttributedString(data: data, options:
+                [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
+                 NSAttributedString.DocumentReadingOptionKey.characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)], documentAttributes: nil)
+            
+            
+        } catch {
+            print("Failed to convert HTML to attributed string:", error.localizedDescription)
+            return NSAttributedString()
+        }
+    }
     
     
 }
