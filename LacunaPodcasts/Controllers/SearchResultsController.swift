@@ -8,8 +8,18 @@
 
 import UIKit
 
+protocol SearchResultsControllerDelegate {
+    func didSelectSearchResult(_ episode: Episode)
+}
+
 class SearchResultsController: UITableViewController {
     
+    var delegate: SearchResultsControllerDelegate?
+    
+    deinit {
+        print("SearchResultsController memory being reclaimed...")
+    }
+
     var filteredEpisodes: [Episode] = []
     var noResults: Bool = false
     
@@ -30,12 +40,14 @@ class SearchResultsController: UITableViewController {
     //MARK: - TableView
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episode = filteredEpisodes[indexPath.row]
+        dismiss(animated: true) {
+            self.delegate?.didSelectSearchResult(episode)
+        }
         
         
         
-        //            let episode = episodes[indexPath.row]
-        //            UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
-        //        self.tableView.deselectRow(at: indexPath, animated: true)
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,6 +68,8 @@ class SearchResultsController: UITableViewController {
     
     
     
+    
+    
     let noResultsLabel: UILabel = {
         let label = UILabel()
         label.text = "No Results"
@@ -73,7 +87,6 @@ class SearchResultsController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return filteredEpisodes.isEmpty ? K.downloadEpisodeCellHeight : 0
     }
-    
 }
 
 

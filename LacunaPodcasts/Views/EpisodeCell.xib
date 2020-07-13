@@ -138,6 +138,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="cancelButton" destination="c3c-bl-iRp" id="62C-ka-GhX"/>
+                <outlet property="containerView" destination="JVH-GC-4KC" id="WJm-40-fHz"/>
                 <outlet property="descriptionLabel" destination="Wi7-Uc-Rc0" id="UzG-4j-ozd"/>
                 <outlet property="durationLabel" destination="CKD-jC-evC" id="oxw-hv-DHy"/>
                 <outlet property="episodeImageView" destination="Rvb-TR-Ocs" id="QX8-Zl-ZgQ"/>

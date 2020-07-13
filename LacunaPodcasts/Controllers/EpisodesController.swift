@@ -16,10 +16,20 @@ class EpisodesController: UITableViewController {
     
     var filteredEpisodes: [Episode] = []
     var timer: Timer?
+    
+    
+//    let episodesController = EpisodesController()
+//    episodesController.podcast = podcast
+    
+    
     let searchController = UISearchController(searchResultsController: SearchResultsController())
-    var isSearchBarEmpty: Bool {
-      return searchController.searchBar.text?.isEmpty ?? true
-    }
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -136,6 +146,9 @@ class EpisodesController: UITableViewController {
     }
     
     fileprivate func setupSearchBar() {
+        guard let resultsController = searchController.searchResultsController as? SearchResultsController else { return }
+        resultsController.delegate = self
+        
         searchController.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
@@ -218,7 +231,7 @@ class EpisodesController: UITableViewController {
             let episode = episodes[indexPath.row]
             UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
         }
-        self.tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -338,9 +351,21 @@ extension EpisodesController: EpisodeCellDelegate {
     }
 }
 
-//MARK: - SearchBar Delegate
+//MARK: - SearchController Delegate
+
+extension EpisodesController: SearchResultsControllerDelegate {
+    func didSelectSearchResult(_ episode: Episode) {
+        guard let index = episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+        tableView.selectRow(at: IndexPath(row: index, section: 1), animated: true, scrollPosition: .middle)
+    }
+}
 
 extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdating {
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+        print("Did dismiss search controller")
+    }
+    
     
     func filterContentForSearchText(_ searchText: String) {
         filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
@@ -353,16 +378,18 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
         let searchBar = searchController.searchBar
         self.filterContentForSearchText(searchBar.text!)
 
-        guard let resultsController = searchController.searchResultsController as? SearchResultsController else { return }
-        if filteredEpisodes.isEmpty {
-            resultsController.noResults = true
+        if let resultsController = searchController.searchResultsController as? SearchResultsController {
+            if filteredEpisodes.isEmpty { resultsController.noResults = true }
+            resultsController.filteredEpisodes = filteredEpisodes
+            resultsController.tableView.reloadData()
         }
-        resultsController.filteredEpisodes = filteredEpisodes
-        resultsController.tableView.reloadData()
     }
 }
 
 extension EpisodesController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    }
 }
+
+
+//var isSearchBarEmpty: Bool {
+//  return searchController.searchBar.text?.isEmpty ?? true
+//}

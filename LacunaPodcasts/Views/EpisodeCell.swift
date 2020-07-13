@@ -19,6 +19,7 @@ class EpisodeCell: UITableViewCell {
     static var reuseIdentifier: String { String(describing: self) }
     static var nib: UINib { return UINib(nibName: String(describing: self), bundle: nil) }
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var pubDateLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
@@ -26,9 +27,7 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
-    
-    //var cancelDownloadButtonAction: (() -> Void)?
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         cancelButton.isHidden = true
@@ -36,7 +35,14 @@ class EpisodeCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //cancelDownloadButton.addTarget(self, action: #selector(handleCancelDownloadButtonTap), for: .touchUpInside)
+    }
+    
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        if selected {
+            containerView.backgroundColor = #colorLiteral(red: 1, green: 0.9563938873, blue: 0.8691816619, alpha: 1)
+        }
     }
     
     @IBAction func didTapCancel(_ sender: Any) {
@@ -45,9 +51,8 @@ class EpisodeCell: UITableViewCell {
     
     
     
-    //    @objc func handleCancelDownloadButtonTap() {
-//        cancelDownloadButtonAction?()
-//    }
+    
+    
 
     var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -93,11 +98,6 @@ class EpisodeCell: UITableViewCell {
 
 
 
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
+
 
 
