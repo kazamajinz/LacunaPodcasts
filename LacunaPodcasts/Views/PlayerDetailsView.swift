@@ -485,10 +485,9 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     
     
     //MARK: - Play Episode
-    
-    fileprivate let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
     fileprivate func localFilePath(for url: URL) -> URL {
-      return documentsPath.appendingPathComponent(url.lastPathComponent)
+      return FileManager.documentDirectoryUrl.appendingPathComponent(url.lastPathComponent)
     }
     
     fileprivate func playEpisode() {

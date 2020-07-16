@@ -119,6 +119,21 @@ class EpisodesController: UITableViewController {
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @objc fileprivate func handlePlayerDetailsMinimize() {
         if UIApplication.mainTabBarController()?.miniPlayerIsVisible == true {
             let miniPlayerViewHeight = UIApplication.mainTabBarController()?.minimizedTopAnchorConstraint.constant ?? 0
@@ -156,7 +171,7 @@ class EpisodesController: UITableViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.placeholder = "Search episodes"
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
     }
     

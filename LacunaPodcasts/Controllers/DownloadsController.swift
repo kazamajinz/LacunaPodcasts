@@ -141,19 +141,20 @@ class DownloadsController: UITableViewController {
             let selectedEpisode = self.episodes[indexPath.row]
 
             // Delete Local File
-            guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            var documentDirectoryUrl = FileManager.documentDirectoryUrl
+
             guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
             let fileName = fileUrl.lastPathComponent
-            trueLocation.appendPathComponent(fileName)
+            documentDirectoryUrl.appendPathComponent(fileName)
         
-            if FileManager.default.fileExists(atPath: trueLocation.path) {
+            if FileManager.default.fileExists(atPath: documentDirectoryUrl.path) {
                 do {
-                    try FileManager.default.removeItem(at: trueLocation)
+                    try FileManager.default.removeItem(at: documentDirectoryUrl)
                 } catch { print("Failed to delete the episode file:", error) }
                 
                 // 1. Check If Episode Has Been Deleted
                 // 2. Check Storage Space
-                if !FileManager.default.fileExists(atPath: trueLocation.path) {
+                if !FileManager.default.fileExists(atPath: documentDirectoryUrl.path) {
                     // Remove Episode
                     self.episodes.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
