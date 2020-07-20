@@ -157,13 +157,13 @@ class APIService {
         AF.request(baseiTunesSearchURL, parameters: parameters).responseData { (dataResponse) in
             
             if let err = dataResponse.error {
-                print("Failed to Request URL, ", err)
+                print("Failed to Request URL", err)
                 return
             }
             guard let data = dataResponse.data else { return }
             do {
                 
-                // decoder.keyDecodingStrategy = .convertFromSnakeCase
+                
                 
                 let searchResult = try JSONDecoder().decode(SearchResults.self, from: data)
                 completionHandler(searchResult.results)
