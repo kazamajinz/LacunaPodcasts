@@ -281,8 +281,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     //MARK: - Setup
     
     func setup() {
-        setupMiniDurationBar()
-        
+
         setupRemoteControl()
         
         
@@ -291,13 +290,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         observePlayerCurrentTime()
         observeBoundaryTime()
         setupObservers()
-    }
-    
-    private func setupMiniDurationBar() {
-        miniProgressBar.isUserInteractionEnabled = false
-        miniProgressBar.setThumbImage(UIImage(), for: .normal)
-        miniProgressBar.minimumTrackTintColor = .black
-        miniProgressBar.maximumTrackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     
     //MARK: - Time Observers
@@ -607,7 +599,14 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
 
     // MINI PLAYER
     @IBOutlet weak var miniPlayerView: UIView!
-    @IBOutlet weak var miniProgressBar: UISlider!
+    @IBOutlet weak var miniProgressBar: UISlider! {
+        didSet {
+            miniProgressBar.isUserInteractionEnabled = false
+            miniProgressBar.setThumbImage(UIImage(), for: .normal)
+            miniProgressBar.minimumTrackTintColor = UIColor(named: K.Colors.orange)
+            miniProgressBar.maximumTrackTintColor = UIColor.black
+        }
+    }
     @IBOutlet weak var miniTitleLabel: UILabel!
     @IBOutlet weak var miniAuthorLabel: UILabel!
     @IBOutlet weak var miniPlayPauseButton: UIButton! {
@@ -623,7 +622,12 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var currentTimeSlider: DurationSlider!
+    @IBOutlet weak var currentTimeSlider: DurationSlider! {
+        didSet {
+            currentTimeSlider.minimumTrackTintColor = UIColor(named: K.Colors.orange)
+            currentTimeSlider.maximumTrackTintColor = UIColor(named: K.Colors.darkBlue)
+        }
+    }
 
     //MARK: - @IBActions
     
