@@ -32,15 +32,16 @@ class EpisodeCell: UITableViewCell {
         super.prepareForReuse()
         cancelButton.isHidden = true
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        //containerView.backgroundColor = selected ? #colorLiteral(red: 1, green: 0.9623333327, blue: 0.95, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        selectedBackgroundView?.isHidden = true
+        containerView.backgroundColor = selected ? UIColor(named: K.Colors.blue) : UIColor(named: K.Colors.darkBlue)
     }
+
+    
+    
+    
     
     @IBAction func didTapCancel(_ sender: Any) {
         delegate?.didTapCancel(self)

@@ -219,8 +219,6 @@ class EpisodesController: UITableViewController {
         if indexPath.section != 0 {
             let episode = episodes[indexPath.row]
             UIApplication.mainNavigationController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
-            
-            //UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
         }
     }
     
