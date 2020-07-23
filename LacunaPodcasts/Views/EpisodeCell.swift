@@ -28,6 +28,17 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
     
+    @IBOutlet weak var downloadStatusView: UIView! {
+        didSet {
+            let status = DownloadStatus()
+            downloadStatusView.addSubview(status)
+            status.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
+        }
+    }
+
+    
+    
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         cancelButton.isHidden = true
@@ -36,7 +47,7 @@ class EpisodeCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedBackgroundView?.isHidden = true
-        containerView.backgroundColor = selected ? UIColor(named: K.Colors.orange) : UIColor(named: K.Colors.darkBlue)
+        containerView.backgroundColor = selected ? UIColor(named: K.Colors.highlight) : UIColor(named: K.Colors.darkBlue)
     }
     
     @IBAction func didTapCancel(_ sender: Any) {
@@ -51,10 +62,7 @@ class EpisodeCell: UITableViewCell {
 
     var episode: Episode! {
         didSet {
-            
             titleLabel.textColor = episode.downloadStatus.titleColor
-            
-            
             
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)

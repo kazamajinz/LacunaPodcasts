@@ -36,6 +36,8 @@
 		9E70B62724B7941D0022FEB4 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */; };
 		9E7BD39724C9DEEC00F5DD7E /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */; };
 		9E7BD39A24CA0D2600F5DD7E /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39924CA0D2600F5DD7E /* SearchController.swift */; };
+		9E7BD39C24CA1A8400F5DD7E /* DownloadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39B24CA1A8400F5DD7E /* DownloadStatus.swift */; };
+		9E7BD39E24CA1E7400F5DD7E /* UIView + Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39D24CA1E7400F5DD7E /* UIView + Layout.swift */; };
 		9E7F4F3424AA6898001C4AEE /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */; };
 		9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738B24B20867008CD566 /* DurationSlider.swift */; };
 		9E83738E24B239BF008CD566 /* PlayerDetailsView + Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */; };
@@ -93,6 +95,8 @@
 		9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		9E7BD39924CA0D2600F5DD7E /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		9E7BD39B24CA1A8400F5DD7E /* DownloadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadStatus.swift; sourceTree = "<group>"; };
+		9E7BD39D24CA1E7400F5DD7E /* UIView + Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Layout.swift"; sourceTree = "<group>"; };
 		9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		9E83738B24B20867008CD566 /* DurationSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationSlider.swift; sourceTree = "<group>"; };
 		9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView + Gestures.swift"; sourceTree = "<group>"; };
@@ -238,6 +242,7 @@
 				9EF3B28424B646DA005AC285 /* FollowButton.swift */,
 				9E15E48724BBD34900060A57 /* EpisodeDescriptionTextView.swift */,
 				9E7BD39924CA0D2600F5DD7E /* SearchController.swift */,
+				9E7BD39B24CA1A8400F5DD7E /* DownloadStatus.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				9E95F71624BE47FC0019F8AF /* FileManager + Extensions.swift */,
+				9E7BD39D24CA1E7400F5DD7E /* UIView + Layout.swift */,
 				9E47AFF924B3EEE800A7108C /* UIApplication + Extensions.swift */,
 				9E11F61E24AF689200DB9D0A /* UIWindow + Extensions.swift */,
 				9E11F62024AF9D7200DB9D0A /* UIViewController + Extensions.swift */,
@@ -411,6 +417,7 @@
 				9E70B62724B7941D0022FEB4 /* DatabaseManager.swift in Sources */,
 				9EF3B27A24B61AE3005AC285 /* LibraryController.swift in Sources */,
 				9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */,
+				9E7BD39C24CA1A8400F5DD7E /* DownloadStatus.swift in Sources */,
 				9EDB908B24AD98B1004D8EB1 /* AVPlayer + Extensions.swift in Sources */,
 				9EF4308924B95EF100759BDB /* Download.swift in Sources */,
 				9E33BA6D24AA32C400917EA1 /* APIService.swift in Sources */,
@@ -435,6 +442,7 @@
 				9E15E48824BBD34900060A57 /* EpisodeDescriptionTextView.swift in Sources */,
 				9E15E48A24BCA4B500060A57 /* UIColor + Extensions.swift in Sources */,
 				9EF3B28724B6D356005AC285 /* UserDefaults.swift in Sources */,
+				9E7BD39E24CA1E7400F5DD7E /* UIView + Layout.swift in Sources */,
 				9E11F62124AF9D7200DB9D0A /* UIViewController + Extensions.swift in Sources */,
 				9EF3B28124B631A5005AC285 /* HomePodcastCell.swift in Sources */,
 				9E00023E24A98E2100A1E796 /* SceneDelegate.swift in Sources */,
