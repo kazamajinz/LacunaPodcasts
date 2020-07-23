@@ -222,13 +222,17 @@ class EpisodesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let activityIndicator = AlertService.showActivityIndicator()
-        episodes.isEmpty ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-        return activityIndicator
+        if section == 1 {
+            let activityIndicator = AlertService.showActivityIndicator()
+            episodes.isEmpty ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+            return activityIndicator
+        } else { return nil }
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        episodes.isEmpty ? 100 : 0
+        if section == 1 {
+            if episodes.isEmpty { return K.episodeCellHeight } else { return 0 }
+        } else { return 0 }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int { 2 }

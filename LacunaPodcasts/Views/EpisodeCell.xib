@@ -171,5 +171,8 @@
         <namedColor name="grayBlue">
             <color red="0.20936234125059891" green="0.26046045908930376" blue="0.44946955363762553" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="grayBlue">
+            <color red="0.20936234125059891" green="0.26046045908930376" blue="0.44946955363762553" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
