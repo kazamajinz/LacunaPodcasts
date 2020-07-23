@@ -20,6 +20,7 @@ class DownloadsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         APIService.shared.delegate = self
+        setupView()
         setupTableView()
         setupObservers()
     }
@@ -38,6 +39,10 @@ class DownloadsController: UITableViewController {
     
     
     //MARK: - Setup
+    
+    private func setupView() {
+        view.backgroundColor = UIColor(named: K.Colors.darkBlue)
+    }
     
     fileprivate func setupTableView() {
         tableView.tableFooterView = UIView()

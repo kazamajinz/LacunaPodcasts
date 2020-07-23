@@ -77,8 +77,6 @@ class MainNavigationController: UINavigationController {
     func maximize() {
         animator.addAnimations { [weak self] in
             guard let self = self else { return }
-            
-            // AUTO-LAYOUT
             self.minimizedTopAnchorConstraint.isActive = false
             self.maximizedTopAnchorConstraint.isActive = true
             self.maximizedTopAnchorConstraint.constant = 0
@@ -92,7 +90,6 @@ class MainNavigationController: UINavigationController {
             self.playerDetailsView.episodeImageViewTop.constant = 0
             self.playerDetailsView.episodeImageViewBottom.constant = 0
             self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 16)
-            
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
         }

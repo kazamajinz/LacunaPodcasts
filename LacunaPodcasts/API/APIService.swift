@@ -43,8 +43,7 @@ class APIService {
             NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
             
         }.response { (response) in
-            //debugPrint(response)
-            
+
             // if download is cancelled
             if response.error != nil {
                 print("The download for episode, \(episode.title), has been cancelled.")

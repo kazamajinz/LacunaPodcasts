@@ -180,7 +180,6 @@
 				9E00025124A99C4500A1E796 /* PodcastsSearchController.swift */,
 				9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */,
 				9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */,
-				9EF3B27B24B61F7C005AC285 /* HomeController.swift */,
 				9E70B62424B755550022FEB4 /* DownloadsController.swift */,
 				9E15E48B24BCBE0700060A57 /* SearchResultsController.swift */,
 				9E7BD39824C9EF2300F5DD7E /* Old */,
@@ -260,6 +259,7 @@
 		9E7BD39824C9EF2300F5DD7E /* Old */ = {
 			isa = PBXGroup;
 			children = (
+				9EF3B27B24B61F7C005AC285 /* HomeController.swift */,
 				9E00024F24A98EC800A1E796 /* MainTabBarController.swift */,
 			);
 			path = Old;

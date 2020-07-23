@@ -14,6 +14,19 @@ enum DownloadStatus: String, Codable {
     case inProgress
     case completed
     case failed
+    
+    var titleColor: UIColor {
+        switch self {
+        case .none:
+            return UIColor(named: K.Colors.blue) ?? UIColor.white
+        case .inProgress:
+            return UIColor(named: K.Colors.blue) ?? UIColor.white
+        case .completed:
+            return UIColor.white
+        case .failed:
+            return UIColor(named: K.Colors.blue) ?? UIColor.white
+        }
+    }
 }
 
 struct Episode: Codable {

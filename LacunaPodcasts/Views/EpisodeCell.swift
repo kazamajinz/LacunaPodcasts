@@ -36,7 +36,7 @@ class EpisodeCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedBackgroundView?.isHidden = true
-        containerView.backgroundColor = selected ? UIColor(named: K.Colors.blue) : UIColor(named: K.Colors.darkBlue)
+        containerView.backgroundColor = selected ? UIColor(named: K.Colors.orange) : UIColor(named: K.Colors.darkBlue)
     }
     
     @IBAction func didTapCancel(_ sender: Any) {
@@ -51,18 +51,20 @@ class EpisodeCell: UITableViewCell {
 
     var episode: Episode! {
         didSet {
+            
+            titleLabel.textColor = episode.downloadStatus.titleColor
+            
+            
+            
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
-            
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description//.stripOutHtml()
             pubDateLabel.text = dateFormatter.string(from: episode.pubDate).uppercased()
             durationLabel.text = episode.duration.toDisplayString()
 
             // Non-nil Download object means a download is in progress
-            if let _ = APIService.shared.activeDownloads[episode.streamUrl] {
-                
-            }
+            if let _ = APIService.shared.activeDownloads[episode.streamUrl] { }
         }
     }
     
@@ -71,22 +73,3 @@ class EpisodeCell: UITableViewCell {
         pubDateLabel.text = "Downloading... \(Int(progress * 100))%"
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
