@@ -43,8 +43,8 @@ class MainNavigationController: UINavigationController {
     fileprivate func setupPlayerDetailsView() {
         view.addSubview(playerDetailsView)
         playerDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
-        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -66)
+        maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height + 2)
+        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -64)
         maximizedTopAnchorConstraint.isActive = true
         bottomAnchorConstraint = playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
         bottomAnchorConstraint.isActive = true
@@ -83,14 +83,14 @@ class MainNavigationController: UINavigationController {
             self.maximizedTopAnchorConstraint.isActive = true
             self.maximizedTopAnchorConstraint.constant = 0
             self.bottomAnchorConstraint.constant = 0
-            
             let episodeImageContainerWidth = self.playerDetailsView.episodeImageContainer.bounds.width
-            
             self.playerDetailsView.maxiHeaderHeight.constant = 64
             self.playerDetailsView.episodeImageContainerHeight.constant = episodeImageContainerWidth - 36 * 2
             self.playerDetailsView.episodeDescriptionTextViewLeading.constant = 36
             self.playerDetailsView.episodeDescriptionTextViewContainer.roundCorners(cornerRadius: 16)
             self.playerDetailsView.episodeImageViewLeading.constant = 36
+            self.playerDetailsView.episodeImageViewTop.constant = 0
+            self.playerDetailsView.episodeImageViewBottom.constant = 0
             self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 16)
             
             self.view.setNeedsLayout()

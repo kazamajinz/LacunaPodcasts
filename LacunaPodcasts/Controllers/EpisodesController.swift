@@ -134,15 +134,12 @@ class EpisodesController: UITableViewController {
     
     
     @objc fileprivate func handlePlayerDetailsMinimize() {
-//        if UIApplication.mainTabBarController()?.miniPlayerIsVisible == true {
-            //let miniPlayerViewHeight = UIApplication.mainTabBarController()?.minimizedTopAnchorConstraint.constant ?? 0
-            //let tabBarHeight = UIApplication.mainTabBarController()?.tabBar.frame.size.height ?? 0
-            //let offsetY = abs(miniPlayerViewHeight) + tabBarHeight
-            //print(miniPlayerViewHeight, tabBarHeight, offsetY)
-            
-            //tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
-            //tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
-//        }
+        if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
+            let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
+            //guard let safeAreaInsetBottom = UIWindow.key?.safeAreaInsets.bottom else { return }
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+        }
     }
     
     //MARK: - Setup

@@ -38,10 +38,6 @@ class EpisodeCell: UITableViewCell {
         selectedBackgroundView?.isHidden = true
         containerView.backgroundColor = selected ? UIColor(named: K.Colors.blue) : UIColor(named: K.Colors.darkBlue)
     }
-
-    
-    
-    
     
     @IBAction func didTapCancel(_ sender: Any) {
         delegate?.didTapCancel(self)
