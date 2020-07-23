@@ -12,7 +12,6 @@ import FeedKit
 class EpisodesController: UITableViewController {
     
     //MARK: - Variables and Properties
-    //SEARCH BAR
     
     var filteredEpisodes: [Episode] = []
     var timer: Timer?
@@ -23,7 +22,6 @@ class EpisodesController: UITableViewController {
     
     
     let searchController = UISearchController(searchResultsController: SearchResultsController())
-    
     
     
     
@@ -164,7 +162,6 @@ class EpisodesController: UITableViewController {
     fileprivate func setupSearchBar() {
         guard let resultsController = searchController.searchResultsController as? SearchResultsController else { return }
         resultsController.delegate = self
-        
         searchController.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
@@ -174,15 +171,6 @@ class EpisodesController: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     //MARK: - Setup Gestures
     
@@ -235,13 +223,6 @@ class EpisodesController: UITableViewController {
         episodes.isEmpty ? 100 : 0
     }
     
-    
-    
-    
-    
-    
-    
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section != 0 {
             let episode = episodes[indexPath.row]
@@ -287,12 +268,7 @@ class EpisodesController: UITableViewController {
             return cell
         }
     }
-    
-    
-    
-    
-    
-    
+
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
@@ -365,6 +341,21 @@ extension EpisodesController: EpisodeCellDelegate {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //MARK: - SearchController Delegate
 

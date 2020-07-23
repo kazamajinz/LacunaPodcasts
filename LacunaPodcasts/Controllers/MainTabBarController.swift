@@ -227,7 +227,6 @@ class MainTabBarController: UITabBarController {
     var bottomAnchorConstraint: NSLayoutConstraint!
 
     fileprivate func setupPlayerDetailsView() {
-
         view.insertSubview(playerDetailsView, belowSubview: tabBar)
         
         // AUTO-LAYOUT

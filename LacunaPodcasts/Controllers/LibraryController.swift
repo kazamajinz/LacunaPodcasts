@@ -10,18 +10,26 @@ import UIKit
 
 class LibraryController: UITableViewController {
     
+    deinit { print("LibraryController memory being reclaimed...") }
+    
+    // MARK: - Variables and Properties
+    
     var timer: Timer?
     let searchController = UISearchController(searchResultsController: nil)
     var episodes = [Episode]()
-    
-    deinit {
-        print("LibraryController memory being reclaimed...")
-    }
-    
     var podcasts = UserDefaults.standard.fetchSavedPodcasts()
+    
+    // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        
+        
+        
+        
         setupTableView()
         setupSearchBar()
         setupNavigationBarButtons()
@@ -33,7 +41,7 @@ class LibraryController: UITableViewController {
         tableView.reloadData()
     }
     
-    //MARK: - Setup
+    // MARK: - Setup
     
     fileprivate func setupSearchBar() {
         navigationItem.searchController = searchController
@@ -43,53 +51,30 @@ class LibraryController: UITableViewController {
     }
     
     fileprivate func setupTableView() {
+        view.backgroundColor = UIColor(named: "darkBlue")
+        
         // Removes Text from Back Button
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
     }
-
+    
     fileprivate func setupNavigationBarButtons() {
         navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(handleAddPodcast)),
             UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.down"), style: .plain, target: self, action: #selector(handleDownloads))
         ]
     }
     
-    //    let badgeSize: CGFloat = 16
-    //    let badgeTag = 9830384
-    //
-    //    func badgeLabel(withCount count: Int) -> UILabel {
-    //            let badgeCount = UILabel(frame: CGRect(x: 0, y: 0, width: badgeSize, height: badgeSize))
-    //            badgeCount.translatesAutoresizingMaskIntoConstraints = false
-    //            badgeCount.tag = badgeTag
-    //            badgeCount.layer.cornerRadius = badgeCount.bounds.size.height / 2
-    //            badgeCount.textAlignment = .center
-    //            badgeCount.layer.masksToBounds = true
-    //            badgeCount.textColor = .white
-    //            badgeCount.font = badgeCount.font.withSize(8)
-    //            badgeCount.backgroundColor = .systemBlue
-    //            badgeCount.text = String(count)
-    //            return badgeCount
-    //        }
-    //
-    //    func showBadge(withCount count: Int) {
-    //        let badge = badgeLabel(withCount: count)
-    //        downloadsButton.addSubview(badge)
-    //
-    //        NSLayoutConstraint.activate([
-    //            badge.leftAnchor.constraint(equalTo: downloadsButton.leftAnchor, constant: 14),
-    //            badge.topAnchor.constraint(equalTo: downloadsButton.topAnchor, constant: 4),
-    //            badge.widthAnchor.constraint(equalToConstant: badgeSize),
-    //            badge.heightAnchor.constraint(equalToConstant: badgeSize)
-    //        ])
-    //    }
-        
-        
-        @objc fileprivate func handleDownloads() {
-            let downloadsController = DownloadsController()
-            downloadsController.navigationItem.title = "Downloads"
-            navigationController?.pushViewController(downloadsController, animated: true)
-        }
+    @objc fileprivate func handleDownloads() {
+        let downloadsController = DownloadsController()
+        downloadsController.navigationItem.title = "Downloads"
+        navigationController?.pushViewController(downloadsController, animated: true)
+    }
+    
+    @objc fileprivate func handleAddPodcast() {
+        print("add podcast")
+    }
     
     
     
@@ -127,7 +112,7 @@ class LibraryController: UITableViewController {
     //MARK: - Swipe Actions
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
+        
         //DELETE ACTION
         let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
             let selectedPodcast = self.podcasts[indexPath.row]
@@ -150,5 +135,50 @@ extension LibraryController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     }
-
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    let badgeSize: CGFloat = 16
+//    let badgeTag = 9830384
+//
+//    func badgeLabel(withCount count: Int) -> UILabel {
+//            let badgeCount = UILabel(frame: CGRect(x: 0, y: 0, width: badgeSize, height: badgeSize))
+//            badgeCount.translatesAutoresizingMaskIntoConstraints = false
+//            badgeCount.tag = badgeTag
+//            badgeCount.layer.cornerRadius = badgeCount.bounds.size.height / 2
+//            badgeCount.textAlignment = .center
+//            badgeCount.layer.masksToBounds = true
+//            badgeCount.textColor = .white
+//            badgeCount.font = badgeCount.font.withSize(8)
+//            badgeCount.backgroundColor = .systemBlue
+//            badgeCount.text = String(count)
+//            return badgeCount
+//        }
+//
+//    func showBadge(withCount count: Int) {
+//        let badge = badgeLabel(withCount: count)
+//        downloadsButton.addSubview(badge)
+//
+//        NSLayoutConstraint.activate([
+//            badge.leftAnchor.constraint(equalTo: downloadsButton.leftAnchor, constant: 14),
+//            badge.topAnchor.constraint(equalTo: downloadsButton.topAnchor, constant: 4),
+//            badge.widthAnchor.constraint(equalToConstant: badgeSize),
+//            badge.heightAnchor.constraint(equalToConstant: badgeSize)
+//        ])
+//    }

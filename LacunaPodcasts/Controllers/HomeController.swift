@@ -62,7 +62,6 @@ class HomeController: UICollectionViewController {
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        
         let location = gesture.location(in: collectionView)
         let selectedIndexPath = collectionView.indexPathForItem(at: location)
         print(selectedIndexPath?.row)

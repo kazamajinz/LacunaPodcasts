@@ -22,6 +22,13 @@ struct K {
         static let downloadedEpisodesKey = "downloadedEpisodesKey"
     }
     
+    struct Colors{
+        static let darkBlue = "darkBlue"
+        static let blue = "blue"
+        static let highlight = "highlight"
+        static let orange = "orange"
+    }
+    
     
     
 
