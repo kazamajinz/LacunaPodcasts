@@ -10,6 +10,8 @@ import UIKit
 
 class LibraryController: UITableViewController {
     
+    
+    
     deinit { print("LibraryController memory being reclaimed...") }
     
     // MARK: - Variables and Properties
@@ -44,6 +46,8 @@ class LibraryController: UITableViewController {
     // MARK: - Setup
     
     fileprivate func setupSearchBar() {
+        navigationItem.title = "My Library"
+        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.hidesNavigationBarDuringPresentation = false

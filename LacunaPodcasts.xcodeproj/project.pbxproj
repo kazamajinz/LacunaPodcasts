@@ -10,7 +10,6 @@
 		50BC5A82ABA469592A9B52DF /* Pods_LacunaPodcasts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26111E4BB3838D1F1F4AD552 /* Pods_LacunaPodcasts.framework */; };
 		9E00023C24A98E2100A1E796 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00023B24A98E2100A1E796 /* AppDelegate.swift */; };
 		9E00023E24A98E2100A1E796 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00023D24A98E2100A1E796 /* SceneDelegate.swift */; };
-		9E00024024A98E2100A1E796 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00023F24A98E2100A1E796 /* ViewController.swift */; };
 		9E00024324A98E2100A1E796 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E00024124A98E2100A1E796 /* Main.storyboard */; };
 		9E00024524A98E2600A1E796 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E00024424A98E2600A1E796 /* Assets.xcassets */; };
 		9E00024824A98E2600A1E796 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E00024624A98E2600A1E796 /* LaunchScreen.storyboard */; };
@@ -35,6 +34,7 @@
 		9E4A2C0924ACDED1005B36AC /* UIImage + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4A2C0824ACDED1005B36AC /* UIImage + Extensions.swift */; };
 		9E70B62524B755550022FEB4 /* DownloadsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62424B755550022FEB4 /* DownloadsController.swift */; };
 		9E70B62724B7941D0022FEB4 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */; };
+		9E7BD39524C9CEB700F5DD7E /* DarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39424C9CEB700F5DD7E /* DarkTableViewController.swift */; };
 		9E7F4F3424AA6898001C4AEE /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */; };
 		9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738B24B20867008CD566 /* DurationSlider.swift */; };
 		9E83738E24B239BF008CD566 /* PlayerDetailsView + Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */; };
@@ -65,7 +65,6 @@
 		9E00023824A98E2100A1E796 /* LacunaPodcasts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LacunaPodcasts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E00023B24A98E2100A1E796 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E00023D24A98E2100A1E796 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9E00023F24A98E2100A1E796 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9E00024224A98E2100A1E796 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9E00024424A98E2600A1E796 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E00024724A98E2600A1E796 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -91,6 +90,7 @@
 		9E4A2C0824ACDED1005B36AC /* UIImage + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extensions.swift"; sourceTree = "<group>"; };
 		9E70B62424B755550022FEB4 /* DownloadsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsController.swift; sourceTree = "<group>"; };
 		9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		9E7BD39424C9CEB700F5DD7E /* DarkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTableViewController.swift; sourceTree = "<group>"; };
 		9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		9E83738B24B20867008CD566 /* DurationSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationSlider.swift; sourceTree = "<group>"; };
 		9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView + Gestures.swift"; sourceTree = "<group>"; };
@@ -165,7 +165,6 @@
 				9E00025324A99C5000A1E796 /* Controllers */,
 				9E00023B24A98E2100A1E796 /* AppDelegate.swift */,
 				9E00023D24A98E2100A1E796 /* SceneDelegate.swift */,
-				9E00023F24A98E2100A1E796 /* ViewController.swift */,
 				9E00024124A98E2100A1E796 /* Main.storyboard */,
 				9E00024424A98E2600A1E796 /* Assets.xcassets */,
 				9E00024624A98E2600A1E796 /* LaunchScreen.storyboard */,
@@ -184,6 +183,7 @@
 				9E70B62424B755550022FEB4 /* DownloadsController.swift */,
 				9E00024F24A98EC800A1E796 /* MainTabBarController.swift */,
 				9E15E48B24BCBE0700060A57 /* SearchResultsController.swift */,
+				9E7BD39424C9CEB700F5DD7E /* DarkTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -398,7 +398,6 @@
 				9E4A2C0924ACDED1005B36AC /* UIImage + Extensions.swift in Sources */,
 				9E11F61F24AF689200DB9D0A /* UIWindow + Extensions.swift in Sources */,
 				9E70B62724B7941D0022FEB4 /* DatabaseManager.swift in Sources */,
-				9E00024024A98E2100A1E796 /* ViewController.swift in Sources */,
 				9EF3B27A24B61AE3005AC285 /* LibraryController.swift in Sources */,
 				9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */,
 				9EDB908B24AD98B1004D8EB1 /* AVPlayer + Extensions.swift in Sources */,
@@ -408,6 +407,7 @@
 				9E33BA7424AA45C900917EA1 /* PodcastCell.swift in Sources */,
 				9EF3B28924B6DB93005AC285 /* SwipeActionService.swift in Sources */,
 				9EFCB8CC24AB8B73007B1F77 /* EpisodeCell.swift in Sources */,
+				9E7BD39524C9CEB700F5DD7E /* DarkTableViewController.swift in Sources */,
 				9E95F71724BE47FC0019F8AF /* FileManager + Extensions.swift in Sources */,
 				9E70B62524B755550022FEB4 /* DownloadsController.swift in Sources */,
 				9EF3B27F24B62EB3005AC285 /* Constants.swift in Sources */,

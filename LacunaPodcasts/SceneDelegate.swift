@@ -23,6 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = UINavigationController(rootViewController: LibraryController())
         window?.makeKeyAndVisible()
         
+        
+        
 //        if let windowScene = scene as? UIWindowScene {
 //            let window = UIWindow(windowScene: windowScene)
 //            window.rootViewController = UIHostingController(rootView: contentView)
