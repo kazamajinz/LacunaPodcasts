@@ -11,7 +11,9 @@ import UIKit
 extension PlayerDetailsView {
     
     @objc func handleTapMaximize() {
-        UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: nil)
+        UIApplication.mainNavigationController()?.maximizePlayerDetails(episode: nil)
+        
+        //UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: nil)
     }
     
     @objc func handlePan(gesture: UIPanGestureRecognizer) {
@@ -36,8 +38,9 @@ extension PlayerDetailsView {
                 self.transform = .identity
             })
             
-            if abs(velocity.y) > 500 { // abs(translation.y) > 20 
-                UIApplication.mainTabBarController()?.toggleState()
+            if abs(velocity.y) > 500 { // abs(translation.y) > 20
+                UIApplication.mainNavigationController()?.toggleState()
+                //UIApplication.mainTabBarController()?.toggleState()
             }
         default:
             break

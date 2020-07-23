@@ -134,15 +134,15 @@ class EpisodesController: UITableViewController {
     
     
     @objc fileprivate func handlePlayerDetailsMinimize() {
-        if UIApplication.mainTabBarController()?.miniPlayerIsVisible == true {
-            let miniPlayerViewHeight = UIApplication.mainTabBarController()?.minimizedTopAnchorConstraint.constant ?? 0
-            let tabBarHeight = UIApplication.mainTabBarController()?.tabBar.frame.size.height ?? 0
-            let offsetY = abs(miniPlayerViewHeight) + tabBarHeight
-            print(miniPlayerViewHeight, tabBarHeight, offsetY)
+//        if UIApplication.mainTabBarController()?.miniPlayerIsVisible == true {
+            //let miniPlayerViewHeight = UIApplication.mainTabBarController()?.minimizedTopAnchorConstraint.constant ?? 0
+            //let tabBarHeight = UIApplication.mainTabBarController()?.tabBar.frame.size.height ?? 0
+            //let offsetY = abs(miniPlayerViewHeight) + tabBarHeight
+            //print(miniPlayerViewHeight, tabBarHeight, offsetY)
             
-            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
-        }
+            //tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+            //tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+//        }
     }
     
     //MARK: - Setup
@@ -215,6 +215,15 @@ class EpisodesController: UITableViewController {
     
     //MARK: - UITableView
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section != 0 {
+            let episode = episodes[indexPath.row]
+            UIApplication.mainNavigationController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
+            
+            //UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let activityIndicator = AlertService.showActivityIndicator()
         episodes.isEmpty ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
@@ -224,25 +233,15 @@ class EpisodesController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         episodes.isEmpty ? 100 : 0
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section != 0 {
-            let episode = episodes[indexPath.row]
-            UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: episodes)
-        }
-    }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        2
-    }
+    override func numberOfSections(in tableView: UITableView) -> Int { 2 }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 0 }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         section == 0 ? 1 : episodes.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        0
-    }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 

@@ -14,4 +14,8 @@ extension UIApplication {
         return UIWindow.key?.rootViewController as? MainTabBarController
     }
     
+    static func mainNavigationController() -> MainNavigationController? {
+        return UIWindow.key?.rootViewController as? MainNavigationController
+    }
+    
 }

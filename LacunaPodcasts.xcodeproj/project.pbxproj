@@ -35,6 +35,7 @@
 		9E70B62524B755550022FEB4 /* DownloadsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62424B755550022FEB4 /* DownloadsController.swift */; };
 		9E70B62724B7941D0022FEB4 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */; };
 		9E7BD39524C9CEB700F5DD7E /* DarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39424C9CEB700F5DD7E /* DarkTableViewController.swift */; };
+		9E7BD39724C9DEEC00F5DD7E /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */; };
 		9E7F4F3424AA6898001C4AEE /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */; };
 		9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738B24B20867008CD566 /* DurationSlider.swift */; };
 		9E83738E24B239BF008CD566 /* PlayerDetailsView + Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */; };
@@ -91,6 +92,7 @@
 		9E70B62424B755550022FEB4 /* DownloadsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsController.swift; sourceTree = "<group>"; };
 		9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9E7BD39424C9CEB700F5DD7E /* DarkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTableViewController.swift; sourceTree = "<group>"; };
+		9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		9E83738B24B20867008CD566 /* DurationSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationSlider.swift; sourceTree = "<group>"; };
 		9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView + Gestures.swift"; sourceTree = "<group>"; };
@@ -179,9 +181,10 @@
 				9EF3B27924B61AE3005AC285 /* LibraryController.swift */,
 				9E00025124A99C4500A1E796 /* PodcastsSearchController.swift */,
 				9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */,
+				9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */,
+				9E00024F24A98EC800A1E796 /* MainTabBarController.swift */,
 				9EF3B27B24B61F7C005AC285 /* HomeController.swift */,
 				9E70B62424B755550022FEB4 /* DownloadsController.swift */,
-				9E00024F24A98EC800A1E796 /* MainTabBarController.swift */,
 				9E15E48B24BCBE0700060A57 /* SearchResultsController.swift */,
 				9E7BD39424C9CEB700F5DD7E /* DarkTableViewController.swift */,
 			);
@@ -417,6 +420,7 @@
 				9EFCB8C924AB89BF007B1F77 /* Episode.swift in Sources */,
 				9E00023C24A98E2100A1E796 /* AppDelegate.swift in Sources */,
 				9E00025624A99CDA00A1E796 /* Podcast.swift in Sources */,
+				9E7BD39724C9DEEC00F5DD7E /* MainNavigationController.swift in Sources */,
 				9E11F61D24AF59EC00DB9D0A /* AlertService.swift in Sources */,
 				9E00025024A98EC800A1E796 /* MainTabBarController.swift in Sources */,
 				9E00025224A99C4500A1E796 /* PodcastsSearchController.swift in Sources */,

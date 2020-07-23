@@ -105,10 +105,10 @@ class DownloadsController: UITableViewController {
         let episode = episodes[indexPath.row]
         
         if episode.fileUrl != nil {
-            UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
+            //UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
         } else {
             AlertService.showFileUrlNotFoundAlert(on: self) { (action) in
-                UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
+                //UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
             }
         }
     }

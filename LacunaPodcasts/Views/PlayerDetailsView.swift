@@ -675,7 +675,8 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     }
     
     @IBAction func didTapDismiss(_ sender: Any) {
-        UIApplication.mainTabBarController()?.minimizePlayerDetails()
+        UIApplication.mainNavigationController()?.minimizePlayerDetails()
+        //UIApplication.mainTabBarController()?.minimizePlayerDetails()
     }
 }
 
