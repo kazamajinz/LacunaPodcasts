@@ -9,9 +9,7 @@
 import UIKit
 
 class LibraryController: UITableViewController {
-    
-    
-    
+
     deinit { print("LibraryController memory being reclaimed...") }
     
     // MARK: - Variables and Properties
@@ -25,13 +23,7 @@ class LibraryController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
-        
-        
-        
+        setupView()
         setupTableView()
         setupSearchBar()
         setupNavigationBarButtons()
@@ -45,9 +37,15 @@ class LibraryController: UITableViewController {
     
     // MARK: - Setup
     
-    fileprivate func setupSearchBar() {
+    private func setupView() {
+        view.backgroundColor = UIColor(named: K.Colors.darkBlue)
         navigationItem.title = "My Library"
         
+        // Removes Text from Back Button
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+    
+    fileprivate func setupSearchBar() {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.hidesNavigationBarDuringPresentation = false
@@ -55,10 +53,6 @@ class LibraryController: UITableViewController {
     }
     
     fileprivate func setupTableView() {
-        view.backgroundColor = UIColor(named: "darkBlue")
-        
-        // Removes Text from Back Button
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
     }
@@ -77,7 +71,8 @@ class LibraryController: UITableViewController {
     }
     
     @objc fileprivate func handleAddPodcast() {
-        print("add podcast")
+        let podcastsSearchController = PodcastsSearchController()
+        navigationController?.pushViewController(podcastsSearchController, animated: true)
     }
     
     

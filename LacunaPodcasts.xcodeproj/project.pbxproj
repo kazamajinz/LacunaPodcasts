@@ -176,10 +176,10 @@
 		9E00025324A99C5000A1E796 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9EF3B27B24B61F7C005AC285 /* HomeController.swift */,
+				9EF3B27924B61AE3005AC285 /* LibraryController.swift */,
 				9E00025124A99C4500A1E796 /* PodcastsSearchController.swift */,
 				9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */,
-				9EF3B27924B61AE3005AC285 /* LibraryController.swift */,
+				9EF3B27B24B61F7C005AC285 /* HomeController.swift */,
 				9E70B62424B755550022FEB4 /* DownloadsController.swift */,
 				9E00024F24A98EC800A1E796 /* MainTabBarController.swift */,
 				9E15E48B24BCBE0700060A57 /* SearchResultsController.swift */,

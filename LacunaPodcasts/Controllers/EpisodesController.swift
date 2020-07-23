@@ -36,7 +36,8 @@ class EpisodesController: UITableViewController {
     var podcast: Podcast? {
         didSet {
             fetchEpisodes()
-            self.navigationItem.title = self.podcast?.trackName
+            navigationItem.title = self.podcast?.trackName
+            view.backgroundColor = UIColor(named: K.Colors.darkBlue)
         }
     }
     
@@ -154,6 +155,7 @@ class EpisodesController: UITableViewController {
     }()
     
     fileprivate func setupTableView() {
+        
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeHeader.nib, forCellReuseIdentifier: EpisodeHeader.reuseIdentifier)
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)

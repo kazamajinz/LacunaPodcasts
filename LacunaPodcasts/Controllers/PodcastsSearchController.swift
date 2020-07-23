@@ -17,6 +17,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         setupSearchBar()
         setupTableView()
         
@@ -31,6 +32,11 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     //MARK: - Setup
     
+    private func setupView() {
+        navigationItem.title = "Add Podcast"
+        view.backgroundColor = UIColor(named: K.Colors.darkBlue)
+    }
+    
     fileprivate func setupSearchBar() {
         // Removes Text from Back Button
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -41,6 +47,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     fileprivate func setupTableView() {
+        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
     }
