@@ -10,8 +10,14 @@ import UIKit
 
 class CircularProgressBar: UIView {
     
-    let shapeLayer = CAShapeLayer()
-
+    private var progressLayer = CAShapeLayer()
+    private var trackLayer = CAShapeLayer()
+    private var pathCenter: CGPoint {
+        self.center
+    }
+    private var radius: CGFloat { 10 }
+    private var lineWidth: CGFloat { 2 }
+    
     var action: (() -> Void)?
     
     override init(frame: CGRect) {
@@ -25,45 +31,35 @@ class CircularProgressBar: UIView {
     }
     
     private func setupView() {
-        backgroundColor = .yellow
-        
-        let center = self.center
-        
-        
-        // Track Layer
-        let trackLayer = CAShapeLayer()
-        let circularPath = UIBezierPath(arcCenter: center, radius: 12, startAngle: -CGFloat.pi/2, endAngle: 2 * CGFloat.pi, clockwise: true)
-        trackLayer.path = circularPath.cgPath
+        self.layer.sublayers = nil
+        drawTrackLayer()
+        drawProgressLayer()
+    }
+    
+    private func drawTrackLayer() {
+        let path = UIBezierPath(arcCenter: pathCenter, radius: radius, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        trackLayer.path = path.cgPath
         trackLayer.strokeColor = UIColor(named: K.Colors.highlight)?.cgColor
-        trackLayer.lineWidth = 2
+        trackLayer.lineWidth = lineWidth
         trackLayer.fillColor = UIColor.clear.cgColor
         self.layer.addSublayer(trackLayer)
-        
-        // Progress Bar
-        shapeLayer.path = circularPath.cgPath
-        shapeLayer.strokeColor = UIColor(named: K.Colors.orange)?.cgColor
-        shapeLayer.lineWidth = 2
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineCap = CAShapeLayerLineCap.round
-        shapeLayer.strokeEnd = 0
-        self.layer.addSublayer(shapeLayer)
-        
-        
-        
-        self.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleTap)))
     }
     
-    @objc private func handleTap() {
-        action?()
+    private func drawProgressLayer() {
+        let startAngle = -CGFloat.pi/2
+        let endAngle = 2 * CGFloat.pi + startAngle
+        let path = UIBezierPath(arcCenter: pathCenter, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        progressLayer.path = path.cgPath
+        progressLayer.lineCap = .round
+        progressLayer.strokeColor = UIColor(named: K.Colors.orange)?.cgColor
+        progressLayer.fillColor = UIColor.clear.cgColor
+        progressLayer.lineWidth = lineWidth
+        progressLayer.strokeEnd = 0
+        self.layer.addSublayer(progressLayer)
     }
     
-    private func startAnimation() {
-        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        basicAnimation.toValue = 1
-        basicAnimation.duration = 2
-        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
-        basicAnimation.isRemovedOnCompletion = false
-        shapeLayer.add(basicAnimation, forKey: "basicAnimation")
+    public func setProgress(to progress: Double) {
+        progressLayer.strokeEnd = CGFloat(progress)
     }
-    
+
 }

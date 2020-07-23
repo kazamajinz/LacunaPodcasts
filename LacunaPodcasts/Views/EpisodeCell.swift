@@ -15,6 +15,7 @@ protocol EpisodeCellDelegate {
 class EpisodeCell: UITableViewCell {
     
     var delegate: EpisodeCellDelegate?
+    let circularProgressBar = CircularProgressBar()
     
     static var reuseIdentifier: String { String(describing: self) }
     static var nib: UINib { return UINib(nibName: String(describing: self), bundle: nil) }
@@ -30,36 +31,9 @@ class EpisodeCell: UITableViewCell {
     
     @IBOutlet weak var downloadStatusView: UIView! {
         didSet {
-            let circularProgressBar = CircularProgressBar()
+            
             downloadStatusView.addSubview(circularProgressBar)
             circularProgressBar.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
-            circularProgressBar.action = {
-                print("alskjflaskjdflkasjdf")
-            }
-            
-//            let center = downloadStatusView.center
-//
-//
-//            // Track Layer
-//            let trackLayer = CAShapeLayer()
-//            let circularPath = UIBezierPath(arcCenter: center, radius: 12, startAngle: -CGFloat.pi/2, endAngle: 2 * CGFloat.pi, clockwise: true)
-//            trackLayer.path = circularPath.cgPath
-//            trackLayer.strokeColor = UIColor(named: K.Colors.highlight)?.cgColor
-//            trackLayer.lineWidth = 2
-//            trackLayer.fillColor = UIColor.clear.cgColor
-//            self.layer.addSublayer(trackLayer)
-//
-//            // Progress Bar
-//            let shapeLayer = CAShapeLayer()
-//            shapeLayer.path = circularPath.cgPath
-//            shapeLayer.strokeColor = UIColor(named: K.Colors.orange)?.cgColor
-//            shapeLayer.lineWidth = 2
-//            shapeLayer.fillColor = UIColor.clear.cgColor
-//            shapeLayer.lineCap = CAShapeLayerLineCap.round
-//            shapeLayer.strokeEnd = 0
-//            self.layer.addSublayer(shapeLayer)
-//
-//
         }
     }
     
@@ -105,6 +79,12 @@ class EpisodeCell: UITableViewCell {
     
     func updateDisplay(progress: Double) {
         //cancelButton.isHidden = false
+        circularProgressBar.setProgress(to: progress)
+        
+        
+        
+        
+        
         pubDateLabel.text = "Downloading... \(Int(progress * 100))%"
     }
 }
