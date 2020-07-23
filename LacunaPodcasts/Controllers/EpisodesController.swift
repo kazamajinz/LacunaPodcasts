@@ -95,6 +95,9 @@ class EpisodesController: UITableViewController {
         
         guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
         guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
+        
+        
+        
 
         // Update UI
         DispatchQueue.main.async {
@@ -261,6 +264,11 @@ class EpisodesController: UITableViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
             cell.delegate = self
             cell.episode = episodes[indexPath.row]
+            
+            
+            
+            
+            
 
             if let collectionId = podcast?.collectionId {
                 cell.episode.collectionId = collectionId
@@ -285,7 +293,7 @@ class EpisodesController: UITableViewController {
         
         switch indexPath.section {
         case 1:
-            if !episode.isDownloaded {
+            if episode.downloadStatus != .completed {
                 // Download Action
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
                     // check if episode is already downloaded

@@ -33,15 +33,35 @@ class EpisodeCell: UITableViewCell {
             let circularProgressBar = CircularProgressBar()
             downloadStatusView.addSubview(circularProgressBar)
             circularProgressBar.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
+            circularProgressBar.action = {
+                print("alskjflaskjdflkasjdf")
+            }
             
-            downloadStatusView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleTapCancel)))
+//            let center = downloadStatusView.center
+//
+//
+//            // Track Layer
+//            let trackLayer = CAShapeLayer()
+//            let circularPath = UIBezierPath(arcCenter: center, radius: 12, startAngle: -CGFloat.pi/2, endAngle: 2 * CGFloat.pi, clockwise: true)
+//            trackLayer.path = circularPath.cgPath
+//            trackLayer.strokeColor = UIColor(named: K.Colors.highlight)?.cgColor
+//            trackLayer.lineWidth = 2
+//            trackLayer.fillColor = UIColor.clear.cgColor
+//            self.layer.addSublayer(trackLayer)
+//
+//            // Progress Bar
+//            let shapeLayer = CAShapeLayer()
+//            shapeLayer.path = circularPath.cgPath
+//            shapeLayer.strokeColor = UIColor(named: K.Colors.orange)?.cgColor
+//            shapeLayer.lineWidth = 2
+//            shapeLayer.fillColor = UIColor.clear.cgColor
+//            shapeLayer.lineCap = CAShapeLayerLineCap.round
+//            shapeLayer.strokeEnd = 0
+//            self.layer.addSublayer(shapeLayer)
+//
+//
         }
     }
-
-    @objc private func handleTapCancel() {
-        delegate?.didTapCancel(self)
-    }
-    
     
     
     
@@ -54,7 +74,7 @@ class EpisodeCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedBackgroundView?.isHidden = true
-        containerView.backgroundColor = selected ? UIColor(named: K.Colors.highlight) : UIColor(named: K.Colors.darkBlue)
+        containerView.backgroundColor = selected ? UIColor(named: K.Colors.blue) : UIColor(named: K.Colors.darkBlue)
     }
     
     @IBAction func didTapCancel(_ sender: Any) {
@@ -84,7 +104,7 @@ class EpisodeCell: UITableViewCell {
     }
     
     func updateDisplay(progress: Double) {
-        cancelButton.isHidden = false
+        //cancelButton.isHidden = false
         pubDateLabel.text = "Downloading... \(Int(progress * 100))%"
     }
 }

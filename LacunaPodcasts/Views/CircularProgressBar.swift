@@ -11,6 +11,8 @@ import UIKit
 class CircularProgressBar: UIView {
     
     let shapeLayer = CAShapeLayer()
+
+    var action: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,11 +25,14 @@ class CircularProgressBar: UIView {
     }
     
     private func setupView() {
+        backgroundColor = .yellow
+        
         let center = self.center
+        
         
         // Track Layer
         let trackLayer = CAShapeLayer()
-        let circularPath = UIBezierPath(arcCenter: center, radius: 20, startAngle: -CGFloat.pi/2, endAngle: 2 * CGFloat.pi, clockwise: true)
+        let circularPath = UIBezierPath(arcCenter: center, radius: 12, startAngle: -CGFloat.pi/2, endAngle: 2 * CGFloat.pi, clockwise: true)
         trackLayer.path = circularPath.cgPath
         trackLayer.strokeColor = UIColor(named: K.Colors.highlight)?.cgColor
         trackLayer.lineWidth = 2
@@ -42,15 +47,23 @@ class CircularProgressBar: UIView {
         shapeLayer.lineCap = CAShapeLayerLineCap.round
         shapeLayer.strokeEnd = 0
         self.layer.addSublayer(shapeLayer)
+        
+        
+        
+        self.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleTap)))
     }
     
-//    @objc private func handleTap() {
-//        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-//        basicAnimation.toValue = 1
-//        basicAnimation.duration = 2
-//        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
-//        basicAnimation.isRemovedOnCompletion = false
-//        shapeLayer.add(basicAnimation, forKey: "basicAnimation")
-//    }
+    @objc private func handleTap() {
+        action?()
+    }
+    
+    private func startAnimation() {
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.toValue = 1
+        basicAnimation.duration = 2
+        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
+        basicAnimation.isRemovedOnCompletion = false
+        shapeLayer.add(basicAnimation, forKey: "basicAnimation")
+    }
     
 }
