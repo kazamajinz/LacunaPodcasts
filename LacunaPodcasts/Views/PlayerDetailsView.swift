@@ -66,11 +66,11 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     var isPlaying: Bool! {
         didSet {
             if isPlaying {
-                playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-                miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+                playPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+                miniPlayPauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
             } else {
-                playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-                miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+                playPauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+                miniPlayPauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
             }
         }
     }

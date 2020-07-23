@@ -24,11 +24,32 @@ enum State {
 
 class MainNavigationController: UINavigationController {
     
+    // MARK: - Variables and Properties
+    
+    let playerDetailsView = PlayerDetailsView()
+    var maximizedTopAnchorConstraint: NSLayoutConstraint!
+    var minimizedTopAnchorConstraint: NSLayoutConstraint!
+    var bottomAnchorConstraint: NSLayoutConstraint!
+    
     // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPlayerDetailsView()
+    }
+    
+    //MARK: - Setup
+
+    fileprivate func setupPlayerDetailsView() {
+        view.addSubview(playerDetailsView)
+        playerDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
+        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -64)
+        maximizedTopAnchorConstraint.isActive = true
+        bottomAnchorConstraint = playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
+        bottomAnchorConstraint.isActive = true
+        playerDetailsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        playerDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
     //MARK: - Animations
@@ -47,16 +68,14 @@ class MainNavigationController: UINavigationController {
         return UIViewPropertyAnimator(duration: animationDuration, dampingRatio: 1)
     }()
     
-    private var animationDuration: TimeInterval = 0.5
+    private var animationDuration: TimeInterval = 5.0
     private var shortAnimationDuration: TimeInterval {
         return animationDuration * 0.05
     }
     private var animationDelay: CGFloat = 0.5
     
     func maximize() {
-        
         animator.addAnimations { [weak self] in
-            
             guard let self = self else { return }
             
             // AUTO-LAYOUT
@@ -83,10 +102,6 @@ class MainNavigationController: UINavigationController {
             guard let self = self else { return }
             self.playerDetailsView.maxiHeader.alpha = 1
             self.playerDetailsView.playerControlsContainer.alpha = 1
-            
-            
-            
-            
             }, delayFactor: self.animationDelay)
         
         // ANIMATE OUT:  Mini Player - THIS NEEDS TO FADE OUT SOONER!!!!!
@@ -95,9 +110,6 @@ class MainNavigationController: UINavigationController {
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.miniPlayerView.alpha = 0
                 self.playerDetailsView.miniProgressBar.alpha = 0
-                
-                
-                
             })
         })
         
@@ -204,24 +216,6 @@ class MainNavigationController: UINavigationController {
     
     
     
-    //MARK: - Setup
     
-    let playerDetailsView = PlayerDetailsView()
-    
-    var maximizedTopAnchorConstraint: NSLayoutConstraint!
-    var minimizedTopAnchorConstraint: NSLayoutConstraint!
-    var bottomAnchorConstraint: NSLayoutConstraint!
-    
-    fileprivate func setupPlayerDetailsView() {
-        view.addSubview(playerDetailsView)
-        playerDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
-        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -64)
-        maximizedTopAnchorConstraint.isActive = true
-        bottomAnchorConstraint = playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
-        bottomAnchorConstraint.isActive = true
-        playerDetailsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        playerDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    }
 }
 

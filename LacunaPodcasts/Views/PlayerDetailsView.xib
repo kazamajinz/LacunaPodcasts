@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,7 +60,7 @@
                                                 <constraint firstAttribute="height" constant="36" id="sM2-HG-Hr2"/>
                                                 <constraint firstAttribute="width" secondItem="yaV-FN-VLk" secondAttribute="height" id="tFf-92-qtm"/>
                                             </constraints>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" image="chevron.down" catalog="system">
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="default"/>
                                             </state>
@@ -67,17 +68,17 @@
                                                 <action selector="didTapDismiss:" destination="-1" eventType="touchUpInside" id="aTd-EC-Bte"/>
                                             </connections>
                                         </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Bcw-sQ-zMZ">
-                                            <rect key="frame" x="36" y="7.5" width="326" height="33"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Bcw-sQ-zMZ">
+                                            <rect key="frame" x="36" y="6.5" width="326" height="35"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Episode Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnF-Ug-jbk">
                                                     <rect key="frame" x="119.5" y="0.0" width="87" height="17"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="AUTHOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lrr-eX-ZP0">
-                                                    <rect key="frame" x="138.5" y="19" width="49.5" height="14"/>
+                                                    <rect key="frame" x="138.5" y="21" width="49.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -90,7 +91,7 @@
                                                 <constraint firstAttribute="height" constant="36" id="AeL-w7-Xru"/>
                                                 <constraint firstAttribute="width" secondItem="ram-Zg-0vt" secondAttribute="height" id="nOA-Yk-GTk"/>
                                             </constraints>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" image="ellipsis" catalog="system">
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="default"/>
                                             </state>
@@ -189,6 +190,7 @@
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="36" id="JnX-hy-XfJ"/>
                                                     </constraints>
@@ -205,8 +207,10 @@
                                                                         <constraint firstAttribute="width" secondItem="7K5-cI-z9e" secondAttribute="height" id="5OP-19-7Tq"/>
                                                                         <constraint firstAttribute="width" constant="48" id="Iay-Gc-LWs"/>
                                                                     </constraints>
-                                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <state key="normal" image="rewind15"/>
+                                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <state key="normal" image="gobackward.15" catalog="system">
+                                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="didRewind:" destination="-1" eventType="touchUpInside" id="VOj-VA-ND1"/>
                                                                     </connections>
@@ -217,8 +221,10 @@
                                                                         <constraint firstAttribute="width" constant="48" id="Ox7-er-Q3t"/>
                                                                         <constraint firstAttribute="width" secondItem="I0k-34-Wf8" secondAttribute="height" id="SlJ-sF-pRu"/>
                                                                     </constraints>
-                                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <state key="normal" image="play"/>
+                                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <state key="normal" image="play.fill" catalog="system">
+                                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
+                                                                    </state>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zkj-WX-OPY">
                                                                     <rect key="frame" x="206" y="104" width="48" height="48"/>
@@ -226,16 +232,19 @@
                                                                         <constraint firstAttribute="width" secondItem="zkj-WX-OPY" secondAttribute="height" id="Wyu-NG-Lac"/>
                                                                         <constraint firstAttribute="width" constant="48" id="fNy-Go-Ax7"/>
                                                                     </constraints>
-                                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <state key="normal" image="fastforward15"/>
+                                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <state key="normal" image="goforward.15" catalog="system">
+                                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="didFastForward:" destination="-1" eventType="touchUpInside" id="ySG-oJ-pe4"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </stackView>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="oYf-rj-FwY" firstAttribute="leading" secondItem="4H1-Ku-1f2" secondAttribute="leading" constant="32" id="8yE-Ea-j3v"/>
                                                         <constraint firstAttribute="height" constant="256" id="9gH-Bh-opA"/>
@@ -246,12 +255,13 @@
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5uQ-a2-nPY">
                                                     <rect key="frame" x="0.0" y="292" width="318" height="56"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" name="blue"/>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="KmR-PR-KdL" firstAttribute="leading" secondItem="4Pl-FY-TtS" secondAttribute="leading" constant="48" id="Oct-LU-fPo"/>
                                         <constraint firstAttribute="bottom" secondItem="KmR-PR-KdL" secondAttribute="bottom" constant="32" id="XNs-uR-hyT"/>
@@ -278,22 +288,22 @@
                             <rect key="frame" x="8" y="0.0" width="398" height="64"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pd7-ES-cBw">
-                                    <rect key="frame" x="0.0" y="2" width="230" height="60"/>
+                                    <rect key="frame" x="0.0" y="2" width="266" height="60"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appicon" translatesAutoresizingMaskIntoConstraints="NO" id="biX-tA-T1B">
                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                         </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="696-V1-HaX">
-                                            <rect key="frame" x="68" y="17" width="162" height="26.5"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="696-V1-HaX">
+                                            <rect key="frame" x="68" y="15" width="198" height="30.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Episode Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0c-tc-sQs">
                                                     <rect key="frame" x="0.0" y="0.0" width="74.5" height="14.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="AUTHOR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1D-Z9-aEh">
-                                                    <rect key="frame" x="0.0" y="14.5" width="41.5" height="12"/>
+                                                    <rect key="frame" x="0.0" y="18.5" width="41.5" height="12"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -305,42 +315,50 @@
                                         <constraint firstItem="696-V1-HaX" firstAttribute="leading" secondItem="biX-tA-T1B" secondAttribute="trailing" constant="8" id="Alw-cL-hN9"/>
                                     </constraints>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCh-61-AUI">
-                                    <rect key="frame" x="238" y="8" width="48" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="PCh-61-AUI" secondAttribute="height" multiplier="1:1" id="PJZ-YB-yUb"/>
-                                        <constraint firstAttribute="height" constant="48" id="TfG-vc-y0n"/>
-                                    </constraints>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                    <state key="normal" image="rewind15"/>
-                                    <connections>
-                                        <action selector="didRewind:" destination="-1" eventType="touchUpInside" id="PTf-ji-nfp"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPF-gQ-cOj">
-                                    <rect key="frame" x="294" y="8" width="48" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="cPF-gQ-cOj" secondAttribute="height" multiplier="1:1" id="OUa-KA-jeD"/>
-                                        <constraint firstAttribute="height" constant="48" id="z1k-69-Lw5"/>
-                                    </constraints>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                    <state key="normal" image="pause"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVR-RT-MFD">
-                                    <rect key="frame" x="350" y="8" width="48" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="gVR-RT-MFD" secondAttribute="height" multiplier="1:1" id="WCd-4w-lDb"/>
-                                        <constraint firstAttribute="height" constant="48" id="nkM-0s-bQu"/>
-                                    </constraints>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                    <state key="normal" image="fastforward15"/>
-                                    <connections>
-                                        <action selector="didFastForward:" destination="-1" eventType="touchUpInside" id="h0r-OP-taV"/>
-                                    </connections>
-                                </button>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ie6-RG-pJp">
+                                    <rect key="frame" x="274" y="14" width="124" height="36"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCh-61-AUI">
+                                            <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="PCh-61-AUI" secondAttribute="height" multiplier="1:1" id="PJZ-YB-yUb"/>
+                                                <constraint firstAttribute="height" constant="36" id="TfG-vc-y0n"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" image="gobackward.15" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="didRewind:" destination="-1" eventType="touchUpInside" id="PTf-ji-nfp"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPF-gQ-cOj">
+                                            <rect key="frame" x="44" y="0.0" width="36" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="cPF-gQ-cOj" secondAttribute="height" multiplier="1:1" id="OUa-KA-jeD"/>
+                                                <constraint firstAttribute="height" constant="36" id="z1k-69-Lw5"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" image="pause.fill" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="28"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVR-RT-MFD">
+                                            <rect key="frame" x="88" y="0.0" width="36" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="gVR-RT-MFD" secondAttribute="height" multiplier="1:1" id="WCd-4w-lDb"/>
+                                                <constraint firstAttribute="height" constant="36" id="nkM-0s-bQu"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" image="goforward.15" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="didFastForward:" destination="-1" eventType="touchUpInside" id="h0r-OP-taV"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
                             </subviews>
                         </stackView>
                     </subviews>
@@ -355,13 +373,17 @@
                 </view>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fme-rv-D3d">
                     <rect key="frame" x="-4" y="0.0" width="422" height="45"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="minimumTrackTintColor" name="orange"/>
+                    <color key="maximumTrackTintColor" name="darkBlue"/>
                     <connections>
                         <action selector="didChangeCurrentTimeSlider:" destination="-1" eventType="valueChanged" id="D8b-oJ-ve6"/>
                         <action selector="didChangeCurrentTimeSlider:forEvent:" destination="-1" eventType="valueChanged" id="xN7-vT-mFq"/>
                     </connections>
                 </slider>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" name="blue"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="fme-rv-D3d" secondAttribute="trailing" constant="-2" id="3yg-sv-Kuz"/>
                 <constraint firstItem="M2N-et-AKj" firstAttribute="top" secondItem="fme-rv-D3d" secondAttribute="bottom" id="4ST-6e-iRE"/>
@@ -387,9 +409,18 @@
         <image name="appicon" width="60" height="60"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
-        <image name="fastforward15" width="45.5" height="45.5"/>
-        <image name="pause" width="57" height="57"/>
-        <image name="play" width="59" height="59"/>
-        <image name="rewind15" width="45.5" height="45.5"/>
+        <image name="gobackward.15" catalog="system" width="121" height="128"/>
+        <image name="goforward.15" catalog="system" width="121" height="128"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <namedColor name="blue">
+            <color red="0.14900000393390656" green="0.18400000035762787" blue="0.31400001049041748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="darkBlue">
+            <color red="0.10999999940395355" green="0.13300000131130219" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="orange">
+            <color red="0.99599999189376831" green="0.58799999952316284" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
