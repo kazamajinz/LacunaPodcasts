@@ -28,6 +28,10 @@ class EpisodeHeader: UITableViewCell {
     @IBOutlet weak var followButton: FollowButton!
     
     var descriptionLabelAction: (() -> Void)?
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        selectedBackgroundView?.isHidden = true
+    }
 
     var podcast: Podcast! {
         didSet {

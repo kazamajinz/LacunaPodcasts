@@ -31,26 +31,34 @@ class FollowButton: UIButton {
         setTitle("FOLLOW", for: .normal)
         setTitle("FOLLOWING", for: .selected)
         
-        setTitleColor(.black, for: .normal)
-        setTitleColor(.black, for: .highlighted)
-        setTitleColor(.black, for: .selected)
+        setTitleColor(.white, for: .normal)
+        setTitleColor(.white, for: .highlighted)
+        setTitleColor(.white, for: .selected)
         
         titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-        contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 12.0, bottom: 8.0, right: 12.0)
         
         // Border
         layer.borderColor = UIColor.lightGray.cgColor
         layer.borderWidth = 1.0
-        layer.cornerRadius = self.frame.size.height / 8
+        layer.cornerRadius = self.frame.size.height / 2
         
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let originalContentSize = super.intrinsicContentSize
+        let width = originalContentSize.width + 36
+        let height = originalContentSize.height + 12
+        layer.cornerRadius = height / 2
+        layer.masksToBounds = true
+        return CGSize(width: width, height: height)
     }
     
     override var isSelected: Bool {
         didSet {
             layer.borderColor = isSelected ? UIColor.black.cgColor : UIColor.lightGray.cgColor
+            backgroundColor = isSelected ? UIColor(named: K.Colors.orange) : UIColor.clear
         }
     }
-    
     
     override var isHighlighted: Bool {
         didSet {

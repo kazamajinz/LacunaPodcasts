@@ -21,7 +21,7 @@ class EpisodesController: UITableViewController {
 //    episodesController.podcast = podcast
     
     
-    let searchController = UISearchController(searchResultsController: SearchResultsController())
+    let searchController = SearchController(searchResultsController: SearchResultsController())
     
     
     

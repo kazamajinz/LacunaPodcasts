@@ -35,6 +35,7 @@
 		9E70B62524B755550022FEB4 /* DownloadsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62424B755550022FEB4 /* DownloadsController.swift */; };
 		9E70B62724B7941D0022FEB4 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */; };
 		9E7BD39724C9DEEC00F5DD7E /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */; };
+		9E7BD39A24CA0D2600F5DD7E /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39924CA0D2600F5DD7E /* SearchController.swift */; };
 		9E7F4F3424AA6898001C4AEE /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */; };
 		9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738B24B20867008CD566 /* DurationSlider.swift */; };
 		9E83738E24B239BF008CD566 /* PlayerDetailsView + Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */; };
@@ -91,6 +92,7 @@
 		9E70B62424B755550022FEB4 /* DownloadsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsController.swift; sourceTree = "<group>"; };
 		9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		9E7BD39924CA0D2600F5DD7E /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		9E83738B24B20867008CD566 /* DurationSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationSlider.swift; sourceTree = "<group>"; };
 		9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView + Gestures.swift"; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */,
 				9EF3B28424B646DA005AC285 /* FollowButton.swift */,
 				9E15E48724BBD34900060A57 /* EpisodeDescriptionTextView.swift */,
+				9E7BD39924CA0D2600F5DD7E /* SearchController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				9EF3B27F24B62EB3005AC285 /* Constants.swift in Sources */,
 				9E4A2BFF24ACC4F5005B36AC /* RSSFeed.swift in Sources */,
 				9EFCB8CF24AB96D4007B1F77 /* EpisodeHeader.swift in Sources */,
+				9E7BD39A24CA0D2600F5DD7E /* SearchController.swift in Sources */,
 				9E4A2BFB24AC1423005B36AC /* String + Extensions.swift in Sources */,
 				9EFCB8C924AB89BF007B1F77 /* Episode.swift in Sources */,
 				9E00023C24A98E2100A1E796 /* AppDelegate.swift in Sources */,
