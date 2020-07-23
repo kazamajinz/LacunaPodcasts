@@ -155,7 +155,7 @@ class EpisodesController: UITableViewController {
     }()
     
     fileprivate func setupTableView() {
-        
+        tableView.separatorColor = UIColor(named: K.Colors.blue)
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeHeader.nib, forCellReuseIdentifier: EpisodeHeader.reuseIdentifier)
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
@@ -272,8 +272,8 @@ class EpisodesController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.separatorInset = UIEdgeInsets.zero
-        cell.layoutMargins = UIEdgeInsets.zero
+//        cell.separatorInset = UIEdgeInsets.zero
+//        cell.layoutMargins = UIEdgeInsets.zero
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

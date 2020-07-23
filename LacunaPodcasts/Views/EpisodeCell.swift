@@ -39,7 +39,7 @@ class EpisodeCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        containerView.backgroundColor = selected ? #colorLiteral(red: 1, green: 0.9623333327, blue: 0.95, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        //containerView.backgroundColor = selected ? #colorLiteral(red: 1, green: 0.9623333327, blue: 0.95, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
     @IBAction func didTapCancel(_ sender: Any) {

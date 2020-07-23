@@ -3,6 +3,7 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,17 +21,17 @@
                             <rect key="frame" x="12" y="12" width="378" height="303"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="8bU-nP-ENo">
-                                    <rect key="frame" x="0.0" y="0.0" width="349.33333333333331" height="238.66666666666666"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="349.33333333333331" height="218.33333333333334"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KzN-OW-a80">
-                                            <rect key="frame" x="0.0" y="69.333333333333329" width="100" height="99.999999999999986"/>
+                                            <rect key="frame" x="0.0" y="59.333333333333329" width="100" height="99.999999999999986"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="750" constant="100" id="OLJ-pP-RqW"/>
                                                 <constraint firstAttribute="height" priority="750" constant="100" id="bmq-aM-mDs"/>
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="h3e-lR-fZu">
-                                            <rect key="frame" x="112.00000000000001" y="92.666666666666671" width="237.33333333333337" height="53.333333333333329"/>
+                                            <rect key="frame" x="112.00000000000001" y="82.666666666666671" width="237.33333333333337" height="53.333333333333329"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Dc1-Q3-2C2">
                                                     <rect key="frame" x="0.0" y="0.0" width="237.33333333333334" height="53.333333333333336"/>
@@ -41,13 +42,13 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PODCAST TITLE" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBN-Bj-WLa">
                                                                     <rect key="frame" x="0.0" y="0.0" width="237.33333333333334" height="36"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AUTHOR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4K2-qI-ePQ">
                                                                     <rect key="frame" x="0.0" y="36.999999999999986" width="57.666666666666664" height="16.333333333333329"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -59,7 +60,7 @@
                                     </subviews>
                                 </stackView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu5-GF-GYe" customClass="FollowButton" customModule="LacunaPodcasts" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="250.66666666666669" width="43" height="24"/>
+                                    <rect key="frame" x="0.0" y="230.33333333333334" width="43" height="24"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="10"/>
                                     <state key="normal" title="FOLLOW">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -68,16 +69,23 @@
                                         <action selector="didPressFollow:" destination="EVo-M3-1Oy" eventType="touchUpInside" id="zDB-rI-HBu"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SGJ-sL-LGQ">
-                                    <rect key="frame" x="0.0" y="286.66666666666669" width="127.33333333333333" height="16.333333333333314"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                    <nil key="textColor"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SGJ-sL-LGQ">
+                                    <rect key="frame" x="0.0" y="266.33333333333331" width="378" height="36.666666666666686"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="Multi-line podcast description to see the spacing and how it looks in the cell.">
+                                            <attributes>
+                                                <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="4" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" name="darkBlue"/>
                     <constraints>
                         <constraint firstItem="UIC-hd-zfQ" firstAttribute="leading" secondItem="b8y-O7-HWm" secondAttribute="leading" constant="12" id="F4I-3A-a89"/>
                         <constraint firstItem="UIC-hd-zfQ" firstAttribute="top" secondItem="b8y-O7-HWm" secondAttribute="top" constant="12" id="Is1-Yf-Ewi"/>
@@ -104,4 +112,9 @@
             <point key="canvasLocation" x="-3688" y="-1094.7044334975369"/>
         </view>
     </objects>
+    <resources>
+        <namedColor name="darkBlue">
+            <color red="0.10999999940395355" green="0.13300000131130219" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>
