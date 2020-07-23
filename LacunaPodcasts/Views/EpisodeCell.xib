@@ -108,7 +108,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="WH5-h4-ke3" secondAttribute="bottom" constant="32" id="6aK-4f-UTB"/>
                                             <constraint firstItem="WH5-h4-ke3" firstAttribute="top" secondItem="y62-kO-xs6" secondAttribute="top" constant="32" id="bCy-qz-i8k"/>

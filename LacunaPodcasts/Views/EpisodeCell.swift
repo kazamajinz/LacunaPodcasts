@@ -30,12 +30,19 @@ class EpisodeCell: UITableViewCell {
     
     @IBOutlet weak var downloadStatusView: UIView! {
         didSet {
-            let status = DownloadStatus()
-            downloadStatusView.addSubview(status)
-            status.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
+            let circularProgressBar = CircularProgressBar()
+            downloadStatusView.addSubview(circularProgressBar)
+            circularProgressBar.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
+            
+            downloadStatusView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleTapCancel)))
         }
     }
 
+    @objc private func handleTapCancel() {
+        delegate?.didTapCancel(self)
+    }
+    
+    
     
     
     
