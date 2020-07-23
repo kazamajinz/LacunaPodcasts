@@ -18,7 +18,11 @@ class PodcastCell: UITableViewCell {
         return UINib(nibName: String(describing: self), bundle: nil)
     }
     
-    @IBOutlet weak var podcastImageView: UIImageView!
+    @IBOutlet weak var podcastImageView: UIImageView!  {
+           didSet {
+               podcastImageView.roundCorners(cornerRadius: 4.0)
+           }
+       }
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var episodeCountLabel: UILabel!

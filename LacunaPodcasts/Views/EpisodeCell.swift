@@ -27,7 +27,7 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         cancelButton.isHidden = true
