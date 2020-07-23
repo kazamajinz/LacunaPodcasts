@@ -44,7 +44,7 @@ class MainNavigationController: UINavigationController {
         view.addSubview(playerDetailsView)
         playerDetailsView.translatesAutoresizingMaskIntoConstraints = false
         maximizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
-        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -64)
+        minimizedTopAnchorConstraint = playerDetailsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -66)
         maximizedTopAnchorConstraint.isActive = true
         bottomAnchorConstraint = playerDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
         bottomAnchorConstraint.isActive = true
@@ -133,8 +133,10 @@ class MainNavigationController: UINavigationController {
             self.playerDetailsView.episodeImageContainerHeight.constant = 64
             self.playerDetailsView.episodeDescriptionTextViewLeading.constant = 0
             self.playerDetailsView.episodeDescriptionTextViewContainer.roundCorners(cornerRadius: 0)
-            self.playerDetailsView.episodeImageViewLeading.constant = 0
-            self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 0)
+            self.playerDetailsView.episodeImageViewTop.constant = 8
+            self.playerDetailsView.episodeImageViewLeading.constant = 8
+            self.playerDetailsView.episodeImageViewBottom.constant = 8
+            self.playerDetailsView.episodeImageView.roundCorners(cornerRadius: 4)
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
         }
@@ -145,9 +147,6 @@ class MainNavigationController: UINavigationController {
             UIView.animate(withDuration: self.shortAnimationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.playerDetailsView.maxiHeader.alpha = 0
                 self.playerDetailsView.playerControlsContainer.alpha = 0
-                
-                
-                
                 self.playerDetailsView.episodeDescriptionTextViewContainer.alpha = 0
             })
         })
