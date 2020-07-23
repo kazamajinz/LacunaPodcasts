@@ -15,7 +15,7 @@ class CircularProgressBar: UIView {
     private var pathCenter: CGPoint {
         self.center
     }
-    private var radius: CGFloat { 10 }
+    private var radius: CGFloat { 14 }
     private var lineWidth: CGFloat { 2 }
     
     var action: (() -> Void)?
@@ -61,5 +61,17 @@ class CircularProgressBar: UIView {
     public func setProgress(to progress: Double) {
         progressLayer.strokeEnd = CGFloat(progress)
     }
+    
+//    private func animateCircle() {
+//        let animation = CABasicAnimation(keyPath: "strokeEnd")
+//        animation.toValue = 1
+//        animation.duration = 2
+//        animation.fillMode = .forwards
+//        animation.isRemovedOnCompletion = false
+//        progressLayer.add(animation, forKey: "animation")
+//    }
 
 }
+
+
+

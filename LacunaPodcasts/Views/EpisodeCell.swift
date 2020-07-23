@@ -15,7 +15,16 @@ protocol EpisodeCellDelegate {
 class EpisodeCell: UITableViewCell {
     
     var delegate: EpisodeCellDelegate?
-    let circularProgressBar = CircularProgressBar()
+    
+    let circularProgressBar: CircularProgressBar = {
+        let bar = CircularProgressBar()
+        bar.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(handleTap)))
+        return bar
+    }()
+    
+    @objc private func handleTap() {
+        print("TAPPED!")
+    }
     
     static var reuseIdentifier: String { String(describing: self) }
     static var nib: UINib { return UINib(nibName: String(describing: self), bundle: nil) }
@@ -31,7 +40,6 @@ class EpisodeCell: UITableViewCell {
     
     @IBOutlet weak var downloadStatusView: UIView! {
         didSet {
-            
             downloadStatusView.addSubview(circularProgressBar)
             circularProgressBar.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
         }
@@ -74,17 +82,21 @@ class EpisodeCell: UITableViewCell {
 
             // Non-nil Download object means a download is in progress
             if let _ = APIService.shared.activeDownloads[episode.streamUrl] { }
+            
+            
+            
+            
         }
     }
     
+    
+    
+    
+    
+    
     func updateDisplay(progress: Double) {
-        //cancelButton.isHidden = false
+        downloadStatusView.isHidden = false
         circularProgressBar.setProgress(to: progress)
-        
-        
-        
-        
-        
         pubDateLabel.text = "Downloading... \(Int(progress * 100))%"
     }
 }
