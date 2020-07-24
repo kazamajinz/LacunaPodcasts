@@ -26,9 +26,6 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
-    
-    
-
     @IBOutlet weak var downloadStatusVerticalBar: UIView!
     @IBOutlet weak var downloadStatusView: UIView!
     @IBOutlet weak var downloadStatusButton: UIButton! {
@@ -74,6 +71,8 @@ class EpisodeCell: UITableViewCell {
     
     var episode: Episode! {
         didSet {
+            
+            
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
             titleLabel.text = episode.title
@@ -89,26 +88,24 @@ class EpisodeCell: UITableViewCell {
             
             
             
-            titleLabel.textColor = episode.downloadStatus.titleColor
-            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
-            detailsLabel.textColor = episode.downloadStatus.detailsColor
-            
-            
             if episode.downloadStatus == .completed {
                 downloadStatusVerticalBar.isHidden = false
+                titleLabel.textColor = UIColor.white
+                descriptionLabel.textColor = UIColor(named: K.Colors.lightGray)
+                detailsLabel.textColor = UIColor(named: K.Colors.lightGray)
             }
 
             // Non-nil Download object means a download is in progress
-            if let _ = APIService.shared.activeDownloads[episode.streamUrl] {
-                detailsLabel.textColor = UIColor(named: K.Colors.orange)
-            }
+            if let _ = APIService.shared.activeDownloads[episode.streamUrl] {}
         }
     }
     
-    
-    
-    
-    
+    func updateLabelColors() {
+        downloadStatusView.isHidden = true
+        titleLabel.textColor = episode.downloadStatus.titleColor
+        descriptionLabel.textColor = episode.downloadStatus.descriptionColor
+        detailsLabel.textColor = episode.downloadStatus.detailsColor
+    }
     
     func updateDisplay(progress: Double) {
         downloadStatusView.isHidden = false
@@ -117,7 +114,6 @@ class EpisodeCell: UITableViewCell {
     }
     
     func updateDisplayForDownloadPending() {
-        detailsLabel.textColor = UIColor(named: K.Colors.orange)
         detailsLabel.text = "Waiting for download..."
     }
     

@@ -604,7 +604,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
             miniProgressBar.isUserInteractionEnabled = false
             miniProgressBar.setThumbImage(UIImage(), for: .normal)
             miniProgressBar.minimumTrackTintColor = UIColor(named: K.Colors.orange)
-            miniProgressBar.maximumTrackTintColor = UIColor(named: K.Colors.highlight)
+            miniProgressBar.maximumTrackTintColor = UIColor(named: K.Colors.lightGray)
         }
     }
     @IBOutlet weak var miniTitleLabel: UILabel!
