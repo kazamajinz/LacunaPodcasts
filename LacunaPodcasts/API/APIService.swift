@@ -48,7 +48,6 @@ class APIService {
             if response.error != nil {
                 print("The download for episode, \(episode.title), has been cancelled.")
             } else {
-                
                 print("Finished downloading episode: \(episode.title), to \(response.fileURL?.path ?? "")")
                 
                 let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.path ?? "", episode.title, episode.streamUrl)

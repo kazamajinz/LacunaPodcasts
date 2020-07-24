@@ -22,8 +22,7 @@ class EpisodeCell: UITableViewCell {
     var delegate: EpisodeCellDelegate?
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var pubDateLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var detailsLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
@@ -67,6 +66,7 @@ class EpisodeCell: UITableViewCell {
         didSet {
             titleLabel.textColor = episode.downloadStatus.titleColor
             descriptionLabel.textColor = episode.downloadStatus.descriptionColor
+            detailsLabel.textColor = episode.downloadStatus.descriptionColor
             
             
             
@@ -76,13 +76,9 @@ class EpisodeCell: UITableViewCell {
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description.stripOutHtml()
             
-            
             let pubDate = dateFormatter.string(from: episode.pubDate).uppercased()
             let duration = episode.duration.toDisplayString()
-            pubDateLabel.text = "\(pubDate) • \(duration)"
-            
-            
-            
+            detailsLabel.text = "\(pubDate) • \(duration)"
             
             // Non-nil Download object means a download is in progress
             //if let _ = APIService.shared.activeDownloads[episode.streamUrl] { }
@@ -97,10 +93,11 @@ class EpisodeCell: UITableViewCell {
     func updateDisplay(progress: Double) {
         downloadStatusView.isHidden = false
         circularProgressBar.setProgress(to: progress)
-        pubDateLabel.text = "Downloading... \(Int(progress * 100))%"
+        detailsLabel.text = "Downloading... \(Int(progress * 100))%"
     }
     
-    func updateDisplay(string: String) {
-        pubDateLabel.text = "Waiting for download..."
+    func updateDisplayForDownloadPending() {
+        detailsLabel.text = "Waiting for download..."
+        detailsLabel.textColor = UIColor(named: K.Colors.orange)
     }
 }
