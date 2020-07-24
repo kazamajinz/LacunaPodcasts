@@ -62,10 +62,9 @@ class CircularProgressBar: UIView {
     private func drawTrackLayer() {
         let path = UIBezierPath(arcCenter: .zero, radius: radius, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
         trackLayer.path = path.cgPath
-        //trackLayer.strokeColor = UIColor(named: K.Colors.blue)?.cgColor
-        trackLayer.strokeColor = UIColor.clear.cgColor
+        trackLayer.strokeColor = UIColor(named: K.Colors.highlight)?.cgColor
         trackLayer.lineWidth = lineWidth
-        trackLayer.fillColor = UIColor(named: K.Colors.highlight)?.cgColor
+        trackLayer.fillColor = UIColor(named: K.Colors.midnight)?.cgColor
         trackLayer.position = self.center
         layer.addSublayer(trackLayer)
     }

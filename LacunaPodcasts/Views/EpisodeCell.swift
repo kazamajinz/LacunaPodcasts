@@ -43,8 +43,10 @@ class EpisodeCell: UITableViewCell {
     }()
     
     @objc private func handleTap() {
-        print("TAPPED!")
+        delegate?.didTapCancel(self)
     }
+    
+    
     
     
     
@@ -59,6 +61,7 @@ class EpisodeCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         selectedBackgroundView?.isHidden = true
         containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
+        downloadStatusView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
     }
     
     @IBAction func didTapCancel(_ sender: Any) {
