@@ -27,7 +27,6 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
-    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var downloadStatusView: UIView!
     @IBOutlet weak var downloadStatusButton: UIButton! {
         didSet {
@@ -45,13 +44,7 @@ class EpisodeCell: UITableViewCell {
     @objc private func handleTap() {
         delegate?.didTapCancel(self)
     }
-    
-    
-    
-    
-    
-    
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         downloadStatusView.isHidden = true
@@ -64,10 +57,6 @@ class EpisodeCell: UITableViewCell {
         downloadStatusView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
     }
     
-    @IBAction func didTapCancel(_ sender: Any) {
-        delegate?.didTapCancel(self)
-    }
-    
     var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd, yyyy"
@@ -77,20 +66,26 @@ class EpisodeCell: UITableViewCell {
     var episode: Episode! {
         didSet {
             titleLabel.textColor = episode.downloadStatus.titleColor
+            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
+            
+            
+            
             
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description.stripOutHtml()
-            pubDateLabel.text = dateFormatter.string(from: episode.pubDate).uppercased()
-            durationLabel.text = episode.duration.toDisplayString()
+            
+            
+            let pubDate = dateFormatter.string(from: episode.pubDate).uppercased()
+            let duration = episode.duration.toDisplayString()
+            pubDateLabel.text = "\(pubDate) • \(duration)"
+            
+            
+            
             
             // Non-nil Download object means a download is in progress
-            if let _ = APIService.shared.activeDownloads[episode.streamUrl] { }
-            
-            
-            
-            
+            //if let _ = APIService.shared.activeDownloads[episode.streamUrl] { }
         }
     }
     
@@ -103,5 +98,9 @@ class EpisodeCell: UITableViewCell {
         downloadStatusView.isHidden = false
         circularProgressBar.setProgress(to: progress)
         pubDateLabel.text = "Downloading... \(Int(progress * 100))%"
+    }
+    
+    func updateDisplay(string: String) {
+        pubDateLabel.text = "Waiting for download..."
     }
 }

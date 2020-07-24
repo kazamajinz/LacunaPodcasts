@@ -9,30 +9,17 @@
 import UIKit
 import FeedKit
 
+enum Section: Int, CaseIterable {
+    case header, episode
+}
+
 class EpisodesController: UITableViewController {
     
     //MARK: - Variables and Properties
     
     var filteredEpisodes: [Episode] = []
     var timer: Timer?
-    
-    
-//    let episodesController = EpisodesController()
-//    episodesController.podcast = podcast
-    
-    
     let searchController = SearchController(searchResultsController: SearchResultsController())
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     var podcast: Podcast? {
         didSet {
             fetchEpisodes()
@@ -45,7 +32,6 @@ class EpisodesController: UITableViewController {
         if let podcast = podcast {
             selectedPodcast = podcast
         }
-        
         print("Looking for episodes at feed url:", podcast?.feedUrl ?? "")
         guard let feedUrl = podcast?.feedUrl else { return }
         APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
@@ -247,23 +233,30 @@ class EpisodesController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        if indexPath.section == 0 {
+        if indexPath.section == Section.header.rawValue {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
             header.podcast = selectedPodcast
-            
+
             // Expand and Collapse Podcast Description
             header.descriptionLabelAction = { [weak self] in
                 header.descriptionLabel.numberOfLines = header.descriptionLabel.numberOfLines == 0 ? 3 : 0
-                UIView.animate(withDuration: 1.0) {
-                    self?.tableView.reloadData()
-                }
+                self?.tableView.reloadData()
             }
-        
             return header
+            
         } else {
+            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
             cell.delegate = self
             cell.episode = episodes[indexPath.row]
+            
+            
+            
+            // check if episode is already downloaded
+            let episodes = UserDefaults.standard.fetchDownloadedEpisodes()
+            if episodes.contains(where: {$0.collectionId == cell.episode.collectionId && $0.title == cell.episode.title }) {
+                cell.episode.downloadStatus = .completed
+            }
             
             
             
@@ -289,13 +282,15 @@ class EpisodesController: UITableViewController {
     //MARK: - Swipe Actions
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let episode = self.episodes[indexPath.row]
-        
+        guard let cell = tableView.cellForRow(at: indexPath) as? EpisodeCell else { return nil }
+        guard let episode = cell.episode else { return nil }
         switch indexPath.section {
         case 1:
             if episode.downloadStatus != .completed {
+                
                 // Download Action
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
+                    
                     // check if episode is already downloaded
                     let episodes = UserDefaults.standard.fetchDownloadedEpisodes()
                     if !episodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {

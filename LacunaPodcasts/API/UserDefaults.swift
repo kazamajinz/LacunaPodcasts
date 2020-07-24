@@ -22,39 +22,27 @@ extension UserDefaults {
     }
     
     func downloadEpisode(episode: Episode) {
-
         var episodes = fetchDownloadedEpisodes()
         if !episodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {
             episodes.insert(episode, at: 0)
         }
-
-        // ENCODE
         do {
             let data = try JSONEncoder().encode(episodes)
             UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
         } catch { print("Failed to encode downloaded episode:", error) }
     }
     
-    
-    
-    
-    
-    
     func deleteEpisode(episode: Episode) {
         let episodes = fetchDownloadedEpisodes()
         let filteredEpisodes = episodes.filter { (e) -> Bool in
             return e.title != episode.title || (e.title == episode.title && e.collectionId != episode.collectionId)
         }
-        
-        // ENCODE
         do {
             let data = try JSONEncoder().encode(filteredEpisodes)
             UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
         } catch { print("Failed to delete Episode:", error) }
     }
-    
-    
-    
+
     //MARK: - Podcasts
     
     func fetchSavedPodcasts() -> [Podcast] {
