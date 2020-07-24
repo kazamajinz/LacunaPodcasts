@@ -13,15 +13,10 @@ enum Section: Int, CaseIterable {
     case header, episode
 }
 
-protocol EpisodesControllerDelegate: class {
-    func episodesControllerDelegate(_ controller: EpisodesController, didCancelDownloading episode: Episode)
-}
-
 class EpisodesController: UITableViewController {
     
     //MARK: - Variables and Properties
-    
-    weak var delegate: EpisodesControllerDelegate?
+
     var selectedPodcast = Podcast()
     var episodes = [Episode]()
     var filteredEpisodes: [Episode] = []
@@ -90,34 +85,6 @@ class EpisodesController: UITableViewController {
             cell.updateDisplay(progress: progress)
         }
     }
-    
-    @objc fileprivate func handleDownloadCancel(notification: Notification) {
-//
-//            guard let userInfo = notification.userInfo as? [String: Any] else { return }
-//            guard let title = userInfo["title"] as? String else { return }
-//            guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
-//            //guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
-//            self.episodes[index].downloadStatus = .failed
-//
-//            // Remove Episode and Update UserDefaults
-//            let indexPath = IndexPath(row: index, section: 1)
-//            self.episodes.remove(at: indexPath.row)
-//            self.tableView.deleteRows(at: [indexPath], with: .fade)
-//
-//                // Update UI
-//                DispatchQueue.main.async {
-//                }
-        }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
@@ -350,9 +317,6 @@ extension EpisodesController: EpisodeCellDelegate {
         if let indexPath = tableView.indexPath(for: cell) {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
-
-            // Remove Episode and Update UserDefaults
-            UserDefaults.standard.deleteEpisode(episode: episode)
             tableView.reloadRows(at: [indexPath], with: .none)
         }
     }

@@ -41,12 +41,10 @@ class APIService {
             
         }.response { (response) in
 
-            // if download is cancelled
-            if response.error != nil {
+            // If Download is Cancelled
+            if let error = response.error {
                 
-                print("The download for episode, \(episode.title), has been cancelled.")
-                print(response.error?.localizedDescription)
-                
+                print("The download for episode, \(episode.title), has been cancelled.", error.localizedDescription)
                 UserDefaults.standard.deleteEpisode(episode: episode)
                 
             } else {

@@ -174,23 +174,8 @@ extension DownloadsController: EpisodeCellDelegate {
         if let indexPath = tableView.indexPath(for: cell) {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
-            
-            // Remove Episode and Update UserDefaults
             self.episodes.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
-            UserDefaults.standard.deleteEpisode(episode: episode)
         }
     }
 }
-
-//extension DownloadsController: EpisodesControllerDelegate {
-//    func episodesControllerDelegate(_ controller: EpisodesController, didCancelDownloading episode: Episode) {
-//        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
-//
-//
-////        // Remove Episode and Update UserDefaults
-////        self.episodes.remove(at: indexPath.row)
-////        self.tableView.deleteRows(at: [indexPath], with: .fade)
-////        UserDefaults.standard.deleteEpisode(episode: episode)
-//    }
-//}
