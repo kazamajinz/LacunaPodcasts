@@ -291,13 +291,45 @@ class EpisodesController: UITableViewController {
                 return swipe
                 
             } else {
-                
                 print("Episode is either downloading or already downloaded...")
-                
+
                 // Delete Action
                 let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
                     
                     print("Delete Downloaded Episode...")
+                    
+                    
+                    
+                    
+//                    let selectedEpisode = self.episodes[indexPath.row]
+//
+//                    // Delete Local File
+//                    guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
+//                    let url = fileUrl.localFilePath()
+//                    ///var documentDirectoryUrl = FileManager.documentDirectoryUrl
+//                    ///guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
+//                    ///let fileName = fileUrl.lastPathComponent
+//                    ///documentDirectoryUrl.appendPathComponent(fileName)
+//
+//                    if FileManager.default.fileExists(atPath: url.path) {
+//                        do {
+//                            try FileManager.default.removeItem(at: url)
+//                        } catch { print("Failed to delete the episode file:", error) }
+//
+//                        // 1. Check If Episode Has Been Deleted
+//                        // 2. Check Storage Space
+//                        if !FileManager.default.fileExists(atPath: url.path) {
+//                            // Remove Episode
+//                            self.episodes.remove(at: indexPath.row)
+//                            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//                            UserDefaults.standard.deleteEpisode(episode: selectedEpisode)
+//                        } else {
+//                            print("Failed to delete the episode file")
+//                        }
+//                    }
+                    
+                    
+                    
                     
                     completionHandler(true)
                 }

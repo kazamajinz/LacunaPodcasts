@@ -13,3 +13,9 @@ extension FileManager {
         `default`.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 }
+
+extension URL {
+    func localFilePath() -> URL {
+      return FileManager.documentDirectoryUrl.appendingPathComponent(self.lastPathComponent)
+    }
+}

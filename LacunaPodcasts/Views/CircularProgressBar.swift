@@ -43,7 +43,7 @@ class CircularProgressBar: UIView {
         pulsatingLayer.path = path.cgPath
         pulsatingLayer.strokeColor = UIColor.clear.cgColor
         pulsatingLayer.lineWidth = lineWidth
-        pulsatingLayer.fillColor = UIColor(named: K.Colors.highlight)?.cgColor
+        pulsatingLayer.fillColor = UIColor(named: K.Colors.darkBlue)?.cgColor
         pulsatingLayer.position = self.center
         layer.addSublayer(pulsatingLayer)
         animatePulsatingLayer()

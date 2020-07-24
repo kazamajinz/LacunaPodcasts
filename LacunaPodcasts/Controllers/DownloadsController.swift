@@ -19,9 +19,6 @@ class DownloadsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         setupView()
         setupTableView()
         setupObservers()
@@ -55,11 +52,19 @@ class DownloadsController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
     }
     
-    
-    
-    
-    
-    
+    @objc fileprivate func handleDownloadProgress(notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let progress = userInfo["progress"] as? Double else { return }
+        guard let title = userInfo["title"] as? String else { return }
+        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
+        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
+        self.episodes[index].downloadStatus = .inProgress
+
+        // Update UI
+        DispatchQueue.main.async {
+            cell.updateDisplay(progress: progress)
+        }
+    }
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
@@ -76,31 +81,11 @@ class DownloadsController: UITableViewController {
             self.reload(index)
         }
     }
-
-    @objc fileprivate func handleDownloadProgress(notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: Any] else { return }
-        guard let progress = userInfo["progress"] as? Double else { return }
-        guard let title = userInfo["title"] as? String else { return }
-        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
-        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
-        self.episodes[index].downloadStatus = .inProgress
-
-        // Update UI
-        DispatchQueue.main.async {
-            cell.updateDisplay(progress: progress)
-        }
-    }
-    
-    
-    
-    
-    
     
     //MARK: - TableView
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episode = episodes[indexPath.row]
-        
         if episode.fileUrl != nil {
             UIApplication.mainNavigationController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
         } else {
@@ -128,7 +113,7 @@ class DownloadsController: UITableViewController {
     }
     
     //MARK: - Swipe Actions
-    
+
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         // Delete Action
@@ -136,20 +121,21 @@ class DownloadsController: UITableViewController {
             let selectedEpisode = self.episodes[indexPath.row]
 
             // Delete Local File
-            var documentDirectoryUrl = FileManager.documentDirectoryUrl
-
             guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
-            let fileName = fileUrl.lastPathComponent
-            documentDirectoryUrl.appendPathComponent(fileName)
-        
-            if FileManager.default.fileExists(atPath: documentDirectoryUrl.path) {
+            let url = fileUrl.localFilePath()
+            ///var documentDirectoryUrl = FileManager.documentDirectoryUrl
+            ///guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
+            ///let fileName = fileUrl.lastPathComponent
+            ///documentDirectoryUrl.appendPathComponent(fileName)
+            
+            if FileManager.default.fileExists(atPath: url.path) {
                 do {
-                    try FileManager.default.removeItem(at: documentDirectoryUrl)
+                    try FileManager.default.removeItem(at: url)
                 } catch { print("Failed to delete the episode file:", error) }
                 
                 // 1. Check If Episode Has Been Deleted
                 // 2. Check Storage Space
-                if !FileManager.default.fileExists(atPath: documentDirectoryUrl.path) {
+                if !FileManager.default.fileExists(atPath: url.path) {
                     // Remove Episode
                     self.episodes.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
