@@ -90,7 +90,6 @@ class EpisodesController: UITableViewController {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
         guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
         self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
-        self.episodes[index].isDownloaded = true
         self.episodes[index].downloadStatus = .completed
         
         // Remove from Active Downloads
@@ -239,10 +238,8 @@ class EpisodesController: UITableViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
             cell.delegate = self
             cell.episode = episodes[indexPath.row]
-            //if let collectionId = podcast?.collectionId { cell.episode.collectionId = collectionId }
-            
             let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
-            if let index = downloadedEpisodes.firstIndex(where: {$0.title == cell.episode.title} ) {
+            if let index = downloadedEpisodes.firstIndex(where: {$0.title == cell.episode.title && $0.fileUrl == cell.episode.fileUrl } ) {
                 cell.episode = downloadedEpisodes[index]
             }
             return cell
@@ -287,8 +284,6 @@ class EpisodesController: UITableViewController {
                 // Delete Action
                 let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
                     
-                    print("Delete Downloaded Episode with url:", episode.fileUrl)
-
                     // Delete Local File
                     guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
                     let url = fileUrl.localFilePath()
@@ -301,17 +296,11 @@ class EpisodesController: UITableViewController {
                         // 1. Check If Episode Has Been Deleted
                         // 2. Check Storage Space
                         if !FileManager.default.fileExists(atPath: url.path) {
-                            // Remove Episode
+                            print("Delete Downloaded Episode with url:", episode.fileUrl)
                             UserDefaults.standard.deleteEpisode(episode: episode)
-                            //self.reload(indexPath.row)
-                        } else {
-                            print("Failed to delete the episode file")
-                        }
+                            cell.resetUI()
+                        } else { print("Failed to delete the episode file") }
                     }
-                    
-                    
-                    
-                    
                     completionHandler(true)
                 }
                 let swipe = UISwipeActionsConfiguration(actions: [deleteAction])

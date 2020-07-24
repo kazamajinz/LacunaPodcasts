@@ -53,7 +53,7 @@ class EpisodeCell: UITableViewCell {
         resetUI()
     }
     
-    private func resetUI() {
+    func resetUI() {
         downloadStatusView.isHidden = true
         downloadStatusVerticalBar.isHidden = true
         [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor(named: K.Colors.grayBlue) }

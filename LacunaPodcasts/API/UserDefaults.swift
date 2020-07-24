@@ -23,7 +23,7 @@ extension UserDefaults {
     
     func downloadEpisode(episode: Episode) {
         var episodes = fetchDownloadedEpisodes()
-        if !episodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title }) {
+        if !episodes.contains(where: {$0.fileUrl == episode.fileUrl && $0.title == episode.title }) {
             episodes.insert(episode, at: 0)
         }
         do {
@@ -35,7 +35,7 @@ extension UserDefaults {
     func deleteEpisode(episode: Episode) {
         let episodes = fetchDownloadedEpisodes()
         let filteredEpisodes = episodes.filter { (e) -> Bool in
-            return e.title != episode.title || (e.title == episode.title && e.collectionId != episode.collectionId)
+            return e.title != episode.title || (e.title == episode.title && e.fileUrl != episode.fileUrl)
         }
         do {
             let data = try JSONEncoder().encode(filteredEpisodes)
