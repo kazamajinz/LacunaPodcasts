@@ -239,7 +239,7 @@ class EpisodesController: UITableViewController {
             cell.delegate = self
             cell.episode = episodes[indexPath.row]
             let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
-            if let index = downloadedEpisodes.firstIndex(where: {$0.title == cell.episode.title && $0.fileUrl == cell.episode.fileUrl } ) {
+            if let index = downloadedEpisodes.firstIndex(where: {$0.title == cell.episode.title} ) {
                 cell.episode = downloadedEpisodes[index]
             }
             return cell

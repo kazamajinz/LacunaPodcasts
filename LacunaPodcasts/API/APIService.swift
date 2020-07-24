@@ -56,7 +56,7 @@ class APIService {
                 
                 // Update UserDefaults
                 var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
-                guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.fileUrl == episode.fileUrl} ) else { return }
+                guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl} ) else { return }
                 downloadedEpisodes[index].fileUrl = response.fileURL?.absoluteString ?? ""
                 downloadedEpisodes[index].isDownloaded = true
                 downloadedEpisodes[index].downloadStatus = .completed
