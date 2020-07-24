@@ -31,6 +31,7 @@ class CircularProgressBar: UIView {
     
     private func setupView() {
         self.layer.sublayers = nil
+        backgroundColor = .red
         drawPulsatingLayer()
         drawTrackLayer()
         drawProgressLayer()

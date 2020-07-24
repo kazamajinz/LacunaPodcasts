@@ -38,13 +38,14 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
     
-    @IBOutlet weak var downloadStatusView: UIView! {
-        didSet {
-            //downloadStatusView.addSubview(circularProgressBar)
-            //circularProgressBar.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
-        }
+    @IBOutlet weak var downloadStatusView: UIView!
+    @IBOutlet weak var downloadStatusButton: UIButton! {
+           didSet {
+               downloadStatusButton.addSubview(circularProgressBar)
+               circularProgressBar.center(in: downloadStatusButton, xAnchor: true, yAnchor: true)
+           }
     }
-    
+       
     
     
     
