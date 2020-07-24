@@ -37,7 +37,7 @@ class EpisodesController: UITableViewController {
         didSet {
             fetchEpisodes()
             navigationItem.title = self.podcast?.trackName
-            view.backgroundColor = UIColor(named: K.Colors.darkBlue)
+            view.backgroundColor = UIColor(named: K.Colors.midnight)
         }
     }
     

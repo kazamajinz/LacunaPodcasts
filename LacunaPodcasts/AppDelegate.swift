@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let standard = UINavigationBarAppearance()
             standard.configureWithOpaqueBackground()
-            standard.backgroundColor = UIColor(named: K.Colors.darkBlue)
+            standard.backgroundColor = UIColor(named: K.Colors.midnight)
             standard.shadowColor = .clear
             standard.shadowImage = UIImage()
             

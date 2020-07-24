@@ -21,7 +21,7 @@ class SearchController:  UISearchController {
     
     private func setupSearchController() {
         searchBar.keyboardAppearance = .dark
-        searchBar.searchTextField.backgroundColor = UIColor(named: K.Colors.shadow)
+        searchBar.searchTextField.backgroundColor = UIColor(named: K.Colors.midnight)
     }
     
 }

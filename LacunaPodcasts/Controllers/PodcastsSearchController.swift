@@ -34,7 +34,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     private func setupView() {
         navigationItem.title = "Add Podcast"
-        view.backgroundColor = UIColor(named: K.Colors.darkBlue)
+        view.backgroundColor = UIColor(named: K.Colors.midnight)
     }
     
     fileprivate func setupSearchBar() {

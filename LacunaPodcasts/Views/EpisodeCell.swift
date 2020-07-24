@@ -56,7 +56,9 @@ class EpisodeCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedBackgroundView?.isHidden = true
-        containerView.backgroundColor = selected ? UIColor(named: K.Colors.blue) : UIColor(named: K.Colors.darkBlue)
+        if selected {
+            containerView.backgroundColor = UIColor(named: K.Colors.blue)
+        }
     }
     
     @IBAction func didTapCancel(_ sender: Any) {

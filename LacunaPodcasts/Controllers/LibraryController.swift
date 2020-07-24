@@ -38,7 +38,7 @@ class LibraryController: UITableViewController {
     // MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = UIColor(named: K.Colors.darkBlue)
+        view.backgroundColor = UIColor(named: K.Colors.midnight)
         navigationItem.title = "My Library"
         
         // Removes Text from Back Button

@@ -3,6 +3,7 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -84,7 +85,7 @@
                             </subviews>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" name="darkBlue"/>
+                    <color key="backgroundColor" name="midnight"/>
                     <constraints>
                         <constraint firstItem="UIC-hd-zfQ" firstAttribute="leading" secondItem="b8y-O7-HWm" secondAttribute="leading" constant="12" id="F4I-3A-a89"/>
                         <constraint firstItem="UIC-hd-zfQ" firstAttribute="top" secondItem="b8y-O7-HWm" secondAttribute="top" constant="12" id="Is1-Yf-Ewi"/>
@@ -112,8 +113,8 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="darkBlue">
-            <color red="0.10999999940395355" green="0.13300000131130219" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="midnight">
+            <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059135914665378937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

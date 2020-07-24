@@ -27,7 +27,7 @@ struct K {
         static let blue = "blue"
         static let highlight = "highlight"
         static let orange = "orange"
-        static let shadow = "shadow"
+        static let midnight = "midnight"
         static let grayBlue = "grayBlue"
     }
     
