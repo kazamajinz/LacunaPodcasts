@@ -13,10 +13,15 @@ enum Section: Int, CaseIterable {
     case header, episode
 }
 
+protocol EpisodesControllerDelegate: class {
+    func episodesControllerDelegate(_ controller: EpisodesControllerDelegate, didCancelDownloading episode: Episode)
+}
+
 class EpisodesController: UITableViewController {
     
     //MARK: - Variables and Properties
     
+    weak var delegate: EpisodesControllerDelegate?
     var selectedPodcast = Podcast()
     var episodes = [Episode]()
     var filteredEpisodes: [Episode] = []
@@ -69,7 +74,6 @@ class EpisodesController: UITableViewController {
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadCancel), name: .downloadCancel, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
     }
     
@@ -84,13 +88,18 @@ class EpisodesController: UITableViewController {
         // Update UI
         DispatchQueue.main.async {
             cell.updateDisplay(progress: progress)
-            cell.updateDisplayForDownloadPending()
         }
     }
     
-    @objc fileprivate func handleDownloadCancel(notification: Notifcation) {
-        
-    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
@@ -102,8 +111,8 @@ class EpisodesController: UITableViewController {
         APIService.shared.activeDownloads[episodeDownloadComplete.streamUrl] = nil
         
         // Update UI
-        DispatchQueue.main.async { [weak self] in
-            self?.reload(index)
+        DispatchQueue.main.async {
+            self.reload(index)
         }
     }
     
@@ -286,6 +295,9 @@ class EpisodesController: UITableViewController {
                         if !isDownloaded {
                             APIService.shared.startDownload(episode)
                             UserDefaults.standard.downloadEpisode(episode: episode)
+                            DispatchQueue.main.async {
+                                cell.updateDisplayForDownloadPending()
+                            }
                         }
                     }
                     completionHandler(true)
@@ -320,7 +332,7 @@ extension EpisodesController: EpisodeCellDelegate {
         if let indexPath = tableView.indexPath(for: cell) {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
-            
+
             // Remove Episode and Update UserDefaults
             UserDefaults.standard.deleteEpisode(episode: episode)
             tableView.reloadRows(at: [indexPath], with: .none)

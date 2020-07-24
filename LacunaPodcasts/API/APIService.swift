@@ -49,11 +49,7 @@ class APIService {
             if response.error != nil {
                 
                 print("The download for episode, \(episode.title), has been cancelled.")
-                NotificationCenter.default.post(name: .downloadCancel, object: nil, userInfo: ["title": episode.title])
                 
-                
-                
-            
             } else {
                 
                 print("Finished downloading episode: \(episode.title), to \(response.fileURL?.path ?? "")")
@@ -76,6 +72,12 @@ class APIService {
             }
         }
     }
+    
+    
+    
+    
+    
+    
     
     func cancelDownload(_ episode: Episode) {
         guard let download = activeDownloads[episode.streamUrl] else { return }

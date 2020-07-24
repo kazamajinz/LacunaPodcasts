@@ -50,7 +50,38 @@ class DownloadsController: UITableViewController {
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadCancel), name: .downloadCancel, object: nil)
     }
+    
+    
+    
+    @objc fileprivate func handleDownloadCancel(notification: Notification) {
+        
+        print("IM HERE!!!!")
+        
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let title = userInfo["title"] as? String else { return }
+        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
+        //guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
+        self.episodes[index].downloadStatus = .failed
+        
+        // Remove Episode and Update UserDefaults
+        let indexPath = IndexPath(row: index, section: 1)
+        self.episodes.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .fade)
+            
+//            // Update UI
+//            DispatchQueue.main.async {
+//            }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
@@ -72,25 +103,15 @@ class DownloadsController: UITableViewController {
         guard let userInfo = notification.userInfo as? [String: Any] else { return }
         guard let progress = userInfo["progress"] as? Double else { return }
         guard let title = userInfo["title"] as? String else { return }
-        
         guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
         guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
+        self.episodes[index].downloadStatus = .inProgress
 
         // Update UI
         DispatchQueue.main.async {
             cell.updateDisplay(progress: progress)
-            cell.updateDisplayForDownloadPending()
         }
     }
-    
-    
-    
-
-    
-    
-    
-    
-    
     
     
     
@@ -129,8 +150,6 @@ class DownloadsController: UITableViewController {
     }
     
     //MARK: - Swipe Actions
-    
-    var timer: Timer?
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
