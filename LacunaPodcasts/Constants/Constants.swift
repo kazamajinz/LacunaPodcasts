@@ -30,6 +30,7 @@ struct K {
         static let midnight = "midnight"
         static let grayBlue = "grayBlue"
         static let lightGray = "lightGray"
+        static let green = "green"
     }
     
     

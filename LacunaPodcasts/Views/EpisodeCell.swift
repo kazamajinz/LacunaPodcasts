@@ -50,8 +50,13 @@ class EpisodeCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        resetUI()
+    }
+    
+    private func resetUI() {
         downloadStatusView.isHidden = true
         downloadStatusVerticalBar.isHidden = true
+        [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor(named: K.Colors.grayBlue) }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -77,27 +82,22 @@ class EpisodeCell: UITableViewCell {
             let pubDate = dateFormatter.string(from: episode.pubDate).uppercased()
             let duration = episode.duration.toDisplayString()
             detailsLabel.text = "\(pubDate) • \(duration)"
+               
             
             
             
-//            titleLabel.textColor = episode.downloadStatus.titleColor
-//            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
-//            detailsLabel.textColor = episode.downloadStatus.detailsColor
             
-                
+            
+            
             if episode.downloadStatus == .completed {
                 downloadStatusVerticalBar.isHidden = false
                 titleLabel.textColor = UIColor.white
                 descriptionLabel.textColor = UIColor(named: K.Colors.lightGray)
                 detailsLabel.textColor = UIColor(named: K.Colors.lightGray)
             }
-            
-            
-            
+
             // Non-nil Download object means a download is in progress
-            if let download = APIService.shared.activeDownloads[episode.streamUrl] {
-                print(download.episode.title)
-            }
+            if let _ = APIService.shared.activeDownloads[episode.streamUrl] { }
         }
     }
     
