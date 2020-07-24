@@ -18,13 +18,13 @@ enum DownloadStatus: String, Codable {
     var titleColor: UIColor {
         switch self {
         case .none:
-            return UIColor(named: K.Colors.blue) ?? UIColor.white
+            return UIColor(named: K.Colors.grayBlue) ?? UIColor.white
         case .inProgress:
-            return UIColor(named: K.Colors.blue) ?? UIColor.white
+            return UIColor(named: K.Colors.grayBlue) ?? UIColor.white
         case .completed:
             return UIColor.white
         case .failed:
-            return UIColor(named: K.Colors.blue) ?? UIColor.white
+            return UIColor(named: K.Colors.grayBlue) ?? UIColor.white
         }
     }
 }

@@ -50,7 +50,7 @@ class EpisodeCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        cancelButton.isHidden = true
+        downloadStatusView.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

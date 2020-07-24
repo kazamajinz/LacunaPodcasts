@@ -71,8 +71,8 @@ class DownloadsController: UITableViewController {
         APIService.shared.activeDownloads[episodeDownloadComplete.streamUrl] = nil
         
         // Update UI
-        DispatchQueue.main.async { [weak self] in
-            self?.reload(index)
+        DispatchQueue.main.async {
+            self.reload(index)
         }
     }
 
