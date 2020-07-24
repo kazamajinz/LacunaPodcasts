@@ -26,6 +26,10 @@ class EpisodeCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
+    
+    
+
+    @IBOutlet weak var downloadStatusVerticalBar: UIView!
     @IBOutlet weak var downloadStatusView: UIView!
     @IBOutlet weak var downloadStatusButton: UIButton! {
         didSet {
@@ -47,6 +51,7 @@ class EpisodeCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         downloadStatusView.isHidden = true
+        downloadStatusVerticalBar.isHidden = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -75,9 +80,19 @@ class EpisodeCell: UITableViewCell {
             
             
             
-            titleLabel.textColor = episode.downloadStatus.titleColor
-            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
-            detailsLabel.textColor = episode.downloadStatus.detailsColor
+//            titleLabel.textColor = episode.downloadStatus.titleColor
+//            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
+//            detailsLabel.textColor = episode.downloadStatus.detailsColor
+            
+                
+            if episode.downloadStatus == .completed {
+                downloadStatusVerticalBar.isHidden = false
+                titleLabel.textColor = UIColor.white
+                descriptionLabel.textColor = UIColor(named: K.Colors.lightGray)
+                detailsLabel.textColor = UIColor(named: K.Colors.lightGray)
+            }
+            
+            
             
             // Non-nil Download object means a download is in progress
             if let download = APIService.shared.activeDownloads[episode.streamUrl] {

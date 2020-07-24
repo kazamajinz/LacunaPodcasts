@@ -29,6 +29,13 @@
                                             <constraint firstAttribute="width" secondItem="Rvb-TR-Ocs" secondAttribute="height" id="6zy-BJ-uw7"/>
                                         </constraints>
                                     </imageView>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XUU-fN-ruf">
+                                        <rect key="frame" x="0.0" y="0.0" width="4" height="100"/>
+                                        <color key="backgroundColor" name="highlight"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="4" id="afc-R9-4M9"/>
+                                        </constraints>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVH-GC-4KC">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="100"/>
                                         <subviews>
@@ -107,8 +114,11 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="JVH-GC-4KC" secondAttribute="bottom" id="3ew-C0-dfm"/>
+                                    <constraint firstAttribute="bottom" secondItem="XUU-fN-ruf" secondAttribute="bottom" id="5Fg-MO-Lmo"/>
                                     <constraint firstItem="JVH-GC-4KC" firstAttribute="top" secondItem="8wQ-uk-Mwd" secondAttribute="top" id="97C-jA-8b6"/>
                                     <constraint firstItem="y62-kO-xs6" firstAttribute="centerY" secondItem="8wQ-uk-Mwd" secondAttribute="centerY" id="OgZ-3j-TrM"/>
+                                    <constraint firstItem="XUU-fN-ruf" firstAttribute="leading" secondItem="8wQ-uk-Mwd" secondAttribute="leading" id="SPL-tj-5tO"/>
+                                    <constraint firstItem="XUU-fN-ruf" firstAttribute="top" secondItem="8wQ-uk-Mwd" secondAttribute="top" id="dyL-Xz-28g"/>
                                     <constraint firstAttribute="trailing" secondItem="y62-kO-xs6" secondAttribute="trailing" id="k2Z-do-sdw"/>
                                     <constraint firstItem="y62-kO-xs6" firstAttribute="top" secondItem="8wQ-uk-Mwd" secondAttribute="top" id="kOI-Fz-4HZ"/>
                                     <constraint firstAttribute="bottom" secondItem="y62-kO-xs6" secondAttribute="bottom" id="ytw-b1-D1B"/>
@@ -147,6 +157,7 @@
                 <outlet property="descriptionLabel" destination="Wi7-Uc-Rc0" id="UzG-4j-ozd"/>
                 <outlet property="detailsLabel" destination="qMM-gz-4nh" id="7zG-YN-UgH"/>
                 <outlet property="downloadStatusButton" destination="42M-Z8-BaP" id="VP6-Om-YZo"/>
+                <outlet property="downloadStatusVerticalBar" destination="XUU-fN-ruf" id="1B6-wX-WaN"/>
                 <outlet property="downloadStatusView" destination="y62-kO-xs6" id="2ng-Xl-jd9"/>
                 <outlet property="episodeImageView" destination="Rvb-TR-Ocs" id="QX8-Zl-ZgQ"/>
                 <outlet property="progressLabel" destination="ojp-iL-p8H" id="WeH-Qx-RFK"/>
@@ -161,6 +172,9 @@
         </namedColor>
         <namedColor name="grayBlue">
             <color red="0.31240839694869027" green="0.3414341044250353" blue="0.44900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="highlight">
+            <color red="0.40000000596046448" green="0.40000000596046448" blue="0.83499997854232788" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="midnight">
             <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059135914665378937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
