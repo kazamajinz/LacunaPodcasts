@@ -105,6 +105,7 @@ class DownloadsController: UITableViewController {
         cell.episode = self.episodes[indexPath.row]
         cell.episodeImageView.isHidden = false
         cell.descriptionLabel.isHidden = true
+        cell.downloadStatusVerticalBar.isHidden = true
         return cell
     }
     
