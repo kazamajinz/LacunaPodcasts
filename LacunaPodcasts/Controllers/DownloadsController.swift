@@ -19,6 +19,9 @@ class DownloadsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         setupView()
         setupTableView()
         setupObservers()
@@ -50,32 +53,7 @@ class DownloadsController: UITableViewController {
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadCancel), name: .downloadCancel, object: nil)
     }
-    
-    
-    
-    @objc fileprivate func handleDownloadCancel(notification: Notification) {
-        
-        print("IM HERE!!!!")
-        
-        guard let userInfo = notification.userInfo as? [String: Any] else { return }
-        guard let title = userInfo["title"] as? String else { return }
-        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
-        //guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
-        self.episodes[index].downloadStatus = .failed
-        
-        // Remove Episode and Update UserDefaults
-        let indexPath = IndexPath(row: index, section: 1)
-        self.episodes.remove(at: indexPath.row)
-        self.tableView.deleteRows(at: [indexPath], with: .fade)
-            
-//            // Update UI
-//            DispatchQueue.main.async {
-//            }
-    }
-    
-    
     
     
     
@@ -152,7 +130,7 @@ class DownloadsController: UITableViewController {
     //MARK: - Swipe Actions
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
+        
         // Delete Action
         let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
             let selectedEpisode = self.episodes[indexPath.row]
@@ -180,19 +158,6 @@ class DownloadsController: UITableViewController {
                     print("Failed to delete the episode file")
                 }
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             completionHandler(true)
         }
         let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
@@ -217,3 +182,15 @@ extension DownloadsController: EpisodeCellDelegate {
         }
     }
 }
+
+//extension DownloadsController: EpisodesControllerDelegate {
+//    func episodesControllerDelegate(_ controller: EpisodesController, didCancelDownloading episode: Episode) {
+//        guard let index = self.episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+//
+//
+////        // Remove Episode and Update UserDefaults
+////        self.episodes.remove(at: indexPath.row)
+////        self.tableView.deleteRows(at: [indexPath], with: .fade)
+////        UserDefaults.standard.deleteEpisode(episode: episode)
+//    }
+//}

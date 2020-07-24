@@ -80,8 +80,16 @@ class EpisodeCell: UITableViewCell {
             let duration = episode.duration.toDisplayString()
             detailsLabel.text = "\(pubDate) • \(duration)"
             
+            
+            
+            
+            
+            
+            
             // Non-nil Download object means a download is in progress
-            //if let _ = APIService.shared.activeDownloads[episode.streamUrl] { }
+            if let _ = APIService.shared.activeDownloads[episode.streamUrl] {
+                
+            }
         }
     }
     

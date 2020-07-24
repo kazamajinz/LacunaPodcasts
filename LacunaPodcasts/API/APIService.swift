@@ -10,9 +10,6 @@ import Foundation
 import Alamofire
 import FeedKit
 
-protocol APIServiceProtocol: class {
-}
-
 extension Notification.Name {
     static let downloadProgress = NSNotification.Name("downloadProgress")
     static let downloadComplete = NSNotification.Name("downloadComplete")
@@ -22,7 +19,6 @@ extension Notification.Name {
 class APIService {
     
     static let shared = APIService()
-    weak var delegate: APIServiceProtocol?
 
     //MARK: - Variables and Properties
 
@@ -49,6 +45,9 @@ class APIService {
             if response.error != nil {
                 
                 print("The download for episode, \(episode.title), has been cancelled.")
+                print(response.error?.localizedDescription)
+                
+                UserDefaults.standard.deleteEpisode(episode: episode)
                 
             } else {
                 

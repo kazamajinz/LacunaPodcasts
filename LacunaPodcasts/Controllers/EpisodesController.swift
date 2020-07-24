@@ -14,7 +14,7 @@ enum Section: Int, CaseIterable {
 }
 
 protocol EpisodesControllerDelegate: class {
-    func episodesControllerDelegate(_ controller: EpisodesControllerDelegate, didCancelDownloading episode: Episode)
+    func episodesControllerDelegate(_ controller: EpisodesController, didCancelDownloading episode: Episode)
 }
 
 class EpisodesController: UITableViewController {
@@ -90,6 +90,24 @@ class EpisodesController: UITableViewController {
             cell.updateDisplay(progress: progress)
         }
     }
+    
+    @objc fileprivate func handleDownloadCancel(notification: Notification) {
+//
+//            guard let userInfo = notification.userInfo as? [String: Any] else { return }
+//            guard let title = userInfo["title"] as? String else { return }
+//            guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
+//            //guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
+//            self.episodes[index].downloadStatus = .failed
+//
+//            // Remove Episode and Update UserDefaults
+//            let indexPath = IndexPath(row: index, section: 1)
+//            self.episodes.remove(at: indexPath.row)
+//            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//
+//                // Update UI
+//                DispatchQueue.main.async {
+//                }
+        }
     
     
     
