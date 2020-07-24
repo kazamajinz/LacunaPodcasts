@@ -49,7 +49,6 @@ class EpisodesController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        APIService.shared.delegate = self
         setupTableView()
         setupSearchBar()
         setupObservers()
@@ -70,6 +69,7 @@ class EpisodesController: UITableViewController {
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadCancel), name: .downloadCancel, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
     }
     
@@ -84,7 +84,12 @@ class EpisodesController: UITableViewController {
         // Update UI
         DispatchQueue.main.async {
             cell.updateDisplay(progress: progress)
+            cell.updateDisplayForDownloadPending()
         }
+    }
+    
+    @objc fileprivate func handleDownloadCancel(notification: Notifcation) {
+        
     }
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
@@ -101,6 +106,18 @@ class EpisodesController: UITableViewController {
             self?.reload(index)
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @objc fileprivate func handlePlayerDetailsMinimize() {
         if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
@@ -269,9 +286,6 @@ class EpisodesController: UITableViewController {
                         if !isDownloaded {
                             APIService.shared.startDownload(episode)
                             UserDefaults.standard.downloadEpisode(episode: episode)
-                            DispatchQueue.main.async {
-                                cell.updateDisplayForDownloadPending()
-                            }
                         }
                     }
                     completionHandler(true)
@@ -299,13 +313,6 @@ class EpisodesController: UITableViewController {
     
 }
 
-
-
-
-//MARK: - APIService Protocol
-
-extension EpisodesController: APIServiceProtocol { }
-
 //MARK: - Episode Cell Delegate
 
 extension EpisodesController: EpisodeCellDelegate {
@@ -313,26 +320,13 @@ extension EpisodesController: EpisodeCellDelegate {
         if let indexPath = tableView.indexPath(for: cell) {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
+            
+            // Remove Episode and Update UserDefaults
             UserDefaults.standard.deleteEpisode(episode: episode)
             tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //MARK: - SearchController Delegate
 

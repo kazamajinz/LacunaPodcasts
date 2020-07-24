@@ -13,13 +13,12 @@ class DownloadsController: UITableViewController {
     
     var episodes = UserDefaults.standard.fetchDownloadedEpisodes()
     
-    deinit {
-        print("DownloadsController memory being reclaimed...")
-    }
+    deinit { print("DownloadsController memory being reclaimed...") }
+    
+    // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        APIService.shared.delegate = self
         setupView()
         setupTableView()
         setupObservers()
@@ -30,13 +29,6 @@ class DownloadsController: UITableViewController {
         episodes = UserDefaults.standard.fetchDownloadedEpisodes()
         tableView.reloadData()
     }
-    
-    
-    
-    
-    
-    
-    
     
     //MARK: - Setup
     
@@ -87,6 +79,7 @@ class DownloadsController: UITableViewController {
         // Update UI
         DispatchQueue.main.async {
             cell.updateDisplay(progress: progress)
+            cell.updateDisplayForDownloadPending()
         }
     }
     
@@ -110,10 +103,10 @@ class DownloadsController: UITableViewController {
         let episode = episodes[indexPath.row]
         
         if episode.fileUrl != nil {
-            //UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
+            UIApplication.mainNavigationController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
         } else {
             AlertService.showFileUrlNotFoundAlert(on: self) { (action) in
-                //UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
+                UIApplication.mainNavigationController()?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
             }
         }
     }
@@ -188,17 +181,6 @@ class DownloadsController: UITableViewController {
     }
     
     
-}
-
-
-
-
-
-
-
-//MARK: - APIService Protocol
-
-extension DownloadsController: APIServiceProtocol {
 }
 
 //MARK: - Episode Cell Delegate

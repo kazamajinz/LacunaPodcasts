@@ -16,6 +16,7 @@ protocol APIServiceProtocol: class {
 extension Notification.Name {
     static let downloadProgress = NSNotification.Name("downloadProgress")
     static let downloadComplete = NSNotification.Name("downloadComplete")
+    static let downloadCancel = NSNotification.Name("downloadCancel")
 }
 
 class APIService {
@@ -46,8 +47,15 @@ class APIService {
 
             // if download is cancelled
             if response.error != nil {
+                
                 print("The download for episode, \(episode.title), has been cancelled.")
+                NotificationCenter.default.post(name: .downloadCancel, object: nil, userInfo: ["title": episode.title])
+                
+                
+                
+            
             } else {
+                
                 print("Finished downloading episode: \(episode.title), to \(response.fileURL?.path ?? "")")
                 
                 let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.path ?? "", episode.title, episode.streamUrl)
