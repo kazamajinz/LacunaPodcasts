@@ -69,7 +69,6 @@ class EpisodesController: UITableViewController {
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadCancel), name: .downloadComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
     }
     
@@ -85,13 +84,6 @@ class EpisodesController: UITableViewController {
         DispatchQueue.main.async {
             cell.updateDisplay(progress: progress)
         }
-    }
-    
-    @objc fileprivate func handleDownloadCancel(notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: Any] else { return }
-        guard let title = userInfo["title"] as? String else { return }
-        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
-        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
     }
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
@@ -228,17 +220,7 @@ class EpisodesController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         section == 0 ? 1 : episodes.count
     }
-    
-    
-    
-    
-    
-    private func checkIfEpisodeIsDownloaded(episode: Episode, completion: @escaping (Bool) -> Void) {
-        let episodes = UserDefaults.standard.fetchDownloadedEpisodes()
-        let episodeIsDownloaded = episodes.contains(where: {$0.collectionId == episode.collectionId && $0.title == episode.title })
-        completion(episodeIsDownloaded)
-    }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if indexPath.section == Section.header.rawValue {
@@ -257,9 +239,11 @@ class EpisodesController: UITableViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
             cell.delegate = self
             cell.episode = episodes[indexPath.row]
-            if let collectionId = podcast?.collectionId { cell.episode.collectionId = collectionId }
-            checkIfEpisodeIsDownloaded(episode: cell.episode) { (isDownloaded) in
-                if isDownloaded { cell.episode.downloadStatus = .completed }
+            //if let collectionId = podcast?.collectionId { cell.episode.collectionId = collectionId }
+            
+            let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
+            if let index = downloadedEpisodes.firstIndex(where: {$0.title == cell.episode.title} ) {
+                cell.episode = downloadedEpisodes[index]
             }
             return cell
         }
@@ -281,17 +265,16 @@ class EpisodesController: UITableViewController {
         guard let episode = cell.episode else { return nil }
         switch indexPath.section {
         case 1:
+            
             if episode.downloadStatus != .completed {
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
                     
                     // check if episode is already downloaded
-                    self.checkIfEpisodeIsDownloaded(episode: episode) { (isDownloaded) in
-                        if !isDownloaded {
-                            APIService.shared.startDownload(episode)
-                            UserDefaults.standard.downloadEpisode(episode: episode)
-                            DispatchQueue.main.async {
-                                cell.updateDisplayForDownloadPending()
-                            }
+                    if episode.fileUrl == nil {
+                        APIService.shared.startDownload(episode)
+                        UserDefaults.standard.downloadEpisode(episode: episode)
+                        DispatchQueue.main.async {
+                            cell.updateDisplayForDownloadPending()
                         }
                     }
                     completionHandler(true)
@@ -306,19 +289,11 @@ class EpisodesController: UITableViewController {
                 let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
                     
                     print("Delete Downloaded Episode...")
-                    
-                    
-                    
-                    
-//                    let selectedEpisode = self.episodes[indexPath.row]
+                    print(episode.fileUrl)
 //
 //                    // Delete Local File
 //                    guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
 //                    let url = fileUrl.localFilePath()
-//                    ///var documentDirectoryUrl = FileManager.documentDirectoryUrl
-//                    ///guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
-//                    ///let fileName = fileUrl.lastPathComponent
-//                    ///documentDirectoryUrl.appendPathComponent(fileName)
 //
 //                    if FileManager.default.fileExists(atPath: url.path) {
 //                        do {
@@ -329,9 +304,8 @@ class EpisodesController: UITableViewController {
 //                        // 2. Check Storage Space
 //                        if !FileManager.default.fileExists(atPath: url.path) {
 //                            // Remove Episode
-//                            self.episodes.remove(at: indexPath.row)
-//                            self.tableView.deleteRows(at: [indexPath], with: .fade)
 //                            UserDefaults.standard.deleteEpisode(episode: selectedEpisode)
+//                            self.reload(indexPath.row)
 //                        } else {
 //                            print("Failed to delete the episode file")
 //                        }
