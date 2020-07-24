@@ -41,7 +41,7 @@ class DownloadsController: UITableViewController {
     //MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = UIColor(named: K.Colors.darkBlue)
+        view.backgroundColor = UIColor(named: K.Colors.midnight)
     }
     
     fileprivate func setupTableView() {

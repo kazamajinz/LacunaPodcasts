@@ -40,8 +40,8 @@ class EpisodeCell: UITableViewCell {
     
     @IBOutlet weak var downloadStatusView: UIView! {
         didSet {
-            downloadStatusView.addSubview(circularProgressBar)
-            circularProgressBar.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
+            //downloadStatusView.addSubview(circularProgressBar)
+            //circularProgressBar.center(in: downloadStatusView, xAnchor: true, yAnchor: true)
         }
     }
     
@@ -56,9 +56,7 @@ class EpisodeCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedBackgroundView?.isHidden = true
-        if selected {
-            containerView.backgroundColor = UIColor(named: K.Colors.blue)
-        }
+        containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
     }
     
     @IBAction func didTapCancel(_ sender: Any) {

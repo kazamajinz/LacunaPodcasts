@@ -604,7 +604,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
             miniProgressBar.isUserInteractionEnabled = false
             miniProgressBar.setThumbImage(UIImage(), for: .normal)
             miniProgressBar.minimumTrackTintColor = UIColor(named: K.Colors.orange)
-            miniProgressBar.maximumTrackTintColor = UIColor.black
+            miniProgressBar.maximumTrackTintColor = UIColor(named: K.Colors.midnight)
         }
     }
     @IBOutlet weak var miniTitleLabel: UILabel!
@@ -625,7 +625,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var currentTimeSlider: DurationSlider! {
         didSet {
             currentTimeSlider.minimumTrackTintColor = UIColor(named: K.Colors.orange)
-            currentTimeSlider.maximumTrackTintColor = UIColor(named: K.Colors.darkBlue)
+            currentTimeSlider.maximumTrackTintColor = UIColor(named: K.Colors.blue)
         }
     }
 

@@ -35,7 +35,6 @@ class EpisodeHeader: UITableViewCell {
 
     var podcast: Podcast! {
         didSet {
-
             trackNameLabel.text = podcast.trackName
             artistNameLabel.text = podcast.artistName
             
