@@ -40,11 +40,11 @@ class APIService {
             NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
             
         }.response { (response) in
-
-            // If Download is Cancelled
             if let error = response.error {
-                
+
+                // If Download is Cancelled
                 print("The download for episode, \(episode.title), has been cancelled.", error.localizedDescription)
+                NotificationCenter.default.post(name: .downloadCancel, object: nil, userInfo: ["title": episode.title])
                 UserDefaults.standard.deleteEpisode(episode: episode)
                 
             } else {
@@ -58,6 +58,7 @@ class APIService {
                 var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
                 guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.collectionId == episode.collectionId} ) else { return }
                 downloadedEpisodes[index].fileUrl = response.fileURL?.absoluteString ?? ""
+                downloadedEpisodes[index].isDownloaded = true
                 downloadedEpisodes[index].downloadStatus = .completed
                 
                 do {

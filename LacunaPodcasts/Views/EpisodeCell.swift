@@ -64,13 +64,6 @@ class EpisodeCell: UITableViewCell {
     
     var episode: Episode! {
         didSet {
-            titleLabel.textColor = episode.downloadStatus.titleColor
-            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
-            detailsLabel.textColor = episode.downloadStatus.descriptionColor
-            
-            
-            
-            
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
             titleLabel.text = episode.title
@@ -82,13 +75,13 @@ class EpisodeCell: UITableViewCell {
             
             
             
-            
-            
-            
+            titleLabel.textColor = episode.downloadStatus.titleColor
+            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
+            detailsLabel.textColor = episode.downloadStatus.detailsColor
             
             // Non-nil Download object means a download is in progress
             if let download = APIService.shared.activeDownloads[episode.streamUrl] {
-                detailsLabel.textColor = UIColor(named: K.Colors.orange)
+                print(download.episode.title)
             }
         }
     }
@@ -105,7 +98,8 @@ class EpisodeCell: UITableViewCell {
     }
     
     func updateDisplayForDownloadPending() {
-        detailsLabel.text = "Waiting for download..."
         detailsLabel.textColor = UIColor(named: K.Colors.orange)
+        detailsLabel.text = "Waiting for download..."
     }
+    
 }

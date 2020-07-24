@@ -69,6 +69,7 @@ class EpisodesController: UITableViewController {
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadCancel), name: .downloadComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
     }
     
@@ -86,10 +87,18 @@ class EpisodesController: UITableViewController {
         }
     }
     
+    @objc fileprivate func handleDownloadCancel(notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let title = userInfo["title"] as? String else { return }
+        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
+        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
+    }
+    
     @objc fileprivate func handleDownloadComplete(notification: Notification) {
         guard let episodeDownloadComplete = notification.object as? APIService.EpisodeDownloadCompleteTuple else { return }
         guard let index = self.episodes.firstIndex(where: {$0.title == episodeDownloadComplete.episodeTitle}) else { return }
         self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
+        self.episodes[index].isDownloaded = true
         self.episodes[index].downloadStatus = .completed
         
         // Remove from Active Downloads
