@@ -61,6 +61,16 @@ class EpisodeCell: UITableViewCell {
         selectedBackgroundView?.isHidden = true
         containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
         downloadStatusView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
+        
+        
+        [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = isSelected ? UIColor.lightGray : UIColor.grayBlue }
+        
+//        if isSelected {
+//            [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor(named: K.Colors.lightGray) }
+//        } else {
+//            [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor(named: K.Colors.grayBlue) }
+//        }
+        
     }
     
     var dateFormatter: DateFormatter = {

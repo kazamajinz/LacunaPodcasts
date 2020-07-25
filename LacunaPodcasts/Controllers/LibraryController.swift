@@ -151,7 +151,7 @@ extension LibraryController: SearchResultsControllerDelegate {
 extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating {
     func filterContentForSearchText(_ searchText: String) {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
             self.filteredEpisodes = self.episodes.filter {
                 return $0.title.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased())
             }
@@ -162,7 +162,7 @@ extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating
         let searchBar = searchController.searchBar
         self.filterContentForSearchText(searchBar.text!)
         
-        if let resultsController = searchController.searchResultsController as? SearchResultsController {  
+        if let resultsController = searchController.searchResultsController as? SearchResultsController {
             resultsController.filteredEpisodes = filteredEpisodes
             resultsController.tableView.reloadData()
         }
