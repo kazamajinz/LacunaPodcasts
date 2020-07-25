@@ -18,9 +18,7 @@ class SearchController:  UISearchController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
+
     private func setupSearchController() {
         searchBar.keyboardAppearance = .dark
         searchBar.tintColor = UIColor.highlight

@@ -21,7 +21,7 @@ class EpisodesController: UITableViewController {
     var episodes = [Episode]()
     var filteredEpisodes: [Episode] = []
     var timer: Timer?
-    let searchController = SearchController(searchResultsController: SearchResultsController())
+    let searchController = UISearchController(searchResultsController: SearchResultsController())
     var podcast: Podcast? {
         didSet {
             if let podcast = podcast { selectedPodcast = podcast }
@@ -56,6 +56,11 @@ class EpisodesController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         handlePlayerDetailsMinimize()
         tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchController.searchBar.searchTextField.textColor = UIColor.white
     }
     
     //MARK: - Setup Observers
