@@ -10,12 +10,8 @@ import UIKit
 
 class EpisodeHeader: UITableViewCell {
     
-    static var reuseIdentifier: String {
-        String(describing: self)
-    }
-    static var nib: UINib {
-        return UINib(nibName: String(describing: self), bundle: nil)
-    }
+    static var reuseIdentifier: String { String(describing: self) }
+    static var nib: UINib { return UINib(nibName: String(describing: self), bundle: nil) }
     
     @IBOutlet weak var podcastImageView: UIImageView! {
         didSet {
@@ -35,23 +31,24 @@ class EpisodeHeader: UITableViewCell {
 
     var podcast: Podcast! {
         didSet {
+            guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
+            podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
             trackNameLabel.text = podcast.trackName
             artistNameLabel.text = podcast.artistName
-            
-            // Podcast Description
             descriptionLabel.text = podcast.description
             if descriptionLabel.numberOfLines != 0 {
                     let collapsedText = descriptionLabel.text?.collapseText(to: 120)
                     descriptionLabel.text = collapsedText
             }
-            
-            
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDescriptionTap))
             descriptionLabel.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDescriptionTap))
             descriptionLabel.addGestureRecognizer(tapGesture)
             
-            
+            // FOLLOW BUTTON
+            let savedPodcasts = UserDefaults.standard.fetchSavedPodcasts()
+            if let podcast = podcast {
+                followButton.isSelected = savedPodcasts.contains(podcast) ? true : false
+            }
             
 
             
@@ -64,15 +61,10 @@ class EpisodeHeader: UITableViewCell {
 //            artistNameLabel.addGestureRecognizer(tap)
             
             
-            // IMAGE
-            guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
-            podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
+            
+            
 
-            // FOLLOW BUTTON
-            let savedPodcasts = UserDefaults.standard.fetchSavedPodcasts()
-            if let podcast = podcast {
-                followButton.isSelected = savedPodcasts.contains(podcast) ? true : false
-            }
+
         }
     }
 
@@ -81,15 +73,6 @@ class EpisodeHeader: UITableViewCell {
     @objc func handleDescriptionTap() {
         descriptionLabelAction?()
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 //    @objc func didClickLink() {
 //        guard let url = URL(string: podcast.link ?? "") else { return }

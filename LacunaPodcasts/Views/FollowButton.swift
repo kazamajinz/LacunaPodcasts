@@ -21,13 +21,9 @@ class FollowButton: UIButton {
     }
     
     fileprivate func setupButton() {
-        
-        //addTarget(self, action: #selector(handlePress), for: .allTouchEvents)
-        
         backgroundColor = .clear
         transform = .identity
-        
-        // Text
+ 
         setTitle("FOLLOW", for: .normal)
         setTitle("FOLLOWING", for: .selected)
         
@@ -55,8 +51,8 @@ class FollowButton: UIButton {
     
     override var isSelected: Bool {
         didSet {
-            layer.borderColor = isSelected ? UIColor.black.cgColor : UIColor.lightGray.cgColor
-            backgroundColor = isSelected ? UIColor(named: K.Colors.orange) : UIColor.clear
+            layer.borderColor = isSelected ? UIColor.black.cgColor : UIColor(named: K.Colors.lightGray)?.cgColor
+            backgroundColor = isSelected ? UIColor(named: K.Colors.highlight) : UIColor.clear
         }
     }
     
