@@ -65,12 +65,6 @@ class EpisodeCell: UITableViewCell {
         
         [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = isSelected ? UIColor.lightGray : UIColor.grayBlue }
         
-//        if isSelected {
-//            [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor(named: K.Colors.lightGray) }
-//        } else {
-//            [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor(named: K.Colors.grayBlue) }
-//        }
-        
     }
     
     var dateFormatter: DateFormatter = {

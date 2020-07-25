@@ -23,9 +23,16 @@ class PodcastCell: UITableViewCell {
                podcastImageView.roundCorners(cornerRadius: 4.0)
            }
        }
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var episodeCountLabel: UILabel!
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        selectedBackgroundView?.isHidden = true
+        containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
+    }
     
     var podcast: Podcast! {
         didSet {

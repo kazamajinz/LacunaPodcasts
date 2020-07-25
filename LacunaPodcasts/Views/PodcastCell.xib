@@ -59,6 +59,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="artistNameLabel" destination="pn9-hF-v5a" id="xRG-kd-uFt"/>
+                <outlet property="containerView" destination="Ypv-z8-eXm" id="RbM-5P-jjQ"/>
                 <outlet property="episodeCountLabel" destination="H0q-df-60I" id="BYP-yJ-54T"/>
                 <outlet property="podcastImageView" destination="WqN-zP-PrT" id="QV6-kj-LGQ"/>
                 <outlet property="trackNameLabel" destination="U8J-fn-p02" id="KE9-bg-O81"/>
@@ -69,7 +70,7 @@
     <resources>
         <image name="appicon" width="60" height="60"/>
         <namedColor name="midnight">
-            <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059135914665378937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059000000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
