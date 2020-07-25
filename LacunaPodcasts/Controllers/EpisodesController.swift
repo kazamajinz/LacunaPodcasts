@@ -98,7 +98,7 @@ class EpisodesController: UITableViewController {
 
         // Update UI
         DispatchQueue.main.async {
-            cell.resetUI()
+            self.reload(index)
         }
     }
     
@@ -273,13 +273,15 @@ class EpisodesController: UITableViewController {
     
     //MARK: - Swipe Actions
     
+    var swipe: UISwipeActionsConfiguration?
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let cell = tableView.cellForRow(at: indexPath) as? EpisodeCell else { return nil }
         guard let episode = cell.episode else { return nil }
         switch indexPath.section {
         case 1:
             
-            if episode.downloadStatus != .completed {
+            if episode.downloadStatus == .none {
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
                     
                     // Check if episode is already downloading/downloaded
@@ -291,9 +293,11 @@ class EpisodesController: UITableViewController {
                         DispatchQueue.main.async {
                             cell.updateDisplayForDownloadPending()
                         }
+                        
                     }
                     completionHandler(true)
                 }
+                
                 let swipe = UISwipeActionsConfiguration(actions: [downloadAction])
                 return swipe
                 
