@@ -11,11 +11,14 @@ import Alamofire
 
 class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
+    // MARK: - Variables and Properties
+    
     var podcasts = [Podcast]()
     let searchController = UISearchController(searchResultsController: nil)
     var timer: Timer?
-    
     var isLoading: Bool = false
+    
+    // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,17 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         super.viewDidAppear(animated)
         searchController.searchBar.searchTextField.textColor = UIColor.white
     }
+    
+    // MARK: - Subviews
+    
+    let noResultsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No Results"
+        label.textColor = UIColor.lightGray
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        return label
+    }()
     
     //MARK: - Setup
     
@@ -64,29 +78,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         episodesController.podcast = podcast
         navigationController?.pushViewController(episodesController, animated: true)
     }
-
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let label = UILabel()
-//        label.text = "Search for a Podcast"
-//        label.textColor = UIColor.lightGray
-//        label.textAlignment = .center
-//        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-//        return label
-//    }
-
-//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        //return self.podcasts.count > 0 ? 0 : 250
-//        0
-//    }
-    
-    let noResultsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "No Results"
-        label.textColor = UIColor.lightGray
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return isLoading ? AlertService.showActivityIndicator() : noResultsLabel
@@ -110,10 +101,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         K.podcastCellHeight
     }
 }
-
-
-
-
 
 // MARK: - UISearchControllerDelegate, UISearchResultsUpdating
 

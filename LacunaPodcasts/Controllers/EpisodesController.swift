@@ -17,11 +17,11 @@ class EpisodesController: UITableViewController {
     
     //MARK: - Variables and Properties
 
-    var selectedPodcast = Podcast()
     var episodes = [Episode]()
     var filteredEpisodes: [Episode] = []
     var timer: Timer?
     let searchController = UISearchController(searchResultsController: SearchResultsController())
+    var selectedPodcast = Podcast()
     var podcast: Podcast? {
         didSet {
             if let podcast = podcast { selectedPodcast = podcast }

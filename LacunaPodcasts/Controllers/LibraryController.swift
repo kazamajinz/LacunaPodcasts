@@ -15,9 +15,17 @@ class LibraryController: UITableViewController {
     // MARK: - Variables and Properties
     
     var timer: Timer?
-    let searchController = UISearchController(searchResultsController: nil)
+    let searchController = UISearchController(searchResultsController: SearchResultsController())
+    var podcasts = UserDefaults.standard.fetchSavedPodcasts() {
+        didSet {
+            print("DID SET PODCASTS")
+            
+            
+            
+        }
+    }
+    var filteredEpisodes: [Episode] = []
     var episodes = [Episode]()
-    var podcasts = UserDefaults.standard.fetchSavedPodcasts()
     
     // MARK: - Lifecycles
     
@@ -53,8 +61,13 @@ class LibraryController: UITableViewController {
     fileprivate func setupSearchBar() {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.delegate = self
         searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Directory"
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
     }
     
     fileprivate func setupTableView() {
@@ -80,16 +93,6 @@ class LibraryController: UITableViewController {
         let podcastsSearchController = PodcastsSearchController()
         navigationController?.pushViewController(podcastsSearchController, animated: true)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     //MARK: - UITableView
     
@@ -129,19 +132,56 @@ class LibraryController: UITableViewController {
         let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipe
     }
-    
 }
 
+// MARK: - UISearchControllerDelegate, UISearchResultsUpdating
 
+extension LibraryController: SearchResultsControllerDelegate {
+    func didSelectSearchResult(_ episode: Episode) {
+        self.searchController.searchBar.text = ""
+//        guard let index = episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+//        let indexPath = IndexPath(row: index, section: 1)
+//        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+    }
+}
 
-
-
-extension LibraryController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating {
+    func filterContentForSearchText(_ searchText: String) {
+//        filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
+//            return episode.title.lowercased().contains(searchText.lowercased()) || episode.description.lowercased().contains(searchText.lowercased())
+//        }
+//        tableView.reloadData()
     }
     
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        self.filterContentForSearchText(searchBar.text!)
+
+//        if let resultsController = searchController.searchResultsController as? SearchResultsController {
+//            if filteredEpisodes.isEmpty { resultsController.noResults = true }
+//            resultsController.filteredEpisodes = filteredEpisodes
+//            resultsController.tableView.reloadData()
+//        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// MARK: - UISearchBarDelegate
+
+extension LibraryController: UISearchBarDelegate { }
+
+
+
 
 
 
