@@ -539,15 +539,15 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     
     //MARK: - User Actions
     
-    private lazy var episodeImageTapGesture: UITapGestureRecognizer = {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEpisodeImageTap))
-        return tapGesture
-    }()
-    
-    private lazy var episodeDescriptionTapGesture: UITapGestureRecognizer = {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEpisodeImageTap))
-        return tapGesture
-    }()
+//    private lazy var episodeImageTapGesture: UITapGestureRecognizer = {
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEpisodeImageTap))
+//        return tapGesture
+//    }()
+//    
+//    private lazy var episodeDescriptionTapGesture: UITapGestureRecognizer = {
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEpisodeImageTap))
+//        return tapGesture
+//    }()
     
     @objc fileprivate func handleEpisodeImageTap() {
         DispatchQueue.main.async {
@@ -587,7 +587,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var episodeDescriptionTextViewContainerTop: NSLayoutConstraint!
     @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView! {
         didSet {
-            episodeDescriptionTextView.addGestureRecognizer(episodeDescriptionTapGesture)
+            //episodeDescriptionTextView.addGestureRecognizer(episodeDescriptionTapGesture)
         }
     }
     @IBOutlet weak var episodeDescriptionTextViewLeading: NSLayoutConstraint!
@@ -598,7 +598,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
             episodeImageView.roundCorners(cornerRadius: episodeImageContainerRadius)
-            episodeImageView.addGestureRecognizer(episodeImageTapGesture)
+            //episodeImageView.addGestureRecognizer(episodeImageTapGesture)
         }
     }
     @IBOutlet weak var episodeImageViewTop: NSLayoutConstraint!
