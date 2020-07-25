@@ -561,21 +561,24 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     
     // EPISODE DESCRIPTION
     let episodeImageContainerRadius: CGFloat = 16.0
-    var episodeImageDisplay: Bool = true
+    var episodeImageVisible: Bool = true
     
+    @IBOutlet weak var episodeDescriptionButton: UIButton!
     @IBAction func didTapEpisodeDescriptionButton(_ sender: Any) {
-        if episodeImageDisplay {
+        if episodeImageVisible {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.episodeImageView.alpha = 0
                 self.episodeDescriptionTextViewContainer.alpha = 1
             }, completion: nil)
+            self.episodeImageVisible = false
         } else {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.episodeImageView.alpha = 1
                 self.episodeDescriptionTextViewContainer.alpha = 0
             }, completion: nil)
+            self.episodeImageVisible = true
         }
-        episodeImageDisplay.toggle()
+        
     }
     
     @IBOutlet weak var episodeDescriptionTextViewContainer: UIView! {
@@ -698,7 +701,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     
     @IBAction func didTapDismiss(_ sender: Any) {
         UIApplication.mainNavigationController()?.minimizePlayerDetails()
-        //UIApplication.mainTabBarController()?.minimizePlayerDetails()
     }
 }
 

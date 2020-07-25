@@ -15,6 +15,7 @@
                 <outlet property="currentTimeLabel" destination="QAe-lq-vMu" id="8Iz-xL-ghF"/>
                 <outlet property="currentTimeSlider" destination="vTu-mf-7Cc" id="oiO-iF-gz5"/>
                 <outlet property="durationLabel" destination="Hu7-5A-h3v" id="Lnu-fn-PuY"/>
+                <outlet property="episodeDescriptionButton" destination="aai-tJ-yuv" id="kZv-Ff-6y7"/>
                 <outlet property="episodeDescriptionTextView" destination="UAk-uZ-ydu" id="neR-Xs-Vu6"/>
                 <outlet property="episodeDescriptionTextViewContainer" destination="Sye-th-Zat" id="900-uf-xbW"/>
                 <outlet property="episodeDescriptionTextViewContainerTop" destination="Gde-FL-qrj" id="Xu3-4l-RSf"/>
@@ -131,7 +132,7 @@
                                                     <string key="content">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <attributes>
                                                         <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <font key="NSFont" metaFont="menu" size="14"/>
+                                                        <font key="NSFont" metaFont="system" size="14"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="4" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
