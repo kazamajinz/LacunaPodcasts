@@ -45,6 +45,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.placeholder = "Search Directory"
+        searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
     }
     
@@ -57,6 +58,9 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     //MARK: - TableView
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       // searchController.dismiss(animated: true, completion: nil)
+        
+        
         let podcast = self.podcasts[indexPath.row]
         let episodesController = EpisodesController()
         episodesController.podcast = podcast
@@ -87,13 +91,12 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }()
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let activityIndicator = AlertService.showActivityIndicator()
         
-        
-        if podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false {
-            return noResultsLabel
-        } else {
+        if isLoading {
+            let activityIndicator = AlertService.showActivityIndicator()
             return activityIndicator
+        } else {
+            return noResultsLabel
         }
         
         
@@ -128,12 +131,12 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
 extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsUpdating {
     func filterContentForSearchText(_ searchText: String) {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (timer) in
+        //timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
             APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
                 self.podcasts = podcasts
                 self.tableView.reloadData()
             }
-        })
+        //})
     }
     
     func updateSearchResults(for searchController: UISearchController) {
