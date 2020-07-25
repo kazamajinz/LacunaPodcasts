@@ -38,9 +38,7 @@ class EpisodesController: UITableViewController {
         guard let podcast = podcast else { return false }
         return savedPodcasts.contains(podcast)
     }
-    
-    
-    
+
     fileprivate func fetchEpisodes() {
         print("Looking for episodes at feed url:", podcast?.feedUrl ?? "")
         guard let feedUrl = podcast?.feedUrl else { return }
@@ -400,7 +398,9 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
         self.filterContentForSearchText(searchBar.text!)
 
         if let resultsController = searchController.searchResultsController as? SearchResultsController {
-            if filteredEpisodes.isEmpty { resultsController.noResults = true }
+            if filteredEpisodes.isEmpty {
+                resultsController.noResults = true
+            }
             resultsController.filteredEpisodes = filteredEpisodes
             resultsController.tableView.reloadData()
         }

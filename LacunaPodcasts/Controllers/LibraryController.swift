@@ -18,10 +18,13 @@ class LibraryController: UITableViewController {
     let searchController = UISearchController(searchResultsController: SearchResultsController())
     var podcasts = UserDefaults.standard.fetchSavedPodcasts() {
         didSet {
-            print("DID SET PODCASTS")
-            
-            
-            
+            self.episodes.removeAll()
+            podcasts.forEach { (podcast) in
+                guard let feedUrl = podcast.feedUrl else { return }
+                APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
+                    self.episodes.append(contentsOf: episodes)
+                }
+            }
         }
     }
     var filteredEpisodes: [Episode] = []
@@ -147,21 +150,25 @@ extension LibraryController: SearchResultsControllerDelegate {
 
 extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating {
     func filterContentForSearchText(_ searchText: String) {
-//        filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
-//            return episode.title.lowercased().contains(searchText.lowercased()) || episode.description.lowercased().contains(searchText.lowercased())
-//        }
-//        tableView.reloadData()
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+            self.filteredEpisodes = self.episodes.filter {
+
+                return $0.title.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased())
+                
+            }
+            self.tableView.reloadData()
+        })
     }
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         self.filterContentForSearchText(searchBar.text!)
 
-//        if let resultsController = searchController.searchResultsController as? SearchResultsController {
-//            if filteredEpisodes.isEmpty { resultsController.noResults = true }
-//            resultsController.filteredEpisodes = filteredEpisodes
-//            resultsController.tableView.reloadData()
-//        }
+        if let resultsController = searchController.searchResultsController as? SearchResultsController {
+            resultsController.filteredEpisodes = filteredEpisodes
+            resultsController.tableView.reloadData()
+        }
     }
 }
 

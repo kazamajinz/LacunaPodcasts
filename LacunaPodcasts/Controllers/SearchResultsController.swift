@@ -20,6 +20,7 @@ class SearchResultsController: UITableViewController {
 
     var filteredEpisodes: [Episode] = []
     var noResults: Bool = false
+    var isLoading: Bool = false
     
     //MARK: - Lifecycles
     
@@ -28,6 +29,17 @@ class SearchResultsController: UITableViewController {
         setupView()
         setupTableView()
     }
+    
+    // MARK: - Subviews
+    
+    let noResultsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No Results"
+        label.textColor = UIColor.lightGray
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        return label
+    }()
     
     //MARK: - Setup
     
@@ -66,25 +78,8 @@ class SearchResultsController: UITableViewController {
         K.downloadEpisodeCellHeight
     }
     
-    
-    
-    
-    
-    
-    
-    let noResultsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "No Results"
-        label.textAlignment = .center
-        label.textColor = UIColor.lightGray
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
-    
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let activityIndicator = AlertService.showActivityIndicator()
-        activityIndicator.startAnimating()
-        return noResults ? noResultsLabel : activityIndicator
+        return filteredEpisodes.isEmpty ? AlertService.showActivityIndicator() : noResultsLabel
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
