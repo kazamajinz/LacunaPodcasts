@@ -351,8 +351,8 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     fileprivate func updateTimeLabels(_ currentTime: CMTime) {
         guard let duration = player.currentItem?.duration else { return }
         let timeRemaining = duration - currentTime
-        currentTimeLabel.text = currentTime.toDisplayString()
-        durationLabel.text = "-" + timeRemaining.toDisplayString()
+        currentTimeLabel.text = currentTime.toDisplayString(timeRemaining: false)
+        durationLabel.text = timeRemaining.toDisplayString(timeRemaining: true)
     }
     
     fileprivate func updateCurrentTimeSlider() {

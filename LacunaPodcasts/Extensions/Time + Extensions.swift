@@ -22,7 +22,7 @@ extension TimeInterval {
 
 extension CMTime {
 
-    func toDisplayString() -> String {
+    func toDisplayString(timeRemaining: Bool) -> String {
         if CMTimeGetSeconds(self).isNaN {
             return ""
         }
@@ -31,8 +31,14 @@ extension CMTime {
         let minutes = (totalSeconds / 60) % 60
         let seconds = totalSeconds % 60
         if totalSeconds < 3600 {
+            if timeRemaining {
+            return String(format: "-%02d:%02d", minutes, seconds)
+            }
             return String(format: "%02d:%02d", minutes, seconds)
         } else {
+            if timeRemaining {
+                return String(format: "-%02d:%02d:%02d", hours, minutes, seconds)
+            }
             return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
         }
     }
