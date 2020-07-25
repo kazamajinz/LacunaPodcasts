@@ -12,8 +12,8 @@ import Alamofire
 class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     var podcasts = [Podcast]()
-    
     let searchController = UISearchController(searchResultsController: nil)
+    var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         
         
         
-        searchBar(searchController.searchBar, textDidChange: "Gimlet")
+        //searchBar(searchController.searchBar, textDidChange: "Gimlet")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,17 +38,20 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     //MARK: - Setup
     
     private func setupView() {
-        navigationItem.title = "Add Podcast"
         view.backgroundColor = UIColor(named: K.Colors.midnight)
+        navigationItem.title = "Add Podcast"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     fileprivate func setupSearchBar() {
-        // Removes Text from Back Button
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.delegate = self
         searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Directory"
+        definesPresentationContext = true
     }
     
     fileprivate func setupTableView() {
@@ -56,30 +59,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
     }
-    
-    var timer: Timer?
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        self.tableView.reloadData()
-        
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
-            
-            //if self.podcasts.isEmpty { searchBar.isLoading = true }
-            
-            APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
-                //searchBar.isLoading = false
-                self.podcasts = podcasts
-                self.tableView.reloadData()
-            }
-        })
-    }
-    
-    
-    
-    
-    
-    
     
     //MARK: - TableView
     
@@ -124,5 +103,28 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         K.podcastCellHeight
+    }
+}
+
+
+
+
+
+// MARK: - UISearchControllerDelegate, UISearchResultsUpdating
+
+extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsUpdating {
+    func filterContentForSearchText(_ searchText: String) {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+            APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+                self.podcasts = podcasts
+                self.tableView.reloadData()
+            }
+        })
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        self.filterContentForSearchText(searchBar.text!)
     }
 }
