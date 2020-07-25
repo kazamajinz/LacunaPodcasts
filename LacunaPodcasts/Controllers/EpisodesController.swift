@@ -238,7 +238,7 @@ class EpisodesController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        if indexPath.section == Section.header.rawValue {
+        if indexPath.section == 0 {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
             header.podcast = selectedPodcast
 
@@ -315,14 +315,8 @@ class EpisodesController: UITableViewController {
                         // 2. Check Storage Space
                         if !FileManager.default.fileExists(atPath: url.path) {
                             UserDefaults.standard.deleteEpisode(episode: episode)
-                            DispatchQueue.main.async {
-                                cell.resetUI()
-                                
-                                
-                                
-                                
-                                
-                            }
+                            self.fetchEpisodes()
+                            self.reload(indexPath.row)
                         } else { print("Failed to delete the episode file") }
                     }
                     completionHandler(true)
