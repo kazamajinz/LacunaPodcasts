@@ -243,7 +243,12 @@ class EpisodesController: UITableViewController {
         if indexPath.section == 0 {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
             header.podcast = selectedPodcast
-
+            
+            let savedPodcasts = UserDefaults.standard.fetchSavedPodcasts()
+            if let index = savedPodcasts.firstIndex(where: {$0.trackName == selectedPodcast.trackName} ) {
+                header.podcast = savedPodcasts[index]
+            }
+            
             // Expand and Collapse Podcast Description
             header.descriptionLabelAction = { [weak self] in
                 header.descriptionLabel.numberOfLines = header.descriptionLabel.numberOfLines == 0 ? 3 : 0
