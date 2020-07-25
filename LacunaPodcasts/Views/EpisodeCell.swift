@@ -85,6 +85,11 @@ class EpisodeCell: UITableViewCell {
             
             
             
+//            titleLabel.textColor = episode.downloadStatus.titleColor
+//            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
+//            detailsLabel.textColor = episode.downloadStatus.detailsColor
+            
+            
             
             
             
@@ -98,13 +103,6 @@ class EpisodeCell: UITableViewCell {
             // Non-nil Download object means a download is in progress
             if let _ = APIService.shared.activeDownloads[episode.streamUrl] {}
         }
-    }
-    
-    func updateLabelColors() {
-        downloadStatusView.isHidden = true
-        titleLabel.textColor = episode.downloadStatus.titleColor
-        descriptionLabel.textColor = episode.downloadStatus.descriptionColor
-        detailsLabel.textColor = episode.downloadStatus.detailsColor
     }
     
     func updateDisplay(progress: Double) {

@@ -24,6 +24,7 @@ class EpisodesController: UITableViewController {
     let searchController = SearchController(searchResultsController: SearchResultsController())
     var podcast: Podcast? {
         didSet {
+            if let podcast = podcast { selectedPodcast = podcast }
             fetchEpisodes()
             navigationItem.title = self.podcast?.trackName
             view.backgroundColor = UIColor(named: K.Colors.midnight)
@@ -31,9 +32,6 @@ class EpisodesController: UITableViewController {
     }
     
     fileprivate func fetchEpisodes() {
-        if let podcast = podcast {
-            selectedPodcast = podcast
-        }
         print("Looking for episodes at feed url:", podcast?.feedUrl ?? "")
         guard let feedUrl = podcast?.feedUrl else { return }
         APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
@@ -63,7 +61,9 @@ class EpisodesController: UITableViewController {
     //MARK: - Setup Observers
     
     fileprivate func reload(_ row: Int) {
+        UIView.setAnimationsEnabled(false)
         tableView.reloadRows(at: [IndexPath(row: row, section: 1)], with: .none)
+        UIView.setAnimationsEnabled(true)
     }
     
     fileprivate func setupObservers() {
@@ -95,10 +95,9 @@ class EpisodesController: UITableViewController {
         self.episodes[index].downloadStatus = .none
         
         print("cancelling")
-
+        
         // Update UI
         DispatchQueue.main.async {
-            //self.reload(index)
         }
     }
     
@@ -275,31 +274,16 @@ class EpisodesController: UITableViewController {
     }
     
     //MARK: - Swipe Actions
-
-    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
-        print("did end editing")
-//
-//
-//
-//        if indexPath == indexPathOfSelectedEpisode {
-////            guard let indexPath = indexPath else { return }
-////            guard let cell = self.tableView.cellForRow(at: indexPath) as? EpisodeCell else { return }
-////            cell.episode = self.episodes[indexPath.row]
-//
-//                self.fetchEpisodes()
-//
-//
-//            //fetchEpisodes()
-//
-//
-//        }
-        
+    
+    private func fetchEpisodesAndUpdateUI(_ row: Int) {
+        guard let feedUrl = self.podcast?.feedUrl else { return }
+        APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
+            self.episodes = episodes
+            DispatchQueue.main.async {
+                self.reload(row)
+            }
+        }
     }
-    
-    
-    
-    
-    var indexPathOfSelectedEpisode: IndexPath?
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let cell = tableView.cellForRow(at: indexPath) as? EpisodeCell else { return nil }
@@ -310,12 +294,12 @@ class EpisodesController: UITableViewController {
             if episode.downloadStatus != .completed {
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
                     
+                    
+
                     // Check if episode is already downloading/downloaded
                     let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
                     if !downloadedEpisodes.contains(where: {$0.title == episode.title}) {
-                        
-                        self.indexPathOfSelectedEpisode = indexPath
-                        
+
                         APIService.shared.startDownload(episode)
                         UserDefaults.standard.downloadEpisode(episode: episode)
                         DispatchQueue.main.async {
@@ -352,6 +336,7 @@ class EpisodesController: UITableViewController {
                         // 2. Check Storage Space
                         if !FileManager.default.fileExists(atPath: url.path) {
                             UserDefaults.standard.deleteEpisode(episode: episode)
+                            self.fetchEpisodesAndUpdateUI(indexPath.row)
                         } else { print("Failed to delete the episode file") }
                     }
                     completionHandler(true)
@@ -374,6 +359,13 @@ extension EpisodesController: EpisodeCellDelegate {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
             tableView.reloadRows(at: [indexPath], with: .none)
+            
+            
+            
+            
+            
+            
+            
         }
     }
 }
