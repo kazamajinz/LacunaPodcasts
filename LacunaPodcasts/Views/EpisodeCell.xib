@@ -54,17 +54,12 @@
                                                                         <color key="textColor" name="grayBlue"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5xI-fN-nrD">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PUB DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMM-gz-4nh">
                                                                         <rect key="frame" x="0.0" y="23" width="57.5" height="14"/>
-                                                                        <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PUB DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMM-gz-4nh">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="57.5" height="14"/>
-                                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                                                                <color key="textColor" name="grayBlue"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
-                                                                        </subviews>
-                                                                    </stackView>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                                        <color key="textColor" name="grayBlue"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                 </subviews>
                                                             </stackView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wi7-Uc-Rc0">
@@ -175,7 +170,7 @@
     <resources>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="grayBlue">
-            <color red="0.31240839694869027" green="0.3414341044250353" blue="0.44900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.31200000643730164" green="0.34099999070167542" blue="0.44900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="grayBlue">
             <color red="0.31240839694869027" green="0.3414341044250353" blue="0.44900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -184,7 +179,7 @@
             <color red="0.40000000596046448" green="0.40000000596046448" blue="0.83499997854232788" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="midnight">
-            <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059135914665378937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059000000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="orange">
             <color red="0.99599999189376831" green="0.58799999952316284" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

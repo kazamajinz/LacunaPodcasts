@@ -69,7 +69,8 @@ class SearchResultsController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
         cell.episode = filteredEpisodes[indexPath.row]
         cell.episodeImageView.isHidden = false
-        cell.descriptionLabel.numberOfLines = 1
+        cell.detailsLabel.isHidden = true
+        cell.descriptionLabel.numberOfLines = 2
         cell.isActive = true
         return cell
     }
@@ -79,7 +80,7 @@ class SearchResultsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return filteredEpisodes.isEmpty ? AlertService.showActivityIndicator() : noResultsLabel
+        return isLoading ? AlertService.showActivityIndicator() : noResultsLabel
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
