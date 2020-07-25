@@ -76,7 +76,7 @@ class SearchResultsController: UITableViewController {
         let label = UILabel()
         label.text = "No Results"
         label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
     }()
