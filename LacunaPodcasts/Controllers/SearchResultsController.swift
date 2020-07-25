@@ -16,9 +16,7 @@ class SearchResultsController: UITableViewController {
     
     var delegate: SearchResultsControllerDelegate?
     
-    deinit {
-        print("SearchResultsController memory being reclaimed...")
-    }
+    deinit { print("SearchResultsController memory being reclaimed...") }
 
     var filteredEpisodes: [Episode] = []
     var noResults: Bool = false
@@ -34,7 +32,7 @@ class SearchResultsController: UITableViewController {
     //MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = UIColor(named: K.Colors.darkBlue)
+        view.backgroundColor = UIColor.midnight
     }
     
     fileprivate func setupTableView() {
@@ -60,6 +58,7 @@ class SearchResultsController: UITableViewController {
         cell.episode = filteredEpisodes[indexPath.row]
         cell.episodeImageView.isHidden = false
         cell.descriptionLabel.numberOfLines = 1
+        cell.isActive = true
         return cell
     }
     
@@ -71,10 +70,13 @@ class SearchResultsController: UITableViewController {
     
     
     
+    
+    
     let noResultsLabel: UILabel = {
         let label = UILabel()
         label.text = "No Results"
         label.textAlignment = .center
+        label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
     }()

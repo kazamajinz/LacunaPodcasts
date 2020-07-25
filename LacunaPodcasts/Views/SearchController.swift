@@ -19,9 +19,25 @@ class SearchController:  UISearchController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     private func setupSearchController() {
         searchBar.keyboardAppearance = .dark
-        searchBar.searchTextField.backgroundColor = UIColor(named: K.Colors.midnight)
+        // Cancel Button
+        searchBar.tintColor = UIColor.highlight
+        
+        // TextField Background
+        searchBar.searchTextField.backgroundColor = UIColor.darkBlue
+        
+        // Cursor
+        searchBar.searchTextField.tintColor = UIColor.white
+        
+        
+        searchBar.textField?.textColor = UIColor.white
+        
+        
+        
+        
     }
     
 }

@@ -69,6 +69,16 @@ class EpisodeCell: UITableViewCell {
         return formatter
     }()
     
+    var isActive: Bool = false {
+        didSet {
+            if isActive {
+                titleLabel.textColor = UIColor.white
+                descriptionLabel.textColor = UIColor(named: K.Colors.lightGray)
+                detailsLabel.textColor = UIColor(named: K.Colors.lightGray)
+            }
+        }
+    }
+    
     var episode: Episode! {
         didSet {
             
@@ -84,10 +94,7 @@ class EpisodeCell: UITableViewCell {
                
             
             
-            
-//            titleLabel.textColor = episode.downloadStatus.titleColor
-//            descriptionLabel.textColor = episode.downloadStatus.descriptionColor
-//            detailsLabel.textColor = episode.downloadStatus.detailsColor
+
             
             
             
@@ -95,15 +102,18 @@ class EpisodeCell: UITableViewCell {
             
             if episode.downloadStatus == .completed {
                 downloadStatusVerticalBar.isHidden = false
-                titleLabel.textColor = UIColor.white
-                descriptionLabel.textColor = UIColor(named: K.Colors.lightGray)
-                detailsLabel.textColor = UIColor(named: K.Colors.lightGray)
+                isActive = true
             }
 
             // Non-nil Download object means a download is in progress
             if let _ = APIService.shared.activeDownloads[episode.streamUrl] {}
         }
     }
+    
+    
+    
+    
+    
     
     func updateDisplay(progress: Double) {
         downloadStatusView.isHidden = false

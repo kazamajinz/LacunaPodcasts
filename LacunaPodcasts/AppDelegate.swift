@@ -42,6 +42,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         
+//        // MARK: - SearchBar
+//
+//        UISearchBar.appearance().tintColor = UIColor.highlight
+//        UISearchTextField.appearance().tintColor = UIColor.white
+//        //searchBar.keyboardAppearance = .dark
+//        
+//
+//
+        
+        
+        
         
         
     

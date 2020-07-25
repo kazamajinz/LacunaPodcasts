@@ -75,7 +75,7 @@ class CircularProgressBar: UIView {
         let startAngle = CGFloat(0)
         let endAngle = 2 * CGFloat.pi
         trackLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .darkBlue ?? UIColor(), fillColor: .clear, lineWidth: lineWidth)
-        layer.addSublayer(trackLayer) 
+        layer.addSublayer(trackLayer)
     }
 
     private func drawProgressLayer() {
@@ -91,6 +91,3 @@ class CircularProgressBar: UIView {
     }
 
 }
-
-
-

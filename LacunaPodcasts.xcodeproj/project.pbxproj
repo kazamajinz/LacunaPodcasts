@@ -39,6 +39,7 @@
 		9E7BD39C24CA1A8400F5DD7E /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39B24CA1A8400F5DD7E /* CircularProgressBar.swift */; };
 		9E7BD39E24CA1E7400F5DD7E /* UIView + Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39D24CA1E7400F5DD7E /* UIView + Layout.swift */; };
 		9E7BD3A024CB352F00F5DD7E /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39F24CB352E00F5DD7E /* Download.swift */; };
+		9E7BD3A224CC8D0900F5DD7E /* UISearchBar + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD3A124CC8D0900F5DD7E /* UISearchBar + Extensions.swift */; };
 		9E7F4F3424AA6898001C4AEE /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */; };
 		9E83738C24B20867008CD566 /* DurationSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738B24B20867008CD566 /* DurationSlider.swift */; };
 		9E83738E24B239BF008CD566 /* PlayerDetailsView + Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */; };
@@ -98,6 +99,7 @@
 		9E7BD39B24CA1A8400F5DD7E /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		9E7BD39D24CA1E7400F5DD7E /* UIView + Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Layout.swift"; sourceTree = "<group>"; };
 		9E7BD39F24CB352E00F5DD7E /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		9E7BD3A124CC8D0900F5DD7E /* UISearchBar + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar + Extensions.swift"; sourceTree = "<group>"; };
 		9E7F4F3324AA6898001C4AEE /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		9E83738B24B20867008CD566 /* DurationSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationSlider.swift; sourceTree = "<group>"; };
 		9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView + Gestures.swift"; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				9E0D511D24AD1D3F0035BB90 /* Time + Extensions.swift */,
 				9EDB908A24AD98B1004D8EB1 /* AVPlayer + Extensions.swift */,
 				9E83738F24B27F84008CD566 /* UIPanGestureRecognizer + Extensions.swift */,
+				9E7BD3A124CC8D0900F5DD7E /* UISearchBar + Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				9EF3B28124B631A5005AC285 /* HomePodcastCell.swift in Sources */,
 				9E00023E24A98E2100A1E796 /* SceneDelegate.swift in Sources */,
 				9E7F4F3424AA6898001C4AEE /* EpisodesController.swift in Sources */,
+				9E7BD3A224CC8D0900F5DD7E /* UISearchBar + Extensions.swift in Sources */,
 				9EF3B27C24B61F7C005AC285 /* HomeController.swift in Sources */,
 				9EF3B28524B646DA005AC285 /* FollowButton.swift in Sources */,
 				9E83739024B27F84008CD566 /* UIPanGestureRecognizer + Extensions.swift in Sources */,

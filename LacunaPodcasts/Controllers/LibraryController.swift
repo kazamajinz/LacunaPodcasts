@@ -53,6 +53,7 @@ class LibraryController: UITableViewController {
     }
     
     fileprivate func setupTableView() {
+        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
     }
