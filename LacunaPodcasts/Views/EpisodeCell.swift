@@ -35,7 +35,7 @@ class EpisodeCell: UITableViewCell {
             circularProgressBar.center(in: downloadStatusButton, xAnchor: true, yAnchor: true)
         }
     }
-    
+
     let circularProgressBar: CircularProgressBar = {
         let bar = CircularProgressBar()
         return bar

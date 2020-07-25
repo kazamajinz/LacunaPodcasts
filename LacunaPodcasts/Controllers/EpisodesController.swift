@@ -98,6 +98,7 @@ class EpisodesController: UITableViewController {
         
         // Update UI
         DispatchQueue.main.async {
+            self.reload(index)
         }
     }
     
@@ -107,15 +108,12 @@ class EpisodesController: UITableViewController {
         self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
         self.episodes[index].downloadStatus = .completed
         
-        
         // Remove from Active Downloads
         APIService.shared.activeDownloads[episodeDownloadComplete.streamUrl] = nil
 
         // Update UI
         DispatchQueue.main.async {
-            UIView.setAnimationsEnabled(false)
             self.reload(index)
-            UIView.setAnimationsEnabled(true)
         }
     }
     
@@ -311,6 +309,7 @@ class EpisodesController: UITableViewController {
                         
                         
                         
+                        
                     }
                     completionHandler(true)
                 }
@@ -359,13 +358,6 @@ extension EpisodesController: EpisodeCellDelegate {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
             tableView.reloadRows(at: [indexPath], with: .none)
-            
-            
-            
-            
-            
-            
-            
         }
     }
 }
