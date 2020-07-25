@@ -89,7 +89,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
             
             // MAKE INTO ATTRIBUTED STRING?
             if let description = episode.contentEncoded {
-                episodeDescriptionTextView.attributedText = description.convertHtml(family: "Helvetica", size: 10.0)
+                episodeDescriptionTextView.attributedText = description.convertHtml(family: "Helvetica", size: 10.0, csscolor: "#D9D9D9")
             }
             
             

@@ -35,7 +35,7 @@ extension String {
     
     //MARK: - HTML
     
-    func convertHtml(family: String?, size: CGFloat) -> NSAttributedString? {
+    func convertHtml(family: String?, size: CGFloat, csscolor: String) -> NSAttributedString? {
         
         do {
             let htmlCSSString = "<style>" +
@@ -43,7 +43,8 @@ extension String {
                 "{" +
                 "font-size: \(size)pt !important;" +
                 "font-family: \(family ?? "Helvetica"), Helvetica !important;" +
-                "line-height: 1.5" +
+                "line-height: 1.5;" +
+                "color: \(csscolor);" +
             "}</style> \(self)"
             
             guard let data = htmlCSSString.data(using: String.Encoding.utf8) else { return nil }

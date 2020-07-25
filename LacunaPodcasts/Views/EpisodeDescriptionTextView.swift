@@ -24,22 +24,13 @@ class EpisodeDescriptionTextView: UITextView {
         textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 32, right: 16)
         
         // Text Attributes
-        linkTextAttributes = [.foregroundColor: UIColor.systemPink]
-        
+        linkTextAttributes = [.foregroundColor: UIColor.highlight]
 
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10
-        let attributes = [NSAttributedString.Key.paragraphStyle : paragraphStyle]
-        attributedText = NSAttributedString(string: text, attributes: attributes)
-        
-        
-        
-        
-        //        let attributes: [NSAttributedString.Key: Any] = [
-        //            .strikethroughStyle: 1,
-        //            .foregroundColor: UIColor.black]
-        
-        
+//        let paragraphStyle = NSMutableParagraphStyle()
+//        paragraphStyle.lineSpacing = 10
+//        let attributes : [NSAttributedString.Key: Any] =
+//            [.paragraphStyle : paragraphStyle, .foregroundColor: UIColor.white]
+//        attributedText = NSAttributedString(string: text, attributes: attributes)
         
         
         
