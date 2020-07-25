@@ -26,10 +26,21 @@ class EpisodesController: UITableViewController {
         didSet {
             if let podcast = podcast { selectedPodcast = podcast }
             fetchEpisodes()
-            navigationItem.title = self.podcast?.trackName
+            navigationItem.title = isPodcastSaved ? self.podcast?.trackName : "Add Podcast"
             view.backgroundColor = UIColor(named: K.Colors.midnight)
         }
     }
+    
+    var savedPodcasts: [Podcast] {
+        return UserDefaults.standard.fetchSavedPodcasts()
+    }
+    
+    var isPodcastSaved: Bool {
+        guard let podcast = podcast else { return false }
+        return savedPodcasts.contains(podcast)
+    }
+    
+    
     
     fileprivate func fetchEpisodes() {
         print("Looking for episodes at feed url:", podcast?.feedUrl ?? "")
@@ -244,7 +255,6 @@ class EpisodesController: UITableViewController {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
             header.podcast = selectedPodcast
             
-            let savedPodcasts = UserDefaults.standard.fetchSavedPodcasts()
             if let index = savedPodcasts.firstIndex(where: {$0.trackName == selectedPodcast.trackName} ) {
                 header.podcast = savedPodcasts[index]
             }
