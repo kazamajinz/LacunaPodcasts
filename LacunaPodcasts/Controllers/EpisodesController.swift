@@ -88,18 +88,15 @@ class EpisodesController: UITableViewController {
     }
     
     @objc fileprivate func handleDownloadCancel(notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: Any] else { return }
-        guard let title = userInfo["title"] as? String else { return }
-        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
-        guard let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 1)) as? EpisodeCell else { return }
-        self.episodes[index].downloadStatus = .none
-        
-        print("cancelling")
-        
-        // Update UI
-        DispatchQueue.main.async {
-            self.reload(index)
-        }
+//        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+//        guard let title = userInfo["title"] as? String else { return }
+//        guard let index = self.episodes.firstIndex(where: {$0.title == title}) else { return }
+//        self.episodes[index].downloadStatus = .none
+//
+//        // Update UI
+//        DispatchQueue.main.async {
+//            self.reload(index)
+//        }
     }
     
     @objc fileprivate func handleDownloadComplete(notification: Notification) {

@@ -22,11 +22,13 @@ class CircularProgressBar: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupObservers()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
+        setupObservers()
     }
 
     private func setupView() {
@@ -36,14 +38,20 @@ class CircularProgressBar: UIView {
         drawProgressLayer()
     }
     
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc private func handleEnterForeground() {
+        animatePulsatingLayer()
+    }
+    
     private func drawPulsatingLayer() {
-        pulsatingLayer = CAShapeLayer()
         let path = UIBezierPath(arcCenter: .zero, radius: radius, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        pulsatingLayer = CAShapeLayer()
         pulsatingLayer.path = path.cgPath
-//        pulsatingLayer.strokeColor = UIColor.clear.cgColor
         pulsatingLayer.strokeColor = UIColor(named: K.Colors.darkBlue)?.cgColor
         pulsatingLayer.lineWidth = 4.0
-        //pulsatingLayer.fillColor = UIColor(named: K.Colors.darkBlue)?.cgColor
         pulsatingLayer.fillColor = UIColor.clear.cgColor
         pulsatingLayer.position = self.center
         layer.addSublayer(pulsatingLayer)
@@ -66,7 +74,6 @@ class CircularProgressBar: UIView {
         trackLayer.path = path.cgPath
         trackLayer.strokeColor = UIColor(named: K.Colors.darkBlue)?.cgColor
         trackLayer.lineWidth = lineWidth
-        //trackLayer.fillColor = UIColor(named: K.Colors.midnight)?.cgColor
         trackLayer.fillColor = UIColor.clear.cgColor
         trackLayer.position = self.center
         layer.addSublayer(trackLayer)
