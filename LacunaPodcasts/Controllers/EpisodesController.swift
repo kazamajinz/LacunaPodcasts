@@ -34,7 +34,6 @@ class EpisodesController: UITableViewController {
     var savedPodcasts: [Podcast] {
         return UserDefaults.standard.fetchSavedPodcasts()
     }
-    
     var isPodcastSaved: Bool {
         guard let podcast = podcast else { return false }
         return savedPodcasts.contains(podcast)
@@ -230,9 +229,7 @@ class EpisodesController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 1 {
-            let activityIndicator = AlertService.showActivityIndicator()
-            episodes.isEmpty ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-            return activityIndicator
+            return AlertService.showActivityIndicator()
         } else { return nil }
     }
     

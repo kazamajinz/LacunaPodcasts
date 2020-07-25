@@ -18,6 +18,7 @@ extension UIColor {
     static let grayBlue = UIColor(named: K.Colors.grayBlue)
     static let lightGray = UIColor(named: K.Colors.lightGray)
     static let green = UIColor(named: K.Colors.green)
+    static let dimGray = UIColor(named: K.Colors.dimGray)
     
     
     

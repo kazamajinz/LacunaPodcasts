@@ -53,14 +53,12 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
+        tableView.sectionFooterHeight = 0
     }
     
     //MARK: - TableView
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // searchController.dismiss(animated: true, completion: nil)
-        
-        
         let podcast = self.podcasts[indexPath.row]
         let episodesController = EpisodesController()
         episodesController.podcast = podcast
@@ -91,16 +89,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }()
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
-        if isLoading {
-            let activityIndicator = AlertService.showActivityIndicator()
-            return activityIndicator
-        } else {
-            return noResultsLabel
-        }
-        
-        
-     
+        return isLoading ? AlertService.showActivityIndicator() : noResultsLabel
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -131,15 +120,18 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
 extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsUpdating {
     func filterContentForSearchText(_ searchText: String) {
         timer?.invalidate()
-        //timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
             APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+                self.isLoading = false
                 self.podcasts = podcasts
                 self.tableView.reloadData()
             }
-        //})
+        })
     }
     
     func updateSearchResults(for searchController: UISearchController) {
+        isLoading = true
+        tableView.reloadData()
         let searchBar = searchController.searchBar
         self.filterContentForSearchText(searchBar.text!)
     }

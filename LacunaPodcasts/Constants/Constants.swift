@@ -31,6 +31,7 @@ struct K {
         static let grayBlue = "grayBlue"
         static let lightGray = "lightGray"
         static let green = "green"
+        static let dimGray = "dimGray"
     }
     
     
