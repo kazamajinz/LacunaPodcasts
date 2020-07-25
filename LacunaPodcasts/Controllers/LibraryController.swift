@@ -35,6 +35,11 @@ class LibraryController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchController.searchBar.searchTextField.textColor = UIColor.white
+    }
+    
     // MARK: - Setup
     
     private func setupView() {

@@ -30,6 +30,11 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         searchBar(searchController.searchBar, textDidChange: "Gimlet")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchController.searchBar.searchTextField.textColor = UIColor.white
+    }
+    
     //MARK: - Setup
     
     private func setupView() {
