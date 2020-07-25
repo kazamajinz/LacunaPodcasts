@@ -42,7 +42,7 @@ class CircularProgressBar: UIView {
         pulsatingLayer.path = path.cgPath
 //        pulsatingLayer.strokeColor = UIColor.clear.cgColor
         pulsatingLayer.strokeColor = UIColor(named: K.Colors.darkBlue)?.cgColor
-        pulsatingLayer.lineWidth = lineWidth
+        pulsatingLayer.lineWidth = 4.0
         //pulsatingLayer.fillColor = UIColor(named: K.Colors.darkBlue)?.cgColor
         pulsatingLayer.fillColor = UIColor.clear.cgColor
         pulsatingLayer.position = self.center
@@ -52,8 +52,8 @@ class CircularProgressBar: UIView {
     
     private func animatePulsatingLayer() {
         let animation = CABasicAnimation(keyPath: "transform.scale")
-        animation.toValue = 0.6
-        animation.toValue = 1.2
+        animation.fromValue = 0.9
+        animation.toValue = 1.0
         animation.duration = 0.8
         animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
         animation.autoreverses = true
