@@ -147,12 +147,37 @@
                                         <constraint firstAttribute="trailing" secondItem="UAk-uZ-ydu" secondAttribute="trailing" constant="16" id="g1d-vk-3T1"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NiH-Oh-UJt">
+                                    <rect key="frame" x="36" y="0.0" width="342" height="342"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aai-tJ-yuv">
+                                            <rect key="frame" x="301" y="16" width="25" height="24"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" image="info.circle" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="didTapEpisodeDescriptionButton:" destination="-1" eventType="touchUpInside" id="Gkk-79-eg1"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="NiH-Oh-UJt" secondAttribute="height" id="6OL-FE-wex"/>
+                                        <constraint firstItem="aai-tJ-yuv" firstAttribute="top" secondItem="NiH-Oh-UJt" secondAttribute="top" constant="16" id="i1G-kC-V2M"/>
+                                        <constraint firstAttribute="trailing" secondItem="aai-tJ-yuv" secondAttribute="trailing" constant="16" id="rQo-oZ-qKx"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="ex2-q4-h1q" firstAttribute="top" secondItem="kpM-8Q-kCe" secondAttribute="top" id="5QT-Qh-vOt"/>
+                                <constraint firstItem="NiH-Oh-UJt" firstAttribute="leading" secondItem="kpM-8Q-kCe" secondAttribute="leading" constant="36" id="FIq-Bn-oM5"/>
                                 <constraint firstItem="Sye-th-Zat" firstAttribute="top" secondItem="kpM-8Q-kCe" secondAttribute="top" id="Gde-FL-qrj"/>
+                                <constraint firstItem="NiH-Oh-UJt" firstAttribute="top" secondItem="kpM-8Q-kCe" secondAttribute="top" id="KcL-z5-T4b"/>
                                 <constraint firstAttribute="bottom" secondItem="ex2-q4-h1q" secondAttribute="bottom" id="N8u-NK-mJn"/>
+                                <constraint firstAttribute="bottom" secondItem="NiH-Oh-UJt" secondAttribute="bottom" id="YNO-M2-DZW"/>
                                 <constraint firstAttribute="bottom" secondItem="Sye-th-Zat" secondAttribute="bottom" id="bQo-JK-R2P"/>
                                 <constraint firstItem="ex2-q4-h1q" firstAttribute="leading" secondItem="kpM-8Q-kCe" secondAttribute="leading" constant="36" id="g12-nJ-oWX"/>
                                 <constraint firstAttribute="height" constant="342" id="kVd-vq-kjH"/>
@@ -415,6 +440,7 @@
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="gobackward.15" catalog="system" width="121" height="128"/>
         <image name="goforward.15" catalog="system" width="121" height="128"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <namedColor name="blue">
@@ -424,10 +450,10 @@
             <color red="0.10999999940395355" green="0.13300000131130219" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="lightGray">
-            <color white="0.84999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color white="0.85000002384185791" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="midnight">
-            <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059135914665378937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.065999999642372131" green="0.079999998211860657" blue="0.059000000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="orange">
             <color red="0.99599999189376831" green="0.58799999952316284" blue="0.10599999874830246" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

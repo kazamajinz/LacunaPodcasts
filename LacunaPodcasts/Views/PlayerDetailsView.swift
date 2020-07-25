@@ -557,8 +557,26 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    
+    
     // EPISODE DESCRIPTION
     let episodeImageContainerRadius: CGFloat = 16.0
+    var episodeImageDisplay: Bool = true
+    
+    @IBAction func didTapEpisodeDescriptionButton(_ sender: Any) {
+        if episodeImageDisplay {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.episodeImageView.alpha = 0
+                self.episodeDescriptionTextViewContainer.alpha = 1
+            }, completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.episodeImageView.alpha = 1
+                self.episodeDescriptionTextViewContainer.alpha = 0
+            }, completion: nil)
+        }
+        episodeImageDisplay.toggle()
+    }
     
     @IBOutlet weak var episodeDescriptionTextViewContainer: UIView! {
         didSet {
