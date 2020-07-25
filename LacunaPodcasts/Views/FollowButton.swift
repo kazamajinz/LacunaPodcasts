@@ -34,7 +34,7 @@ class FollowButton: UIButton {
         titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         
         // Border
-        layer.borderColor = UIColor.lightGray.cgColor
+        layer.borderColor = UIColor.lightGray?.cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = self.frame.size.height / 2
         

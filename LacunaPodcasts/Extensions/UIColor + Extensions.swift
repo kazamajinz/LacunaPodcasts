@@ -10,12 +10,22 @@ import UIKit
 
 extension UIColor {
     
+    static let darkBlue = UIColor(named: K.Colors.darkBlue)
+    static let blue = UIColor(named: K.Colors.blue)
+    static let highlight = UIColor(named: K.Colors.highlight)
+    static let orange = UIColor(named: K.Colors.orange)
+    static let midnight = UIColor(named: K.Colors.midnight)
+    static let grayBlue = UIColor(named: K.Colors.grayBlue)
+    static let lightGray = UIColor(named: K.Colors.lightGray)
+    static let green = UIColor(named: K.Colors.green)
+    
+    
+    
+    
     static func rgb(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
         return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
-    
-    
-    
+
     public convenience init?(hex: String) {
         let r, g, b, a: CGFloat
 

@@ -10,14 +10,10 @@ import UIKit
 
 class CircularProgressBar: UIView {
     
-    private var progressLayer = CAShapeLayer()
-    private var trackLayer = CAShapeLayer()
-    private var pathCenter: CGPoint { self.center }
-    private var radius: CGFloat { 14 }
-    private var lineWidth: CGFloat { 2 }
+    private var progressLayer: CAShapeLayer!
+    private var trackLayer: CAShapeLayer!
     private var pulsatingLayer: CAShapeLayer!
-    
-    var action: (() -> Void)?
+    private var lineWidth: CGFloat = 2
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +29,7 @@ class CircularProgressBar: UIView {
 
     private func setupView() {
         self.layer.sublayers = nil
-        drawPulsatingLayer()
+        //drawPulsatingLayer()
         drawTrackLayer()
         drawProgressLayer()
     }
@@ -43,25 +39,31 @@ class CircularProgressBar: UIView {
     }
     
     @objc private func handleEnterForeground() {
-        animatePulsatingLayer()
+        //animatePulsatingLayer()
+    }
+    
+    private func createCircleShapeLayer(startAngle: CGFloat, endAngle: CGFloat, strokeColor: UIColor, fillColor: UIColor, lineWidth: CGFloat) -> CAShapeLayer {
+        let path = UIBezierPath(arcCenter: .zero, radius: 14, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        let layer = CAShapeLayer()
+        layer.path = path.cgPath
+        layer.strokeColor = strokeColor.cgColor
+        layer.lineWidth = lineWidth
+        layer.fillColor = fillColor.cgColor
+        layer.lineCap = .round
+        layer.position = self.center
+        return layer
     }
     
     private func drawPulsatingLayer() {
-        let path = UIBezierPath(arcCenter: .zero, radius: radius, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-        pulsatingLayer = CAShapeLayer()
-        pulsatingLayer.path = path.cgPath
-        pulsatingLayer.strokeColor = UIColor(named: K.Colors.darkBlue)?.cgColor
-        pulsatingLayer.lineWidth = 4.0
-        pulsatingLayer.fillColor = UIColor.clear.cgColor
-        pulsatingLayer.position = self.center
+        let startAngle = CGFloat(0)
+        let endAngle = 2 * CGFloat.pi
+        pulsatingLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .darkBlue ?? UIColor(), fillColor: .clear, lineWidth: 4)
         layer.addSublayer(pulsatingLayer)
         animatePulsatingLayer()
     }
-    
     private func animatePulsatingLayer() {
         let animation = CABasicAnimation(keyPath: "transform.scale")
-        animation.fromValue = 0.9
-        animation.toValue = 1.0
+        animation.toValue = 1.1
         animation.duration = 0.8
         animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
         animation.autoreverses = true
@@ -70,41 +72,23 @@ class CircularProgressBar: UIView {
     }
     
     private func drawTrackLayer() {
-        let path = UIBezierPath(arcCenter: .zero, radius: radius, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-        trackLayer.path = path.cgPath
-        trackLayer.strokeColor = UIColor(named: K.Colors.darkBlue)?.cgColor
-        trackLayer.lineWidth = lineWidth
-        trackLayer.fillColor = UIColor.clear.cgColor
-        trackLayer.position = self.center
-        layer.addSublayer(trackLayer)
+        let startAngle = CGFloat(0)
+        let endAngle = 2 * CGFloat.pi
+        trackLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .darkBlue ?? UIColor(), fillColor: .clear, lineWidth: lineWidth)
+        layer.addSublayer(trackLayer) 
     }
-    
+
     private func drawProgressLayer() {
         let startAngle = -CGFloat.pi/2
         let endAngle = 2 * CGFloat.pi + startAngle
-        let path = UIBezierPath(arcCenter: pathCenter, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
-        progressLayer.path = path.cgPath
-        progressLayer.lineCap = .round
-        progressLayer.strokeColor = UIColor(named: K.Colors.orange)?.cgColor
-        progressLayer.fillColor = UIColor.clear.cgColor
-        progressLayer.lineWidth = lineWidth
+        progressLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .orange ?? UIColor(), fillColor: .clear, lineWidth: lineWidth)
         progressLayer.strokeEnd = 0
-        progressLayer.position = self.center
         layer.addSublayer(progressLayer)
     }
     
     public func setProgress(to progress: Double) {
         progressLayer.strokeEnd = CGFloat(progress)
     }
-    
-//    private func animateCircle() {
-//        let animation = CABasicAnimation(keyPath: "strokeEnd")
-//        animation.toValue = 1
-//        animation.duration = 2
-//        animation.fillMode = .forwards
-//        animation.isRemovedOnCompletion = false
-//        progressLayer.add(animation, forKey: "animation")
-//    }
 
 }
 
