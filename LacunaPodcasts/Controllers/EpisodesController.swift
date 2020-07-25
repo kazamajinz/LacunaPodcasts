@@ -98,7 +98,7 @@ class EpisodesController: UITableViewController {
 
         // Update UI
         DispatchQueue.main.async {
-            self.reload(index)
+            //self.reload(index)
         }
     }
     
@@ -108,12 +108,15 @@ class EpisodesController: UITableViewController {
         self.episodes[index].fileUrl = episodeDownloadComplete.fileUrl
         self.episodes[index].downloadStatus = .completed
         
+        
         // Remove from Active Downloads
         APIService.shared.activeDownloads[episodeDownloadComplete.streamUrl] = nil
 
         // Update UI
         DispatchQueue.main.async {
+            UIView.setAnimationsEnabled(false)
             self.reload(index)
+            UIView.setAnimationsEnabled(true)
         }
     }
     
@@ -272,8 +275,31 @@ class EpisodesController: UITableViewController {
     }
     
     //MARK: - Swipe Actions
+
+    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        print("did end editing")
+//
+//
+//
+//        if indexPath == indexPathOfSelectedEpisode {
+////            guard let indexPath = indexPath else { return }
+////            guard let cell = self.tableView.cellForRow(at: indexPath) as? EpisodeCell else { return }
+////            cell.episode = self.episodes[indexPath.row]
+//
+//                self.fetchEpisodes()
+//
+//
+//            //fetchEpisodes()
+//
+//
+//        }
+        
+    }
     
-    var swipe: UISwipeActionsConfiguration?
+    
+    
+    
+    var indexPathOfSelectedEpisode: IndexPath?
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let cell = tableView.cellForRow(at: indexPath) as? EpisodeCell else { return nil }
@@ -281,18 +307,25 @@ class EpisodesController: UITableViewController {
         switch indexPath.section {
         case 1:
             
-            if episode.downloadStatus == .none {
+            if episode.downloadStatus != .completed {
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
                     
                     // Check if episode is already downloading/downloaded
                     let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
                     if !downloadedEpisodes.contains(where: {$0.title == episode.title}) {
                         
+                        self.indexPathOfSelectedEpisode = indexPath
+                        
                         APIService.shared.startDownload(episode)
                         UserDefaults.standard.downloadEpisode(episode: episode)
                         DispatchQueue.main.async {
                             cell.updateDisplayForDownloadPending()
                         }
+                        
+                        
+                        
+                        
+                        
                         
                     }
                     completionHandler(true)
@@ -302,7 +335,7 @@ class EpisodesController: UITableViewController {
                 return swipe
                 
             } else {
-                    
+ 
                 // Delete Action
                 let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
                     
@@ -319,11 +352,10 @@ class EpisodesController: UITableViewController {
                         // 2. Check Storage Space
                         if !FileManager.default.fileExists(atPath: url.path) {
                             UserDefaults.standard.deleteEpisode(episode: episode)
-                            self.fetchEpisodes()
-                            self.reload(indexPath.row)
                         } else { print("Failed to delete the episode file") }
                     }
                     completionHandler(true)
+                    
                 }
                 let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
                 return swipe
