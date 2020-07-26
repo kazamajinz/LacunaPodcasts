@@ -30,6 +30,7 @@ class PodcastCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        selectionStyle = .none
         selectedBackgroundView?.isHidden = true
         containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
     }

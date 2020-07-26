@@ -237,8 +237,6 @@
 				9EFCB8CE24AB96D4007B1F77 /* EpisodeHeader.swift */,
 				9EFCB8D024AB96DE007B1F77 /* EpisodeHeader.xib */,
 				9E83738B24B20867008CD566 /* DurationSlider.swift */,
-				9EF3B28024B631A5005AC285 /* HomePodcastCell.swift */,
-				9EF3B28224B6326A005AC285 /* HomePodcastCell.xib */,
 				9E4A2C0024ACD492005B36AC /* PlayerDetailsView.xib */,
 				9E4A2C0224ACD7BF005B36AC /* PlayerDetailsView.swift */,
 				9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */,
@@ -271,6 +269,8 @@
 		9E7BD39824C9EF2300F5DD7E /* Old */ = {
 			isa = PBXGroup;
 			children = (
+				9EF3B28024B631A5005AC285 /* HomePodcastCell.swift */,
+				9EF3B28224B6326A005AC285 /* HomePodcastCell.xib */,
 				9EF3B27B24B61F7C005AC285 /* HomeController.swift */,
 				9E00024F24A98EC800A1E796 /* MainTabBarController.swift */,
 			);

@@ -57,7 +57,7 @@ class CircularProgressBar: UIView {
     private func drawPulsatingLayer() {
         let startAngle = CGFloat(0)
         let endAngle = 2 * CGFloat.pi
-        pulsatingLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .darkBlue ?? UIColor(), fillColor: .clear, lineWidth: 4)
+        pulsatingLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .blue ?? UIColor(), fillColor: .clear, lineWidth: 4)
         layer.addSublayer(pulsatingLayer)
         animatePulsatingLayer()
     }
@@ -74,7 +74,7 @@ class CircularProgressBar: UIView {
     private func drawTrackLayer() {
         let startAngle = CGFloat(0)
         let endAngle = 2 * CGFloat.pi
-        trackLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .darkBlue ?? UIColor(), fillColor: .clear, lineWidth: lineWidth)
+        trackLayer = createCircleShapeLayer(startAngle: startAngle, endAngle: endAngle, strokeColor: .blue ?? UIColor(), fillColor: .clear, lineWidth: lineWidth)
         layer.addSublayer(trackLayer)
     }
 
