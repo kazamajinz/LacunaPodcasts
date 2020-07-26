@@ -51,12 +51,6 @@ class EpisodeCell: UITableViewCell {
         resetUI()
     }
     
-    var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyyy"
-        return formatter
-    }()
-    
     func resetUI() {
         downloadStatusView.isHidden = true
         downloadStatusVerticalBar.isHidden = true
@@ -68,9 +62,14 @@ class EpisodeCell: UITableViewCell {
         selectedBackgroundView?.isHidden = true
         containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
         downloadStatusView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
-        if selected { [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor.lightGray } }
     }
-
+    
+    var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, yyyy"
+        return formatter
+    }()
+    
     var isActive: Bool = false {
         didSet {
             if isActive {
