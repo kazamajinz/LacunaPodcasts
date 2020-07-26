@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EpisodeCellDelegate {
+protocol EpisodeCellDelegate: class {
     func didTapCancel(_ cell: EpisodeCell)
 }
 
@@ -19,7 +19,7 @@ class EpisodeCell: UITableViewCell {
     
     // MARK: - Variables and Properties
     
-    var delegate: EpisodeCellDelegate?
+    weak var delegate: EpisodeCellDelegate?
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
@@ -35,11 +35,12 @@ class EpisodeCell: UITableViewCell {
             circularProgressBar.center(in: downloadStatusButton, xAnchor: true, yAnchor: true)
         }
     }
-
-    let circularProgressBar: CircularProgressBar = {
-        let bar = CircularProgressBar()
-        return bar
-    }()
+    
+    let circularProgressBar = CircularProgressBar()
+//    let circularProgressBar: CircularProgressBar = {
+//        let bar = CircularProgressBar()
+//        return bar
+//    }()
     
     @objc private func handleTap() {
         delegate?.didTapCancel(self)
@@ -49,6 +50,12 @@ class EpisodeCell: UITableViewCell {
         super.prepareForReuse()
         resetUI()
     }
+    
+    var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, yyyy"
+        return formatter
+    }()
     
     func resetUI() {
         downloadStatusView.isHidden = true
@@ -61,18 +68,9 @@ class EpisodeCell: UITableViewCell {
         selectedBackgroundView?.isHidden = true
         containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
         downloadStatusView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
-        
-        
-        [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = isSelected ? UIColor.lightGray : UIColor.grayBlue }
-        
+        if selected { [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor.lightGray } }
     }
-    
-    var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyyy"
-        return formatter
-    }()
-    
+
     var isActive: Bool = false {
         didSet {
             if isActive {

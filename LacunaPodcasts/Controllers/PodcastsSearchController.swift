@@ -11,6 +11,8 @@ import Alamofire
 
 class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
+    deinit { print("PodcastsSearchController memory being reclaimed...") }
+    
     // MARK: - Variables and Properties
     
     var podcasts = [Podcast]()

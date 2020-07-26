@@ -71,12 +71,6 @@ class APIService {
         }
     }
     
-    
-    
-    
-    
-    
-    
     func cancelDownload(_ episode: Episode) {
         guard let download = activeDownloads[episode.streamUrl] else { return }
         download.task?.cancel()

@@ -190,6 +190,7 @@
 				9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */,
 				9E70B62424B755550022FEB4 /* DownloadsController.swift */,
 				9E15E48B24BCBE0700060A57 /* SearchResultsController.swift */,
+				9E7BD39924CA0D2600F5DD7E /* SearchController.swift */,
 				9E7BD39824C9EF2300F5DD7E /* Old */,
 			);
 			path = Controllers;
@@ -243,7 +244,6 @@
 				9E83738D24B239BF008CD566 /* PlayerDetailsView + Gestures.swift */,
 				9EF3B28424B646DA005AC285 /* FollowButton.swift */,
 				9E15E48724BBD34900060A57 /* EpisodeDescriptionTextView.swift */,
-				9E7BD39924CA0D2600F5DD7E /* SearchController.swift */,
 				9E7BD39B24CA1A8400F5DD7E /* CircularProgressBar.swift */,
 			);
 			path = Views;

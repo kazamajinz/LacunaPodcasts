@@ -12,6 +12,8 @@ import SafariServices
 
 class EpisodesController: UITableViewController {
     
+    deinit { print("EpisodesController memory being reclaimed...") }
+    
     //MARK: - Variables and Properties
 
     var episodes = [Episode]()
@@ -270,11 +272,14 @@ class EpisodesController: UITableViewController {
         } else {
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
+            
             cell.delegate = self
             cell.episode = episodes[indexPath.row]
+            
             let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
             if let index = downloadedEpisodes.firstIndex(where: {$0.title == cell.episode.title} ) {
                 cell.episode = downloadedEpisodes[index]
+                print("Located downloaded episode")
             }
             return cell
         }
@@ -310,8 +315,6 @@ class EpisodesController: UITableViewController {
             if episode.downloadStatus != .completed {
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
                     
-                    
-
                     // Check if episode is already downloading/downloaded
                     let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
                     if !downloadedEpisodes.contains(where: {$0.title == episode.title}) {
@@ -322,12 +325,8 @@ class EpisodesController: UITableViewController {
                             cell.updateDisplayForDownloadPending()
                         }
                         
-                        
-                        
-                        
-                        
-                        
-                        
+                        // HANDLE CANCEL FIX HERE
+
                     }
                     completionHandler(true)
                 }

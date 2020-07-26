@@ -174,24 +174,14 @@ extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating
         resultsController.isLoading = true
         
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { [weak self] (timer) in
+            guard let self = self else { return }
             self.filterContentForSearchText(searchBar.text!)
             resultsController.isLoading = false
             resultsController.filteredEpisodes = self.filteredEpisodes
         })   
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // MARK: - UISearchBarDelegate
 
