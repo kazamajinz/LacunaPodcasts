@@ -563,7 +563,18 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     let episodeImageContainerRadius: CGFloat = 16.0
     var episodeImageVisible: Bool = true
     
-    @IBOutlet weak var episodeDescriptionButton: UIButton!
+    @IBOutlet weak var episodeDescriptionButton: UIButton! {
+        didSet {
+            episodeDescriptionButton.layer.shadowPath = UIBezierPath(rect: episodeDescriptionButton.layer.bounds).cgPath
+            episodeDescriptionButton.layer.shadowColor = UIColor.midnight?.cgColor
+            episodeDescriptionButton.layer.shadowOpacity = 0.25
+            episodeDescriptionButton.layer.shadowOffset = .zero
+            episodeDescriptionButton.layer.shadowRadius = 10.0
+            episodeDescriptionButton.layer.masksToBounds = false
+            
+        }
+    }
+    
     @IBAction func didTapEpisodeDescriptionButton(_ sender: Any) {
         if episodeImageVisible {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
