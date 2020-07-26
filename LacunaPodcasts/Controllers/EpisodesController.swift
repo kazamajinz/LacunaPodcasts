@@ -379,9 +379,9 @@ extension EpisodesController: EpisodeCellDelegate {
 extension EpisodesController: SearchResultsControllerDelegate {
     func didSelectSearchResult(_ episode: Episode) {
         self.searchController.searchBar.text = ""
-        guard let index = episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+        guard let index = episodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl}) else { return }
         let indexPath = IndexPath(row: index, section: 1)
-        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
     }
 }
 

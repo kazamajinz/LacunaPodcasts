@@ -68,19 +68,12 @@ class SearchResultsController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
         cell.episode = filteredEpisodes[indexPath.row]
-        
-        
-        
         cell.episodeImageView.isHidden = false
         cell.detailsLabel.isHidden = true
         cell.descriptionLabel.numberOfLines = 2
-        
         DispatchQueue.main.async {
             cell.isActive = true
         }
-        
-        
-        
         return cell
     }
     
