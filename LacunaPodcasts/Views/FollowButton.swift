@@ -50,7 +50,7 @@ class FollowButton: UIButton {
     override var isSelected: Bool {
         didSet {
             layer.borderColor = isSelected ? UIColor.lightGray?.cgColor : UIColor.black.cgColor
-            backgroundColor = isSelected ? UIColor.clear : UIColor.orange
+            backgroundColor = isSelected ? .clear : .orange
         }
     }
     

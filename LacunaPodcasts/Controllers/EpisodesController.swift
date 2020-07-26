@@ -68,7 +68,7 @@ class EpisodesController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        searchController.searchBar.searchTextField.textColor = UIColor.white
+        searchController.searchBar.searchTextField.textColor = .white
     }
     
     //MARK: - Setup Observers

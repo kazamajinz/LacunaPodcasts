@@ -54,15 +54,15 @@ class EpisodeCell: UITableViewCell {
     func resetUI() {
         downloadStatusView.isHidden = true
         downloadStatusVerticalBar.isHidden = true
-        [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = UIColor(named: K.Colors.grayBlue) }
+        [titleLabel, descriptionLabel, detailsLabel].forEach { $0?.textColor = .grayBlue }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectionStyle = .none
         selectedBackgroundView?.isHidden = true
-        containerView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
-        downloadStatusView.backgroundColor = isSelected ? UIColor(named: K.Colors.darkBlue) : UIColor(named: K.Colors.midnight)
+        containerView.backgroundColor = selected ? .darkBlue : .midnight
+        downloadStatusView.backgroundColor = selected ? .darkBlue : .midnight
     }
     
     var dateFormatter: DateFormatter = {
@@ -74,9 +74,9 @@ class EpisodeCell: UITableViewCell {
     var isActive: Bool = false {
         didSet {
             if isActive {
-                titleLabel.textColor = UIColor.white
-                descriptionLabel.textColor = UIColor(named: K.Colors.lightGray)
-                detailsLabel.textColor = UIColor(named: K.Colors.lightGray)
+                titleLabel.textColor = .white
+                descriptionLabel.textColor = .lightGray
+                detailsLabel.textColor = .lightGray
             }
         }
     }

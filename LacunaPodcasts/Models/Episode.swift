@@ -17,24 +17,24 @@ enum DownloadStatus: String, Codable {
     
     var titleColor: UIColor {
         switch self {
-        case .completed: return UIColor.white
-        default: return UIColor(named: K.Colors.grayBlue) ?? UIColor.white
+        case .completed: return .white
+        default: return .grayBlue ?? .white
         }
     }
     
     var descriptionColor: UIColor {
         switch self {
-        case .completed: return UIColor(named: K.Colors.lightGray) ?? UIColor.white
-        default: return UIColor(named: K.Colors.grayBlue) ?? UIColor.white
+        case .completed: return .lightGray ?? .white
+        default: return .grayBlue ?? .white
         }
     }
     
     var detailsColor: UIColor {
         switch self {
-        case .none: return UIColor(named: K.Colors.grayBlue) ?? UIColor.white
-        case .inProgress: return UIColor(named: K.Colors.orange) ?? UIColor.white
-        case .completed: return UIColor(named: K.Colors.lightGray) ?? UIColor.white
-        case .failed: return UIColor(named: K.Colors.grayBlue) ?? UIColor.white
+        case .none: return .grayBlue ?? .white
+        case .inProgress: return .orange ?? .white
+        case .completed: return .lightGray ?? .white
+        case .failed: return .grayBlue ?? .white
         }
     }
 }

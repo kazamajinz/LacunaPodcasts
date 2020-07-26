@@ -28,24 +28,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             standard.titleTextAttributes = [.foregroundColor: UIColor.white]
             
             let plainButton = UIBarButtonItemAppearance(style: .plain)
-            plainButton.normal.titleTextAttributes = [.foregroundColor: UIColor.highlight ?? UIColor.white]
+            plainButton.normal.titleTextAttributes = [.foregroundColor: .highlight ?? UIColor.white]
             standard.buttonAppearance = plainButton
             
             let doneButton = UIBarButtonItemAppearance(style: .done)
-            doneButton.normal.titleTextAttributes = [.foregroundColor: UIColor.highlight ?? UIColor.white]
+            doneButton.normal.titleTextAttributes = [.foregroundColor: .highlight ?? UIColor.white]
             standard.doneButtonAppearance = doneButton
             
             UINavigationBar.appearance().standardAppearance = standard
             UINavigationBar.appearance().scrollEdgeAppearance = standard
             UINavigationBar.appearance().prefersLargeTitles = false
-            UINavigationBar.appearance().tintColor = UIColor.highlight
+            UINavigationBar.appearance().tintColor = .highlight
             
         }
         
         // MARK: - SearchBar
 
-        UISearchBar.appearance().tintColor = UIColor.highlight
-        UISearchTextField.appearance().tintColor = UIColor.highlight
+        UISearchBar.appearance().tintColor = .highlight
+        UISearchTextField.appearance().tintColor = .highlight
         
         return true
     }

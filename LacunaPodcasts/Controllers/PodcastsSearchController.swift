@@ -31,7 +31,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        searchController.searchBar.searchTextField.textColor = UIColor.white
+        searchController.searchBar.searchTextField.textColor = .white
     }
     
     // MARK: - Subviews
@@ -39,7 +39,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     let noResultsLabel: UILabel = {
         let label = UILabel()
         label.text = "No Results"
-        label.textColor = UIColor.lightGray
+        label.textColor = .lightGray
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label

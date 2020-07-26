@@ -24,7 +24,7 @@ class EpisodeDescriptionTextView: UITextView {
         textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 32, right: 16)
         
         // Text Attributes
-        linkTextAttributes = [.foregroundColor: UIColor.orange]
+        linkTextAttributes = [.foregroundColor: UIColor.orange ?? UIColor.white]
 
 //        let paragraphStyle = NSMutableParagraphStyle()
 //        paragraphStyle.lineSpacing = 10

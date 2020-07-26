@@ -493,7 +493,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
             miniProgressBar.isUserInteractionEnabled = false
             miniProgressBar.setThumbImage(UIImage(), for: .normal)
             miniProgressBar.minimumTrackTintColor = UIColor(named: K.Colors.orange)
-            miniProgressBar.maximumTrackTintColor = UIColor(named: K.Colors.darkBlue)
+            miniProgressBar.maximumTrackTintColor = UIColor(named: K.Colors.blue)
         }
     }
     @IBOutlet weak var miniTitleLabel: UILabel!
@@ -505,7 +505,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     }
     @IBOutlet weak var miniRewindButton: UIButton!
     @IBOutlet weak var miniFastForwardButton: UIButton!
-
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!

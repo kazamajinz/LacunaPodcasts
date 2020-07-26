@@ -21,8 +21,8 @@ class SearchController:  UISearchController {
 
     private func setupSearchController() {
         searchBar.keyboardAppearance = .dark
-        searchBar.tintColor = UIColor.highlight
-        searchBar.searchTextField.tintColor = UIColor.highlight
+        searchBar.tintColor = .highlight
+        searchBar.searchTextField.tintColor = .highlight
     }
     
 }

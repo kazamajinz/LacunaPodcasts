@@ -18,7 +18,7 @@ class DurationSlider: UISlider {
     // and set as thumb. You can customize it's colors, border, etc.
     private lazy var thumbView: UIView = {
         let thumb = UIView()
-        thumb.backgroundColor = UIColor(named: K.Colors.orange)
+        thumb.backgroundColor = .orange
         //thumb.layer.borderWidth = 1
         //thumb.layer.borderColor = UIColor.white.cgColor
         return thumb

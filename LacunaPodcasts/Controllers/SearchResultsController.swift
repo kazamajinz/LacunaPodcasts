@@ -42,7 +42,7 @@ class SearchResultsController: UITableViewController {
     let noResultsLabel: UILabel = {
         let label = UILabel()
         label.text = "No Results"
-        label.textColor = UIColor.lightGray
+        label.textColor = .lightGray
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
@@ -51,7 +51,7 @@ class SearchResultsController: UITableViewController {
     //MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = UIColor.midnight
+        view.backgroundColor = .midnight
     }
     
     fileprivate func setupTableView() {
