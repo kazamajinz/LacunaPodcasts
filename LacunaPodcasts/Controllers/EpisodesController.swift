@@ -41,6 +41,7 @@ class EpisodesController: UITableViewController {
         APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
             self.episodes = episodes
             self.selectedPodcast.description = pod.description
+            self.selectedPodcast.link = pod.link
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

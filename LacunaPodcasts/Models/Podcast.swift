@@ -23,7 +23,7 @@ struct Podcast: Codable, Equatable {
 
     
     var description: String?
-    //var link: String?
+    var link: String?
     //var categories: Set<String>?
     
     

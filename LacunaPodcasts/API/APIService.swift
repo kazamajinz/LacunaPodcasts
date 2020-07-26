@@ -130,6 +130,7 @@ class APIService {
                     // Podcast Details
                     var podcast = Podcast()
                     podcast.description = feed.description
+                    podcast.link = feed.link
 
                     // Episodes
                     let episodes = feed.toEpisodes()
@@ -168,9 +169,6 @@ class APIService {
             }
             guard let data = dataResponse.data else { return }
             do {
-                
-                
-                
                 let searchResult = try JSONDecoder().decode(SearchResults.self, from: data)
                 completionHandler(searchResult.results)
             } catch let decodeErr {

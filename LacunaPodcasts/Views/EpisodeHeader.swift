@@ -42,26 +42,19 @@ class EpisodeHeader: UITableViewCell {
             guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
             podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
             trackNameLabel.text = podcast.trackName
+            
+            // Artist Name
             artistNameLabel.text = podcast.artistName
+            let tap = UITapGestureRecognizer(target: self, action: #selector(didTapArtistName))
+            artistNameLabel.isUserInteractionEnabled = true
+            artistNameLabel.addGestureRecognizer(tap)
+            
+            // Description
             descriptionLabel.text = podcast.description?.stripOutHtml()
             if descriptionLabel.numberOfLines != 0 {
                 if let text = descriptionLabel.text {
                     descriptionLabel.attributedText = makeUrlLook(with: text)
                 }
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                    //descriptionLabel.text = collapsedText
             }
             descriptionLabel.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDescriptionTap))
@@ -72,22 +65,6 @@ class EpisodeHeader: UITableViewCell {
             if let podcast = podcast {
                 followButton.isSelected = savedPodcasts.contains(podcast) ? true : false
             }
-            
-
-            
-            
-            
-            
-            
-//            let tap = UITapGestureRecognizer(target: self, action: #selector(didClickLink))
-//            artistNameLabel.isUserInteractionEnabled = true
-//            artistNameLabel.addGestureRecognizer(tap)
-            
-            
-            
-            
-
-
         }
     }
 
@@ -97,11 +74,10 @@ class EpisodeHeader: UITableViewCell {
         descriptionLabelAction?()
     }
     
-//    @objc func didClickLink() {
-//        guard let url = URL(string: podcast.link ?? "") else { return }
-//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//    }
-    
+    @objc func didTapArtistName() {
+        guard let url = URL(string: podcast.link ?? "") else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
     
     @IBAction func didPressFollow(_ sender: UIButton) {
         guard let podcast = podcast else { return }

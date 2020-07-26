@@ -85,8 +85,6 @@ class EpisodeCell: UITableViewCell {
     
     var episode: Episode! {
         didSet {
-            
-            
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
             titleLabel.text = episode.title
@@ -96,28 +94,15 @@ class EpisodeCell: UITableViewCell {
             let duration = episode.duration.toDisplayString()
             detailsLabel.text = "\(pubDate) • \(duration)"
                
-            
-            
-
-            
-            
-            
-            
-            
             if episode.downloadStatus == .completed {
                 downloadStatusVerticalBar.isHidden = false
                 isActive = true
             }
 
             // Non-nil Download object means a download is in progress
-            if let _ = APIService.shared.activeDownloads[episode.streamUrl] {}
+            //if let _ = APIService.shared.activeDownloads[episode.streamUrl] {}
         }
     }
-    
-    
-    
-    
-    
     
     func updateDisplay(progress: Double) {
         downloadStatusView.isHidden = false
