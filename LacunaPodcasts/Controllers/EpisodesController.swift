@@ -8,6 +8,7 @@
 
 import UIKit
 import FeedKit
+import SafariServices
 
 class EpisodesController: UITableViewController {
     
@@ -249,6 +250,16 @@ class EpisodesController: UITableViewController {
                 header.podcast = savedPodcasts[index]
             }
             
+            // Show Podcast Link
+            header.artistNameLabelAction = { [weak self] in
+                guard let podcast = self?.podcast else { return }
+                guard let url = URL(string: podcast.link ?? "") else { return }
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = false
+                let vc = SFSafariViewController(url: url, configuration: config)
+                self?.present(vc, animated: true, completion: nil)
+            }
+            
             // Expand and Collapse Podcast Description
             header.descriptionLabelAction = { [weak self] in
                 header.descriptionLabel.numberOfLines = header.descriptionLabel.numberOfLines == 0 ? 3 : 0
@@ -405,3 +416,8 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
 
 extension EpisodesController: UISearchBarDelegate {
 }
+
+
+
+
+

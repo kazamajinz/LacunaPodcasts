@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class EpisodeHeader: UITableViewCell {
     
@@ -23,6 +24,7 @@ class EpisodeHeader: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var followButton: FollowButton!
     
+    var artistNameLabelAction: (() -> Void)?
     var descriptionLabelAction: (() -> Void)?
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -36,7 +38,7 @@ class EpisodeHeader: UITableViewCell {
         attributedString.addAttributes([ NSAttributedString.Key.foregroundColor : UIColor.orange ?? UIColor.white], range: NSRange(location: length + ellipsis.count + 1, length: text.count))
         return attributedString
     }
-
+    
     var podcast: Podcast! {
         didSet {
             guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
@@ -74,10 +76,29 @@ class EpisodeHeader: UITableViewCell {
         descriptionLabelAction?()
     }
     
-    @objc func didTapArtistName() {
+    
+    
+    
+    
+    private func showPodcastLink() {
         guard let url = URL(string: podcast.link ?? "") else { return }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        let config = SFSafariViewController.Configuration()
+        config.entersReaderIfAvailable = true
+        let vc = SFSafariViewController(url: url, configuration: config)
+        UIApplication.mainNavigationController()?.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
+
+    @objc func didTapArtistName() {
+        artistNameLabelAction?()
+        print("SLDKFJSLDKFJSKDLJF")
+//        guard let url = URL(string: podcast.link ?? "") else { return }
+//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    
+    
     
     @IBAction func didPressFollow(_ sender: UIButton) {
         guard let podcast = podcast else { return }
