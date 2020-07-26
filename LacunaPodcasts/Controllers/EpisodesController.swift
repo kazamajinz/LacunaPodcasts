@@ -252,6 +252,8 @@ class EpisodesController: UITableViewController {
                 header.podcast = savedPodcasts[index]
             }
             
+            // TODO: FIX RETAIN CYCLE ERRORS HERE
+            
             // Show Podcast Link
             header.artistNameLabelAction = { [weak self] in
                 guard let podcast = self?.podcast else { return }
