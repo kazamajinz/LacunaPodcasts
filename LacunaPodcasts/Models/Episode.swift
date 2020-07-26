@@ -47,6 +47,8 @@ struct Episode: Codable {
     let duration: Double
     let streamUrl: String
     
+    let keywords: String
+    
     var fileUrl: String?
     var imageUrl: String?
 
@@ -63,6 +65,7 @@ struct Episode: Codable {
         self.duration = feedItem.iTunes?.iTunesDuration ?? 0
         self.imageUrl = feedItem.iTunes?.iTunesImage?.attributes?.href
         self.streamUrl = feedItem.enclosure?.attributes?.url ?? ""
+        self.keywords = feedItem.iTunes?.iTunesKeywords ?? ""
         
         // HTML
         self.contentEncoded = feedItem.content?.contentEncoded ?? ""
