@@ -47,21 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISearchBar.appearance().tintColor = UIColor.highlight
         UISearchTextField.appearance().tintColor = UIColor.highlight
         
-        
-        
-
-
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
         return true
     }
     

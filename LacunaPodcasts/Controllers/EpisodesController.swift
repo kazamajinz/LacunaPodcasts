@@ -363,7 +363,7 @@ extension EpisodesController: EpisodeCellDelegate {
         if let indexPath = tableView.indexPath(for: cell) {
             let episode = episodes[indexPath.row]
             APIService.shared.cancelDownload(episode)
-            tableView.reloadRows(at: [indexPath], with: .none)
+            reload(indexPath.row)
         }
     }
 }
