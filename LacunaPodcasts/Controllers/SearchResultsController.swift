@@ -23,7 +23,6 @@ class SearchResultsController: UITableViewController {
             tableView.reloadData()
         }
     }
-    var noResults: Bool = false
     var isLoading: Bool = false {
         didSet {
             tableView.reloadData()
@@ -56,6 +55,7 @@ class SearchResultsController: UITableViewController {
     }
     
     fileprivate func setupTableView() {
+        tableView.separatorColor = UIColor(named: K.Colors.blue)
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
     }

@@ -142,9 +142,20 @@ class LibraryController: UITableViewController {
 extension LibraryController: SearchResultsControllerDelegate {
     func didSelectSearchResult(_ episode: Episode) {
         self.searchController.searchBar.text = ""
-//        guard let index = episodes.firstIndex(where: {$0.title == episode.title}) else { return }
+
+//        // Find Podcast
+//        guard let index = podcasts.firstIndex(where: {$0.collectionId == podcast.collectionId} ) else { return }
+//        let podcast = self.podcasts[indexPath.row]
+//
+//        // Go to Podcast Episodes
+//        let episodesController = EpisodesController()
+//        episodesController.podcast = podcast
+//        navigationController?.pushViewController(episodesController, animated: true)
+//
+//        // Select Row
+//        guard let index = episodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl}) else { return }
 //        let indexPath = IndexPath(row: index, section: 1)
-//        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+//        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
     }
 }
 

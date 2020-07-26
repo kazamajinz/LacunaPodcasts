@@ -49,8 +49,9 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     deinit {
         // Don't forget to remove self as an observer.
         // Otherwise, object will be forever retained.
-        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
-        player.removeObserver(self, forKeyPath: "rate")
+        
+        //NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+        //player.removeObserver(self, forKeyPath: "rate")
         
         print("PlayerDetailsView memory being reclaimed...")
     }
@@ -84,26 +85,10 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
             miniTitleLabel.text = episode.title
             miniAuthorLabel.text = episode.author.uppercased()
             
-            
-            
-            
             // MAKE INTO ATTRIBUTED STRING?
             if let description = episode.contentEncoded {
                 episodeDescriptionTextView.attributedText = description.convertHtml(family: "Helvetica", size: 10.0, csscolor: "#D9D9D9")
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             setupNowPlayingInfo()
             setupAudioSession()
@@ -262,35 +247,25 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    
-    
-    
-    
-        
-        
-        
-            
-
-    
-    
-    
-    
-    
-    
-    
-    //MARK: - Setup
+    // MARK: - Setup
     
     func setup() {
-
         setupRemoteControl()
-        
-        
         setupNotifications()
-        
         observePlayerCurrentTime()
         observeBoundaryTime()
         setupObservers()
     }
+    
+    // MARK: - Set Gradient Background
+        
+    //    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
+    //        let gradientLayer = CAGradientLayer()
+    //        gradientLayer.frame = containerView.bounds
+    //        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+    //        gradientLayer.locations = [0.6, 1.8]
+    //        containerView.layer.insertSublayer(gradientLayer, at: 0)
+    //    }
     
     //MARK: - Time Observers
     
@@ -365,40 +340,8 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //MARK: - Gesture Recognizers
-    
-    var animationProgress: CGFloat = 0
-    var dragStartPosition: CGFloat = 0
-    
+
     @IBOutlet weak var miniPlayerMinusControls: UIStackView!
     
     private lazy var tapGesture: UITapGestureRecognizer = {
@@ -420,61 +363,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    //MARK: - Set Gradient Background
-    
-//    fileprivate func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = containerView.bounds
-//        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
-//        gradientLayer.locations = [0.6, 1.8]
-//        containerView.layer.insertSublayer(gradientLayer, at: 0)
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     //MARK: - Play Episode
 
@@ -503,39 +391,11 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         player.play()
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private var player: AVPlayer = {
         let avPlayer = AVPlayer()
         avPlayer.automaticallyWaitsToMinimizeStalling = false
         return avPlayer
     }()
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     //MARK: - User Actions
     
@@ -548,17 +408,15 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEpisodeImageTap))
 //        return tapGesture
 //    }()
-    
-    @objc fileprivate func handleEpisodeImageTap() {
-        DispatchQueue.main.async {
-            if self.episodeDescriptionTextViewContainer.alpha == 1 {
-                self.episodeDescriptionTextViewContainer.alpha = 0
-            } else { self.episodeDescriptionTextViewContainer.alpha = 1 }
-        }
-    }
-    
-    
-    
+//
+//    @objc fileprivate func handleEpisodeImageTap() {
+//        DispatchQueue.main.async {
+//            if self.episodeDescriptionTextViewContainer.alpha == 1 {
+//                self.episodeDescriptionTextViewContainer.alpha = 0
+//            } else { self.episodeDescriptionTextViewContainer.alpha = 1 }
+//        }
+//    }
+
     // EPISODE DESCRIPTION
     let episodeImageContainerRadius: CGFloat = 16.0
     var episodeImageVisible: Bool = true
@@ -571,7 +429,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
             episodeDescriptionButton.layer.shadowOffset = .zero
             episodeDescriptionButton.layer.shadowRadius = 10.0
             episodeDescriptionButton.layer.masksToBounds = false
-            
         }
     }
     
@@ -688,8 +545,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
                     self?.miniProgressBar.value = Float(percentage)
                     self?.observePlayerCurrentTime()
                 }
-            default:
-                break
+            default: break
             }
         }
     }
@@ -714,9 +570,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         UIApplication.mainNavigationController()?.minimizePlayerDetails()
     }
 }
-
-
-
 
 
 

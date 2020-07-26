@@ -40,9 +40,6 @@ enum DownloadStatus: String, Codable {
 }
 
 struct Episode: Codable {
-    
-    //var collectionId: Int
-    
     let title: String
     let pubDate: Date
     let description: String
@@ -52,10 +49,8 @@ struct Episode: Codable {
     
     var fileUrl: String?
     var imageUrl: String?
-    
-    
+
     var contentEncoded: String?
-    
     
     var isDownloaded: Bool = false
     var downloadStatus: DownloadStatus = .none
@@ -69,8 +64,7 @@ struct Episode: Codable {
         self.imageUrl = feedItem.iTunes?.iTunesImage?.attributes?.href
         self.streamUrl = feedItem.enclosure?.attributes?.url ?? ""
         
-        // Encoded
+        // HTML
         self.contentEncoded = feedItem.content?.contentEncoded ?? ""
     }
-    
 }

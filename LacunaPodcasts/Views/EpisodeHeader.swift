@@ -35,7 +35,7 @@ class EpisodeHeader: UITableViewCell {
             podcastImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appicon"), completed: nil)
             trackNameLabel.text = podcast.trackName
             artistNameLabel.text = podcast.artistName
-            descriptionLabel.text = podcast.description
+            descriptionLabel.text = podcast.description?.stripOutHtml()
             if descriptionLabel.numberOfLines != 0 {
                     let collapsedText = descriptionLabel.text?.collapseText(to: 120)
                     descriptionLabel.text = collapsedText
