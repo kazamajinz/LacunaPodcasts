@@ -40,14 +40,18 @@ enum DownloadStatus: String, Codable {
 }
 
 struct Episode: Codable {
+    
+    var podcastCollectionId: Int = 0
+
     let title: String
     let pubDate: Date
     let description: String
     let author: String
     let duration: Double
     let streamUrl: String
-    
     let keywords: String
+    
+    //var guid: RSSFeedItemGUID
     
     var fileUrl: String?
     var imageUrl: String?
@@ -66,6 +70,8 @@ struct Episode: Codable {
         self.imageUrl = feedItem.iTunes?.iTunesImage?.attributes?.href
         self.streamUrl = feedItem.enclosure?.attributes?.url ?? ""
         self.keywords = feedItem.iTunes?.iTunesKeywords ?? ""
+        
+        //self.guid = feedItem.guid ?? RSSFeedItemGUID.init()
         
         // HTML
         self.contentEncoded = feedItem.content?.contentEncoded ?? ""

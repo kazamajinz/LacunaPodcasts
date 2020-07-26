@@ -28,6 +28,14 @@ class EpisodeHeader: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         selectedBackgroundView?.isHidden = true
     }
+    
+    private func makeUrlLook(with string: String) -> NSAttributedString {
+        let length = 120; let ellipsis = "... " ; let text = "more"
+        let collapsedText = string.collapseText(to: length, ellipsis: ellipsis, text: text)
+        let attributedString = NSMutableAttributedString(string: collapsedText)
+        attributedString.addAttributes([ NSAttributedString.Key.foregroundColor : UIColor.orange ?? UIColor.white], range: NSRange(location: length + ellipsis.count + 1, length: text.count))
+        return attributedString
+    }
 
     var podcast: Podcast! {
         didSet {
@@ -37,8 +45,23 @@ class EpisodeHeader: UITableViewCell {
             artistNameLabel.text = podcast.artistName
             descriptionLabel.text = podcast.description?.stripOutHtml()
             if descriptionLabel.numberOfLines != 0 {
-                    let collapsedText = descriptionLabel.text?.collapseText(to: 120)
-                    descriptionLabel.text = collapsedText
+                if let text = descriptionLabel.text {
+                    descriptionLabel.attributedText = makeUrlLook(with: text)
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                    //descriptionLabel.text = collapsedText
             }
             descriptionLabel.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDescriptionTap))

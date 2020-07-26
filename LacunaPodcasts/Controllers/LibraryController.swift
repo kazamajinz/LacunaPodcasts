@@ -163,7 +163,7 @@ extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating
     func filterContentForSearchText(_ searchText: String) {
         filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
             return episode.title.lowercased().contains(searchText.lowercased()) || episode.description.lowercased().contains(searchText.lowercased()) ||
-                episode.author.lowercased().contains(searchText.lowercased())
+                episode.keywords.lowercased().contains(searchText.lowercased())
         }
     }
     
