@@ -31,11 +31,17 @@ class EpisodeHeader: UITableViewCell {
         selectedBackgroundView?.isHidden = true
     }
     
-    private func makeUrlLook(with string: String) -> NSAttributedString {
+    private func styleDescriptionText(_ string: String) -> NSAttributedString {
         let length = 120; let ellipsis = "... " ; let text = "more"
         let collapsedText = string.collapseText(to: length, ellipsis: ellipsis, text: text)
-        let attributedString = NSMutableAttributedString(string: collapsedText)
-        attributedString.addAttributes([ NSAttributedString.Key.foregroundColor : UIColor.orange ?? UIColor.white], range: NSRange(location: length + ellipsis.count + 1, length: text.count))
+        return makeUrlLook(with: collapsedText, range: NSRange(location: length + ellipsis.count + 1, length: text.count), underline: false)
+    }
+    
+    private func makeUrlLook(with text: String, range: NSRange, underline: Bool) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: text)
+        var attributes: [NSAttributedString.Key : Any] = [.foregroundColor : UIColor.orange ?? UIColor.white]
+        if underline == true { attributes[.underlineStyle] = NSUnderlineStyle.single.rawValue }
+        attributedString.addAttributes(attributes, range: range)
         return attributedString
     }
     
@@ -47,6 +53,9 @@ class EpisodeHeader: UITableViewCell {
             
             // Artist Name
             artistNameLabel.text = podcast.artistName
+            if let text = artistNameLabel.text {
+                artistNameLabel.attributedText = makeUrlLook(with: text, range: NSRange(location: 0, length: text.count), underline: true)
+            }
             let tap = UITapGestureRecognizer(target: self, action: #selector(didTapArtistName))
             artistNameLabel.isUserInteractionEnabled = true
             artistNameLabel.addGestureRecognizer(tap)
@@ -55,7 +64,7 @@ class EpisodeHeader: UITableViewCell {
             descriptionLabel.text = podcast.description?.stripOutHtml()
             if descriptionLabel.numberOfLines != 0 {
                 if let text = descriptionLabel.text {
-                    descriptionLabel.attributedText = makeUrlLook(with: text)
+                    descriptionLabel.attributedText = styleDescriptionText(text)
                 }
             }
             descriptionLabel.isUserInteractionEnabled = true
@@ -75,30 +84,10 @@ class EpisodeHeader: UITableViewCell {
     @objc func handleDescriptionTap() {
         descriptionLabelAction?()
     }
-    
-    
-    
-    
-    
-    private func showPodcastLink() {
-        guard let url = URL(string: podcast.link ?? "") else { return }
-        let config = SFSafariViewController.Configuration()
-        config.entersReaderIfAvailable = true
-        let vc = SFSafariViewController(url: url, configuration: config)
-        UIApplication.mainNavigationController()?.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    
 
     @objc func didTapArtistName() {
         artistNameLabelAction?()
-        print("SLDKFJSLDKFJSKDLJF")
-//        guard let url = URL(string: podcast.link ?? "") else { return }
-//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
-    
-    
-    
     
     @IBAction func didPressFollow(_ sender: UIButton) {
         guard let podcast = podcast else { return }
@@ -107,3 +96,4 @@ class EpisodeHeader: UITableViewCell {
     }
  
 }
+
