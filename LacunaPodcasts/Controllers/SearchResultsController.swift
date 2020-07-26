@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol SearchResultsControllerDelegate {
+protocol SearchResultsControllerDelegate: class {
     func didSelectSearchResult(_ episode: Episode)
 }
 
 class SearchResultsController: UITableViewController {
     
-    var delegate: SearchResultsControllerDelegate?
+    weak var delegate: SearchResultsControllerDelegate?
     
     deinit { print("SearchResultsController memory being reclaimed...") }
 

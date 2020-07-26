@@ -279,7 +279,6 @@ class EpisodesController: UITableViewController {
             let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
             if let index = downloadedEpisodes.firstIndex(where: {$0.title == cell.episode.title} ) {
                 cell.episode = downloadedEpisodes[index]
-                print("Located downloaded episode")
             }
             return cell
         }
