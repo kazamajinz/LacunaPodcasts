@@ -150,22 +150,24 @@ extension LibraryController: SearchResultsControllerDelegate {
 
 extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating {
     func filterContentForSearchText(_ searchText: String) {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
-            self.filteredEpisodes = self.episodes.filter {
-                return $0.title.lowercased().contains(searchText.lowercased()) || $0.description.lowercased().contains(searchText.lowercased())
-            }
-        })
+        filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
+            return episode.title.lowercased().contains(searchText.lowercased()) || episode.description.lowercased().contains(searchText.lowercased()) ||
+                episode.author.lowercased().contains(searchText.lowercased())
+        }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
+        guard let resultsController = searchController.searchResultsController as? SearchResultsController else { fatalError("The search results controller cannot be found")}
         let searchBar = searchController.searchBar
-        self.filterContentForSearchText(searchBar.text!)
         
-        if let resultsController = searchController.searchResultsController as? SearchResultsController {
-            resultsController.filteredEpisodes = filteredEpisodes
-            resultsController.tableView.reloadData()
-        }
+        resultsController.isLoading = true
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+            self.filterContentForSearchText(searchBar.text!)
+            resultsController.isLoading = false
+            resultsController.filteredEpisodes = self.filteredEpisodes
+        })   
     }
 }
 

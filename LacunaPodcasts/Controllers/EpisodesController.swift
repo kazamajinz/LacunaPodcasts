@@ -9,10 +9,6 @@
 import UIKit
 import FeedKit
 
-enum Section: Int, CaseIterable {
-    case header, episode
-}
-
 class EpisodesController: UITableViewController {
     
     //MARK: - Variables and Properties
@@ -39,7 +35,7 @@ class EpisodesController: UITableViewController {
         return savedPodcasts.contains(podcast)
     }
 
-    fileprivate func fetchEpisodes() {
+    private func fetchEpisodes() {
         print("Looking for episodes at feed url:", podcast?.feedUrl ?? "")
         guard let feedUrl = podcast?.feedUrl else { return }
         APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
@@ -226,9 +222,7 @@ class EpisodesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == 1 {
-            return AlertService.showActivityIndicator()
-        } else { return nil }
+        section == 1 ? AlertService.showActivityIndicator() : nil
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -390,20 +384,20 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
         filteredEpisodes = episodes.filter { (episode: Episode) -> Bool in
             return episode.title.lowercased().contains(searchText.lowercased()) || episode.description.lowercased().contains(searchText.lowercased())
         }
-        tableView.reloadData()
     }
     
     func updateSearchResults(for searchController: UISearchController) {
+        guard let resultsController = searchController.searchResultsController as? SearchResultsController else { fatalError("The search results controller cannot be found")}
         let searchBar = searchController.searchBar
-        self.filterContentForSearchText(searchBar.text!)
-
-        if let resultsController = searchController.searchResultsController as? SearchResultsController {
-            if filteredEpisodes.isEmpty {
-                resultsController.noResults = true
-            }
-            resultsController.filteredEpisodes = filteredEpisodes
-            resultsController.tableView.reloadData()
-        }
+        
+        resultsController.isLoading = true
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+            self.filterContentForSearchText(searchBar.text!)
+            resultsController.isLoading = false
+            resultsController.filteredEpisodes = self.filteredEpisodes
+        })
     }
 }
 

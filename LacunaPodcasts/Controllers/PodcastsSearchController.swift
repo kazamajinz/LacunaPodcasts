@@ -106,20 +106,22 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
 
 extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsUpdating {
     func filterContentForSearchText(_ searchText: String) {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
-            APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
-                self.isLoading = false
-                self.podcasts = podcasts
-                self.tableView.reloadData()
-            }
-        })
+        APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+            self.podcasts = podcasts
+            self.tableView.reloadData()
+        }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        
         isLoading = true
         tableView.reloadData()
-        let searchBar = searchController.searchBar
-        self.filterContentForSearchText(searchBar.text!)
+
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+            self.isLoading = false
+            self.filterContentForSearchText(searchBar.text!)
+        })
     }
 }

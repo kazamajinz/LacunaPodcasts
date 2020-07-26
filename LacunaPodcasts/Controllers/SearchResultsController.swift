@@ -18,9 +18,17 @@ class SearchResultsController: UITableViewController {
     
     deinit { print("SearchResultsController memory being reclaimed...") }
 
-    var filteredEpisodes: [Episode] = []
+    var filteredEpisodes: [Episode] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     var noResults: Bool = false
-    var isLoading: Bool = false
+    var isLoading: Bool = false {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     //MARK: - Lifecycles
     
