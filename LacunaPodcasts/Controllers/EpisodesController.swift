@@ -259,8 +259,11 @@ class EpisodesController: UITableViewController {
                 guard let url = URL(string: podcast.link ?? "") else { return }
                 let config = SFSafariViewController.Configuration()
                 config.entersReaderIfAvailable = false
+                config.barCollapsingEnabled = false
                 let vc = SFSafariViewController(url: url, configuration: config)
+                vc.modalPresentationStyle = .popover
                 self?.present(vc, animated: true, completion: nil)
+                
             }
             
             // Expand and Collapse Podcast Description
