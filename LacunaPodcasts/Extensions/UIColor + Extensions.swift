@@ -16,31 +16,30 @@ enum AssetsColor: String {
     case grayBlue // inactive episode cell
     case orange
     case lightGray // active episode cell + subtitles
-    //case darkGray
 }
-
-
 
 extension UIColor {
     
+    // MARK: - App Colors
+    
     static func appColor(_ name: AssetsColor) -> UIColor? {
+        
         let colorName = name.rawValue
-        return UIColor(named: colorName)
+        
+        // Flyweight
+        let key = "\(name)"
+        if let color = colorStore[key] {
+            print("COLOR ALREADY EXISTS!", colorStore)
+            return color
+        }
+        let color = UIColor(named: colorName)
+        colorStore[key] = color
+        
+        
+        print("CREATING NEW COLOR!!!!", colorStore)
+        return color
+        //return UIColor(named: colorName)
     }
-    
-    
-//    static let darkBlue = UIColor(named: "darkBlue")
-//    static let blue = UIColor(named: "blue")
-//    static let highlight = UIColor(named: "highlight")
-//    static let orange = UIColor(named: "orange")
-//    static let midnight = UIColor(named: "midnight")
-//    static let grayBlue = UIColor(named: "grayBlue")
-//    static let lightGray = UIColor(named: "lightGray")
-//    static let green = UIColor(named: "green")
-    
-    
-    
-    
     
     
     

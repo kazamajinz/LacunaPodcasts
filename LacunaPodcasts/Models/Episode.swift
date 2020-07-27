@@ -14,29 +14,6 @@ enum DownloadStatus: String, Codable {
     case inProgress
     case completed
     case failed
-    
-//    var titleColor: UIColor {
-//        switch self {
-//        case .completed: return .white
-//        default: return .grayBlue ?? .white
-//        }
-//    }
-//    
-//    var descriptionColor: UIColor {
-//        switch self {
-//        case .completed: return .lightGray ?? .white
-//        default: return .grayBlue ?? .white
-//        }
-//    }
-//    
-//    var detailsColor: UIColor {
-//        switch self {
-//        case .none: return .grayBlue ?? .white
-//        case .inProgress: return .orange ?? .white
-//        case .completed: return .lightGray ?? .white
-//        case .failed: return .grayBlue ?? .white
-//        }
-//    }
 }
 
 struct Episode: Codable {

@@ -48,7 +48,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     //MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = UIColor.appColor(.highlight)
+        view.backgroundColor = UIColor.appColor(.midnight)
         navigationItem.title = "Add Podcast"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
