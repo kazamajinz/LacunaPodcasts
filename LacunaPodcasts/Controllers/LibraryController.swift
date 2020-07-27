@@ -25,6 +25,9 @@ class LibraryController: UITableViewController {
                     self.episodes.append(contentsOf: episodes)
                 }
             }
+            if podcasts.isEmpty {
+                browsePodcastsView.isHidden = false
+            }
         }
     }
     var filteredEpisodes: [Episode] = []
@@ -55,6 +58,7 @@ class LibraryController: UITableViewController {
     
     let browsePodcastsView: BrowsePodcastsView = {
         let view = BrowsePodcastsView()
+        view.isHidden = true
         return view
     }()
     
@@ -66,7 +70,6 @@ class LibraryController: UITableViewController {
         
         // Removes Text from Back Button
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
         view.addSubview(browsePodcastsView)
         setupLayouts()
     }
