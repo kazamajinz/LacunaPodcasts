@@ -57,7 +57,7 @@ class FollowButton: UIButton {
     override var isHighlighted: Bool {
         didSet {
             isSelected ? setTitle("FOLLOWING", for: .highlighted) : setTitle("FOLLOW", for: .highlighted)
-            transform =  isHighlighted ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
+            transform =  isHighlighted ? CGAffineTransform(scaleX: 0.98, y: 0.98) : .identity
         }
     }
     
