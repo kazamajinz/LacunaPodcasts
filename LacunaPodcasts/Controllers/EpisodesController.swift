@@ -263,13 +263,8 @@ class EpisodesController: UITableViewController {
             // Show Podcast Link
             header.artistNameLabelAction = { [weak self] in
                 guard let podcast = self?.selectedPodcast else { return }
-                guard let url = URL(string: podcast.link ?? "") else { return }
-                let config = SFSafariViewController.Configuration()
-                config.entersReaderIfAvailable = false
-                config.barCollapsingEnabled = false
-                let vc = SFSafariViewController(url: url, configuration: config)
-                vc.modalPresentationStyle = .popover
-                self?.present(vc, animated: true, completion: nil)
+                guard let urlString = podcast.link else { return }
+                self?.showWebView(urlString)
             }
             
             // Expand and Collapse Podcast Description

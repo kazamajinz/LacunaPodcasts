@@ -7,23 +7,22 @@
 //
 
 import UIKit
+import SafariServices
 
-extension UITabBarController {
+extension UIViewController {
     
-    func hideTabBar() {
-        self.tabBar.frame.origin.y = self.view.frame.size.height + (self.tabBar.frame.size.height)
-        //UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut ,animations: {
-            self.tabBar.frame = self.tabBar.frame
-        //})
-    }
+    // MARK: - SFSafariViewController
     
-    func showTabBar() {
-        self.tabBar.frame.origin.y = self.view.frame.size.height - (self.tabBar.frame.size.height)
-        //UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut ,animations: {
-            self.tabBar.frame = self.tabBar.frame
-        //})
+    func showWebView(_ urlString: String) {
+        if let url = URL(string: urlString) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = false
+            config.barCollapsingEnabled = false
+            let vc = SFSafariViewController(url: url, configuration: config)
+            vc.modalPresentationStyle = .popover
+            self.present(vc, animated: true)
+        }
     }
-
 }
 
 

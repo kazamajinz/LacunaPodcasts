@@ -32,6 +32,7 @@
 		9E4A2C0124ACD492005B36AC /* PlayerDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E4A2C0024ACD492005B36AC /* PlayerDetailsView.xib */; };
 		9E4A2C0324ACD7BF005B36AC /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4A2C0224ACD7BF005B36AC /* PlayerDetailsView.swift */; };
 		9E4A2C0924ACDED1005B36AC /* UIImage + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4A2C0824ACDED1005B36AC /* UIImage + Extensions.swift */; };
+		9E5EFC5824CE9BD700777390 /* UITabBarController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5EFC5724CE9BD700777390 /* UITabBarController + Extensions.swift */; };
 		9E70B62524B755550022FEB4 /* DownloadsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62424B755550022FEB4 /* DownloadsController.swift */; };
 		9E70B62724B7941D0022FEB4 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */; };
 		9E7BD39724C9DEEC00F5DD7E /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */; };
@@ -92,6 +93,7 @@
 		9E4A2C0024ACD492005B36AC /* PlayerDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerDetailsView.xib; sourceTree = "<group>"; };
 		9E4A2C0224ACD7BF005B36AC /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		9E4A2C0824ACDED1005B36AC /* UIImage + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extensions.swift"; sourceTree = "<group>"; };
+		9E5EFC5724CE9BD700777390 /* UITabBarController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController + Extensions.swift"; sourceTree = "<group>"; };
 		9E70B62424B755550022FEB4 /* DownloadsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsController.swift; sourceTree = "<group>"; };
 		9E70B62624B7941D0022FEB4 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9E7BD39624C9DEEC00F5DD7E /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				9E47AFF924B3EEE800A7108C /* UIApplication + Extensions.swift */,
 				9E11F61E24AF689200DB9D0A /* UIWindow + Extensions.swift */,
 				9E11F62024AF9D7200DB9D0A /* UIViewController + Extensions.swift */,
+				9E5EFC5724CE9BD700777390 /* UITabBarController + Extensions.swift */,
 				9E4A2C0824ACDED1005B36AC /* UIImage + Extensions.swift */,
 				9E15E48924BCA4B500060A57 /* UIColor + Extensions.swift */,
 				9E4A2BFA24AC1423005B36AC /* String + Extensions.swift */,
@@ -424,6 +427,7 @@
 				9EDB908B24AD98B1004D8EB1 /* AVPlayer + Extensions.swift in Sources */,
 				9E33BA6D24AA32C400917EA1 /* APIService.swift in Sources */,
 				9EC3D84D24B8C0CB003FD283 /* FileManagerUtility.swift in Sources */,
+				9E5EFC5824CE9BD700777390 /* UITabBarController + Extensions.swift in Sources */,
 				9E33BA7424AA45C900917EA1 /* PodcastCell.swift in Sources */,
 				9EF3B28924B6DB93005AC285 /* SwipeActionService.swift in Sources */,
 				9EFCB8CC24AB8B73007B1F77 /* EpisodeCell.swift in Sources */,

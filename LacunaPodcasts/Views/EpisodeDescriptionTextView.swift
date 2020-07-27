@@ -22,9 +22,20 @@ class EpisodeDescriptionTextView: UITextView {
     
     private func setupTextView() {
         textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 32, right: 16)
-        
-        // Text Attributes
         linkTextAttributes = [.foregroundColor: UIColor.appColor(.orange) ?? UIColor.white]
+        
+        
+        
+        
+//        
+//        guard let podcast = self?.selectedPodcast else { return }
+//        guard let url = URL(string: podcast.link ?? "") else { return }
+//        let config = SFSafariViewController.Configuration()
+//        config.entersReaderIfAvailable = false
+//        config.barCollapsingEnabled = false
+//        let vc = SFSafariViewController(url: url, configuration: config)
+//        vc.modalPresentationStyle = .popover
+//        self?.present(vc, animated: true, completion: nil)
 
 //        let paragraphStyle = NSMutableParagraphStyle()
 //        paragraphStyle.lineSpacing = 10
