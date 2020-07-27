@@ -25,13 +25,9 @@ class BrowsePodcastsButton: UIButton {
         transform = .identity
         setTitle("BROWSE PODCASTS", for: .normal)
         setTitleColor(UIColor.appColor(.midnight), for: .normal)
-        setTitleColor(.white, for: .highlighted)
-        
+        setTitleColor(UIColor.appColor(.midnight), for: .selected)
+        setTitleColor(UIColor.appColor(.midnight), for: .highlighted)
         titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-
-        
-        
-        
         layer.cornerRadius = self.frame.size.height / 2
     }
     
@@ -46,7 +42,7 @@ class BrowsePodcastsButton: UIButton {
     
     override var isHighlighted: Bool {
         didSet {
-            alpha = isHighlighted ? 0.5 : 1
+            backgroundColor = isHighlighted ? UIColor.appColor(.burntOrange) : UIColor.appColor(.orange)
             transform =  isHighlighted ? CGAffineTransform(scaleX: 0.98, y: 0.98) : .identity
         }
     }

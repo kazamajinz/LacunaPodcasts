@@ -15,6 +15,7 @@ enum AssetsColor: String {
     case darkBlue // selected episode cell
     case grayBlue // inactive episode cell
     case orange
+    case burntOrange
     case lightGray // active episode cell + subtitles
 }
 

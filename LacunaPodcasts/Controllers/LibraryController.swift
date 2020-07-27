@@ -24,10 +24,8 @@ class LibraryController: UITableViewController {
                 APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
                     self.episodes.append(contentsOf: episodes)
                 }
-            }
-            if podcasts.isEmpty {
-                browsePodcastsView.isHidden = false
-            }
+            }g
+            browsePodcastsView.isHidden = podcasts.isEmpty ? false : true
         }
     }
     var filteredEpisodes: [Episode] = []

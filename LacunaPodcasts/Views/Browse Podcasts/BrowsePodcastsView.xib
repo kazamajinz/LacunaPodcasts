@@ -18,12 +18,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="wyo-0l-voN">
-                    <rect key="frame" x="36" y="388" width="342" height="120.5"/>
+                    <rect key="frame" x="64" y="400.5" width="286" height="95.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pXU-Wk-0Ek">
-                            <rect key="frame" x="15.5" y="0.0" width="311.5" height="54.5"/>
+                            <rect key="frame" x="27.5" y="0.0" width="231.5" height="25.5"/>
                             <attributedString key="attributedText">
-                                <fragment content="Looking for a podcast to listen to?">
+                                <fragment content="Looking for a podcast?">
                                     <attributes>
                                         <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <font key="NSFont" size="21" name="HelveticaNeue-Bold"/>
@@ -33,18 +33,21 @@
                             </attributedString>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ek5-vF-Zfl" customClass="BrowsePodcastsButton" customModule="LacunaPodcasts" customModuleProvider="target">
-                            <rect key="frame" x="112" y="90.5" width="118" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ek5-vF-Zfl" customClass="BrowsePodcastsButton" customModule="LacunaPodcasts" customModuleProvider="target">
+                            <rect key="frame" x="73.5" y="61.5" width="139" height="34"/>
                             <state key="normal" title="Browse Podcasts"/>
+                            <connections>
+                                <action selector="didTapBrowsePodcasts:" destination="-1" eventType="touchUpInside" id="gIT-K2-3Hf"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="wyo-0l-voN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="36" id="0dU-UZ-7QJ"/>
+                <constraint firstItem="wyo-0l-voN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="64" id="0dU-UZ-7QJ"/>
                 <constraint firstItem="wyo-0l-voN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="L93-g2-9F8"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wyo-0l-voN" secondAttribute="trailing" constant="36" id="R9b-MR-eMM"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wyo-0l-voN" secondAttribute="trailing" constant="64" id="R9b-MR-eMM"/>
                 <constraint firstItem="wyo-0l-voN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="rTr-NM-9vm"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

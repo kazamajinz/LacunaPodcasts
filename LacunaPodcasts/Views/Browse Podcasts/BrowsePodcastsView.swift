@@ -44,4 +44,7 @@ class BrowsePodcastsView: UIView {
     }
         
         
+    @IBAction func didTapBrowsePodcasts(_ sender: Any) {
+        
+    }
 }
