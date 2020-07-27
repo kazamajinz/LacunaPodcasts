@@ -11,13 +11,7 @@ import AVKit
 import UIImageColors
 import MediaPlayer
 
-protocol PlayerDetailsViewDelegate: class {
-    func playerDetailsView(_ view: PlayerDetailsView, didTap url: URL)
-}
-
 class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
-    
-    weak var delegate: PlayerDetailsViewDelegate?
 
     @IBOutlet var containerView: UIView!
     
@@ -464,9 +458,6 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var episodeDescriptionTextViewContainerTop: NSLayoutConstraint!
     @IBOutlet weak var episodeDescriptionTextView: EpisodeDescriptionTextView! {
         didSet {
-            episodeDescriptionTextView.delegate = self
-            
-            
             //episodeDescriptionTextView.addGestureRecognizer(episodeDescriptionTapGesture)
         }
     }
@@ -584,7 +575,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
 extension PlayerDetailsView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         print(URL.absoluteString)
-        delegate?.playerDetailsView(self, didTap: URL)
+        UIApplication.mainNavigationController()?.showWebView(URL)
         return false
     }
 }
