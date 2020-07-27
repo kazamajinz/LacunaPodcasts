@@ -18,6 +18,8 @@ extension UIViewController {
         config.entersReaderIfAvailable = false
         config.barCollapsingEnabled = false
         let vc = SFSafariViewController(url: url, configuration: config)
+        vc.preferredBarTintColor = UIColor.appColor(.midnight)
+        vc.preferredControlTintColor = UIColor.appColor(.highlight)
         vc.modalPresentationStyle = .popover
         self.present(vc, animated: true)
     }
