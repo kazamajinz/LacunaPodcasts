@@ -57,7 +57,7 @@ class EpisodeHeader: UITableViewCell {
             if let text = artistNameLabel.text {
                 artistNameLabel.attributedText = makeUrlLook(with: text, range: NSRange(location: 0, length: text.count), underline: true)
             }
-            let tap = UITapGestureRecognizer(target: self, action: #selector(didTapArtistName))
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleArtistName))
             artistNameLabel.isUserInteractionEnabled = true
             artistNameLabel.addGestureRecognizer(tap)
             
@@ -87,11 +87,9 @@ class EpisodeHeader: UITableViewCell {
     @objc func handleDescriptionTap() {
         descriptionLabelAction?()
         descriptionLabel.numberOfLines = descriptionLabel.numberOfLines == 0 ? 3 : 0
-        //self?.tableView.reloadData()
-        
     }
 
-    @objc func didTapArtistName() {
+    @objc func handleArtistName() {
         artistNameLabelAction?()
     }
     

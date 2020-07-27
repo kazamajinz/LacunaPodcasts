@@ -22,8 +22,15 @@ class EpisodesController: UITableViewController {
     let searchController = UISearchController(searchResultsController: SearchResultsController())
     var selectedPodcast = Podcast()
     var podcast: Podcast? {
+        willSet {
+            if let newValue = newValue {
+                selectedPodcast = newValue
+            }
+        }
         didSet {
-            if let podcast = podcast { selectedPodcast = podcast }
+//            if let podcast = podcast {
+//                selectedPodcast = podcast
+//            }
             fetchEpisodes()
             navigationItem.title = isPodcastSaved ? self.podcast?.trackName : "Add Podcast"
             view.backgroundColor = UIColor.appColor(.midnight)
@@ -255,7 +262,7 @@ class EpisodesController: UITableViewController {
             
             // Show Podcast Link
             header.artistNameLabelAction = { [weak self] in
-                guard let podcast = self?.podcast else { return }
+                guard let podcast = self?.selectedPodcast else { return }
                 guard let url = URL(string: podcast.link ?? "") else { return }
                 let config = SFSafariViewController.Configuration()
                 config.entersReaderIfAvailable = false
