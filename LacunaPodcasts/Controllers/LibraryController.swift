@@ -68,7 +68,7 @@ class LibraryController: UITableViewController {
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Directory"
+        searchController.searchBar.placeholder = "Search Library"
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
     }

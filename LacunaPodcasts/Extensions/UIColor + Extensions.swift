@@ -20,8 +20,10 @@ enum AssetsColor: String {
 
 extension UIColor {
     
-    // MARK: - App Colors
+    public static var colorStore: [String: UIColor] = [:]
     
+    // MARK: - App Colors
+
     static func appColor(_ name: AssetsColor) -> UIColor? {
         
         let colorName = name.rawValue
@@ -29,26 +31,15 @@ extension UIColor {
         // Flyweight
         let key = "\(name)"
         if let color = colorStore[key] {
-            print("COLOR ALREADY EXISTS!", colorStore)
             return color
         }
         let color = UIColor(named: colorName)
         colorStore[key] = color
-        
-        
-        print("CREATING NEW COLOR!!!!", colorStore)
         return color
-        //return UIColor(named: colorName)
     }
     
-    
-    
-    
-    
     // MARK: - Flyweight
-    
-    public static var colorStore: [String: UIColor] = [:]
-    
+
 //    static func rgb(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
 //        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
 //    }
