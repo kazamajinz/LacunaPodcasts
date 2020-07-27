@@ -26,7 +26,7 @@ class EpisodesController: UITableViewController {
             if let podcast = podcast { selectedPodcast = podcast }
             fetchEpisodes()
             navigationItem.title = isPodcastSaved ? self.podcast?.trackName : "Add Podcast"
-            view.backgroundColor = UIColor(named: K.Colors.midnight)
+            view.backgroundColor = UIColor.appColor(.midnight)
         }
     }
     
@@ -158,7 +158,7 @@ class EpisodesController: UITableViewController {
     }()
     
     fileprivate func setupTableView() {
-        tableView.separatorColor = UIColor(named: K.Colors.blue)
+        tableView.separatorColor = UIColor.appColor(.blue)
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeHeader.nib, forCellReuseIdentifier: EpisodeHeader.reuseIdentifier)
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)

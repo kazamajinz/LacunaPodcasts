@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let standard = UINavigationBarAppearance()
             standard.configureWithOpaqueBackground()
-            standard.backgroundColor = UIColor(named: K.Colors.midnight)
+            standard.backgroundColor = UIColor.appColor(.highlight)
             standard.shadowColor = .clear
             standard.shadowImage = UIImage()
             
@@ -28,24 +28,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             standard.titleTextAttributes = [.foregroundColor: UIColor.white]
             
             let plainButton = UIBarButtonItemAppearance(style: .plain)
-            plainButton.normal.titleTextAttributes = [.foregroundColor: .highlight ?? UIColor.white]
+            plainButton.normal.titleTextAttributes = [.foregroundColor: UIColor.appColor(.highlight) ?? UIColor.white]
             standard.buttonAppearance = plainButton
             
             let doneButton = UIBarButtonItemAppearance(style: .done)
-            doneButton.normal.titleTextAttributes = [.foregroundColor: .highlight ?? UIColor.white]
+            doneButton.normal.titleTextAttributes = [.foregroundColor: UIColor.appColor(.highlight) ?? UIColor.white]
             standard.doneButtonAppearance = doneButton
             
             UINavigationBar.appearance().standardAppearance = standard
             UINavigationBar.appearance().scrollEdgeAppearance = standard
             UINavigationBar.appearance().prefersLargeTitles = false
-            UINavigationBar.appearance().tintColor = .highlight
+            UINavigationBar.appearance().tintColor = UIColor.appColor(.highlight)
             
         }
         
         // MARK: - SearchBar
 
-        UISearchBar.appearance().tintColor = .highlight
-        UISearchTextField.appearance().tintColor = .highlight
+        UISearchBar.appearance().tintColor = UIColor.appColor(.highlight)
+        UISearchTextField.appearance().tintColor = UIColor.appColor(.highlight)
         
         return true
     }

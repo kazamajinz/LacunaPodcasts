@@ -424,7 +424,7 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var episodeDescriptionButton: UIButton! {
         didSet {
             episodeDescriptionButton.layer.shadowPath = UIBezierPath(rect: episodeDescriptionButton.layer.bounds).cgPath
-            episodeDescriptionButton.layer.shadowColor = UIColor.midnight?.cgColor
+            episodeDescriptionButton.layer.shadowColor = UIColor.appColor(.midnight)?.cgColor
             episodeDescriptionButton.layer.shadowOpacity = 0.25
             episodeDescriptionButton.layer.shadowOffset = .zero
             episodeDescriptionButton.layer.shadowRadius = 10.0
@@ -492,8 +492,8 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
         didSet {
             miniProgressBar.isUserInteractionEnabled = false
             miniProgressBar.setThumbImage(UIImage(), for: .normal)
-            miniProgressBar.minimumTrackTintColor = UIColor(named: K.Colors.orange)
-            miniProgressBar.maximumTrackTintColor = UIColor(named: K.Colors.blue)
+            miniProgressBar.minimumTrackTintColor = UIColor.appColor(.orange)
+            miniProgressBar.maximumTrackTintColor = UIColor.appColor(.blue)
         }
     }
     @IBOutlet weak var miniTitleLabel: UILabel!
@@ -512,8 +512,8 @@ class PlayerDetailsView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var currentTimeSlider: DurationSlider! {
         didSet {
-            currentTimeSlider.minimumTrackTintColor = UIColor(named: K.Colors.orange)
-            currentTimeSlider.maximumTrackTintColor = UIColor(named: K.Colors.blue)
+            currentTimeSlider.minimumTrackTintColor = UIColor.appColor(.orange)
+            currentTimeSlider.maximumTrackTintColor = UIColor.appColor(.blue)
         }
     }
 

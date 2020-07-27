@@ -33,11 +33,11 @@ class DownloadsController: UITableViewController {
     //MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = UIColor(named: K.Colors.midnight)
+        view.backgroundColor = UIColor.appColor(.midnight)
     }
     
     fileprivate func setupTableView() {
-        tableView.separatorColor = UIColor(named: K.Colors.blue)
+        tableView.separatorColor = UIColor.appColor(.blue)
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
     }

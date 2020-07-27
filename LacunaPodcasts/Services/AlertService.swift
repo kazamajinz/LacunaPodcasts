@@ -14,7 +14,7 @@ class AlertService {
     public static func showActivityIndicator() -> UIActivityIndicatorView {
         let activityIndicatorView = UIActivityIndicatorView(style: .medium)
         activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.color = .highlight
+        activityIndicatorView.color = UIColor.appColor(.highlight)
         activityIndicatorView.startAnimating()
         return activityIndicatorView
     }

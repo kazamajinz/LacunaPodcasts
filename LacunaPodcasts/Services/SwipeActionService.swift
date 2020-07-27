@@ -23,7 +23,7 @@ struct SwipeActionService {
     }
     
     static func createDownloadAction(handler: @escaping UIContextualAction.Handler) -> UIContextualAction {
-        createBasicSwipeAction(style: .normal, title: "Download", image: UIImage(systemName: "square.and.arrow.down"), backgroundColor: UIColor(named: K.Colors.darkBlue), handler: handler)
+        createBasicSwipeAction(style: .normal, title: "Download", image: UIImage(systemName: "square.and.arrow.down"), backgroundColor: UIColor.appColor(.darkBlue), handler: handler)
     }
 
 }

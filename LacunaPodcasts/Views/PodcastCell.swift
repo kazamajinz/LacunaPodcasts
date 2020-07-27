@@ -32,7 +32,7 @@ class PodcastCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         selectionStyle = .none
         selectedBackgroundView?.isHidden = true
-        containerView.backgroundColor = selected ? .darkBlue : .midnight
+        containerView.backgroundColor = selected ? UIColor.appColor(.darkBlue) : UIColor.appColor(.midnight)
     }
     
     var podcast: Podcast! {

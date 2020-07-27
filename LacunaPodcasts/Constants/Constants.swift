@@ -22,17 +22,17 @@ struct K {
         static let downloadedEpisodesKey = "downloadedEpisodesKey"
     }
     
-    struct Colors{
-        static let darkBlue = "darkBlue"
-        static let blue = "blue"
-        static let highlight = "highlight"
-        static let orange = "orange"
-        static let midnight = "midnight"
-        static let grayBlue = "grayBlue"
-        static let lightGray = "lightGray"
-        static let green = "green"
-        static let dimGray = "dimGray"
-    }
+//    struct Colors{
+//        static let darkBlue = "darkBlue"
+//        static let lacunaBlue = "blue"
+//        static let highlight = "highlight"
+//        static let orange = "orange"
+//        static let midnight = "midnight"
+//        static let grayBlue = "grayBlue"
+//        static let lightGray = "lightGray"
+//        static let green = "green"
+//        static let dimGray = "dimGray"
+//    }
     
     
     

@@ -39,7 +39,7 @@ class EpisodeHeader: UITableViewCell {
     
     private func makeUrlLook(with text: String, range: NSRange, underline: Bool) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: text)
-        var attributes: [NSAttributedString.Key : Any] = [.foregroundColor : UIColor.orange ?? UIColor.white]
+        var attributes: [NSAttributedString.Key : Any] = [.foregroundColor : UIColor.appColor(.orange) ?? UIColor.white]
         if underline == true { attributes[.underlineStyle] = NSUnderlineStyle.single.rawValue }
         attributedString.addAttributes(attributes, range: range)
         return attributedString

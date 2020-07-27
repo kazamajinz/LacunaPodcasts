@@ -39,7 +39,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     let noResultsLabel: UILabel = {
         let label = UILabel()
         label.text = "No Results"
-        label.textColor = .lightGray
+        label.textColor = UIColor.appColor(.lightGray)
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
@@ -48,7 +48,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     //MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = UIColor(named: K.Colors.midnight)
+        view.backgroundColor = UIColor.appColor(.highlight)
         navigationItem.title = "Add Podcast"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }

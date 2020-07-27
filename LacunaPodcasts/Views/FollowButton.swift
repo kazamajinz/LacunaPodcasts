@@ -33,7 +33,7 @@ class FollowButton: UIButton {
         
         titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         
-        layer.borderColor = UIColor.lightGray?.cgColor
+        layer.borderColor = UIColor.appColor(.lightGray)?.cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = self.frame.size.height / 2
     }
@@ -49,8 +49,8 @@ class FollowButton: UIButton {
     
     override var isSelected: Bool {
         didSet {
-            layer.borderColor = isSelected ? UIColor.lightGray?.cgColor : UIColor.black.cgColor
-            backgroundColor = isSelected ? .clear : .orange
+            layer.borderColor = isSelected ? UIColor.appColor(.lightGray)?.cgColor : UIColor.appColor(.midnight)?.cgColor
+            backgroundColor = isSelected ? UIColor.clear : UIColor.appColor(.orange)
         }
     }
     

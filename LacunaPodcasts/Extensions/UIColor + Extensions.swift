@@ -8,24 +8,63 @@
 
 import UIKit
 
+enum AssetsColor: String {
+    case midnight // background
+    case highlight
+    case blue
+    case darkBlue // selected episode cell
+    case grayBlue // inactive episode cell
+    case orange
+    case lightGray // active episode cell + subtitles
+    //case darkGray
+}
+
+
+
 extension UIColor {
     
-    static let darkBlue = UIColor(named: K.Colors.darkBlue)
-    static let blue = UIColor(named: K.Colors.blue)
-    static let highlight = UIColor(named: K.Colors.highlight)
-    static let orange = UIColor(named: K.Colors.orange)
-    static let midnight = UIColor(named: K.Colors.midnight)
-    static let grayBlue = UIColor(named: K.Colors.grayBlue)
-    static let lightGray = UIColor(named: K.Colors.lightGray)
-    static let green = UIColor(named: K.Colors.green)
-    static let dimGray = UIColor(named: K.Colors.dimGray)
-    
-    
-    
-    
-    static func rgb(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
-        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
+    static func appColor(_ name: AssetsColor) -> UIColor? {
+        let colorName = name.rawValue
+        return UIColor(named: colorName)
     }
+    
+    
+//    static let darkBlue = UIColor(named: "darkBlue")
+//    static let blue = UIColor(named: "blue")
+//    static let highlight = UIColor(named: "highlight")
+//    static let orange = UIColor(named: "orange")
+//    static let midnight = UIColor(named: "midnight")
+//    static let grayBlue = UIColor(named: "grayBlue")
+//    static let lightGray = UIColor(named: "lightGray")
+//    static let green = UIColor(named: "green")
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Flyweight
+    
+    public static var colorStore: [String: UIColor] = [:]
+    
+//    static func rgb(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
+//        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
+//    }
+    
+    public class func rgba(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat, _ alpha: CGFloat) -> UIColor {
+        let key = "\(r)\(g)\(b)\(alpha)"
+        if let color = colorStore[key] {
+            return color
+        }
+        let color = UIColor(red: r, green: g, blue: b, alpha: alpha)
+        colorStore[key] = color
+        return color
+    }
+    
+    // MARK: - HEX to UIColor
 
     public convenience init?(hex: String) {
         let r, g, b, a: CGFloat
