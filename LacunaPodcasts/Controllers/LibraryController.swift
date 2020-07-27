@@ -51,6 +51,13 @@ class LibraryController: UITableViewController {
         searchController.searchBar.searchTextField.textColor = .white
     }
     
+    // MARK: - Subviews
+    
+    let browsePodcastsView: BrowsePodcastsView = {
+        let view = BrowsePodcastsView()
+        return view
+    }()
+    
     // MARK: - Setup
     
     private func setupView() {
@@ -59,7 +66,19 @@ class LibraryController: UITableViewController {
         
         // Removes Text from Back Button
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        view.addSubview(browsePodcastsView)
+        setupLayouts()
     }
+
+    private func setupLayouts() {
+        browsePodcastsView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
+        browsePodcastsView.center(in: view, xAnchor: true, yAnchor: true)
+    }
+    
+    
+    
+    
     
     fileprivate func setupSearchBar() {
         navigationItem.searchController = searchController
