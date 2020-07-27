@@ -36,7 +36,6 @@ extension String {
     //MARK: - HTML
     
     func convertHtml(family: String?, size: CGFloat, csscolor: String) -> NSAttributedString? {
-        
         do {
             let htmlCSSString = "<style>" +
                 "html *" +

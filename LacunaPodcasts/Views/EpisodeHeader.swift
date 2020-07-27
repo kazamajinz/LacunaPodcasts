@@ -28,6 +28,7 @@ class EpisodeHeader: UITableViewCell {
     var descriptionLabelAction: (() -> Void)?
     
     override func setSelected(_ selected: Bool, animated: Bool) {
+        selectionStyle = .none
         selectedBackgroundView?.isHidden = true
     }
     

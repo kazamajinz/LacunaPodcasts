@@ -13,15 +13,13 @@ extension UIViewController {
     
     // MARK: - SFSafariViewController
     
-    func showWebView(_ urlString: String) {
-        if let url = URL(string: urlString) {
-            let config = SFSafariViewController.Configuration()
-            config.entersReaderIfAvailable = false
-            config.barCollapsingEnabled = false
-            let vc = SFSafariViewController(url: url, configuration: config)
-            vc.modalPresentationStyle = .popover
-            self.present(vc, animated: true)
-        }
+    func showWebView(_ url: URL) {
+        let config = SFSafariViewController.Configuration()
+        config.entersReaderIfAvailable = false
+        config.barCollapsingEnabled = false
+        let vc = SFSafariViewController(url: url, configuration: config)
+        vc.modalPresentationStyle = .popover
+        self.present(vc, animated: true)
     }
 }
 
