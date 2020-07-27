@@ -263,7 +263,6 @@ class EpisodesController: UITableViewController {
                 let vc = SFSafariViewController(url: url, configuration: config)
                 vc.modalPresentationStyle = .popover
                 self?.present(vc, animated: true, completion: nil)
-                
             }
             
             // Expand and Collapse Podcast Description

@@ -26,10 +26,10 @@ extension String {
         return self.contains("https") ? self : self.replacingOccurrences(of: "http", with: "https")
     }
     
-    func collapseText(to indexDistance: IndexDistance, ellipsis: String?, text: String?) -> String {
+    func collapseText(to indexDistance: IndexDistance, ellipsis: String?, text: String?) -> String? {
         if let index = self.index(self.startIndex, offsetBy: indexDistance, limitedBy: self.endIndex) {
             return self[...index] + String(ellipsis ?? "") + String(text ?? "")
-        } else { return "" }
+        } else { return nil }
     }
     
     

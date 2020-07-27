@@ -31,10 +31,11 @@ class EpisodeHeader: UITableViewCell {
         selectedBackgroundView?.isHidden = true
     }
     
-    private func styleDescriptionText(_ string: String) -> NSAttributedString {
+    private func styleDescriptionText(_ string: String) -> NSAttributedString? {
         let length = 120; let ellipsis = "... " ; let text = "more"
-        let collapsedText = string.collapseText(to: length, ellipsis: ellipsis, text: text)
-        return makeUrlLook(with: collapsedText, range: NSRange(location: length + ellipsis.count + 1, length: text.count), underline: false)
+        guard let collapsedText = string.collapseText(to: length, ellipsis: ellipsis, text: text) else { return nil }
+        let styledText = makeUrlLook(with: collapsedText, range: NSRange(location: length + ellipsis.count + 1, length: text.count), underline: false)
+        return styledText
     }
     
     private func makeUrlLook(with text: String, range: NSRange, underline: Bool) -> NSAttributedString {
@@ -64,7 +65,9 @@ class EpisodeHeader: UITableViewCell {
             descriptionLabel.text = podcast.description?.stripOutHtml()
             if descriptionLabel.numberOfLines != 0 {
                 if let text = descriptionLabel.text {
-                    descriptionLabel.attributedText = styleDescriptionText(text)
+                    if let styledText = styleDescriptionText(text) {
+                        descriptionLabel.attributedText = styledText
+                    }
                 }
             }
             descriptionLabel.isUserInteractionEnabled = true
