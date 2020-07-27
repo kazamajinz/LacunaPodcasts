@@ -83,6 +83,9 @@ class EpisodeHeader: UITableViewCell {
     
     @objc func handleDescriptionTap() {
         descriptionLabelAction?()
+        descriptionLabel.numberOfLines = descriptionLabel.numberOfLines == 0 ? 3 : 0
+        //self?.tableView.reloadData()
+        
     }
 
     @objc func didTapArtistName() {

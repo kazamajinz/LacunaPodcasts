@@ -246,13 +246,12 @@ class EpisodesController: UITableViewController {
 
         if indexPath.section == 0 {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
+
             header.podcast = selectedPodcast
             
             if let index = savedPodcasts.firstIndex(where: {$0.trackName == selectedPodcast.trackName} ) {
                 header.podcast = savedPodcasts[index]
             }
-            
-            // TODO: FIX RETAIN CYCLE ERRORS HERE
             
             // Show Podcast Link
             header.artistNameLabelAction = { [weak self] in
@@ -266,9 +265,9 @@ class EpisodesController: UITableViewController {
             
             // Expand and Collapse Podcast Description
             header.descriptionLabelAction = { [weak self] in
-                header.descriptionLabel.numberOfLines = header.descriptionLabel.numberOfLines == 0 ? 3 : 0
                 self?.tableView.reloadData()
             }
+            
             return header
             
         } else {
