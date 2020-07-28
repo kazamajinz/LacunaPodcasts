@@ -319,28 +319,17 @@ class EpisodesController: UITableViewController {
         switch indexPath.section {
         case 1:
             
-            if episode.downloadStatus == .none {
+            //Check if episode is already downloading/downloaded
+            let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
+            if !downloadedEpisodes.contains(where: {$0.title == episode.title}) {
+                
+                // Download Action
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
-                    
-                    // Check if episode is already downloading/downloaded
-                    let downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
-                    if !downloadedEpisodes.contains(where: {$0.title == episode.title}) {
-
                         APIService.shared.startDownload(episode)
                         UserDefaults.standard.downloadEpisode(episode: episode)
                         DispatchQueue.main.async {
                             cell.updateDisplayForDownloadPending()
                         }
-                        
-                        
-                        
-                        
-                        // HANDLE CANCEL FIX HERE
-                        
-                        
-                        
-
-                    }
                     completionHandler(true)
                 }
                 
@@ -352,6 +341,14 @@ class EpisodesController: UITableViewController {
                 // Delete Action
                 let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
                     
+                    // Cancel Download if In Progress
+                    if self.episodes[indexPath.row].downloadStatus == .inProgress {
+                        APIService.shared.cancelDownload(episode)
+                        self.reload(indexPath.row)
+                        completionHandler(true)
+                        return
+                    }
+
                     // Delete Local File
                     guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
                     let url = fileUrl.localFilePath()
@@ -367,6 +364,7 @@ class EpisodesController: UITableViewController {
                             UserDefaults.standard.deleteEpisode(episode: episode)
                             self.fetchEpisodesAndUpdateUI(indexPath.row)
                         } else { print("Failed to delete the episode file") }
+                    
                     }
                     completionHandler(true)
                     

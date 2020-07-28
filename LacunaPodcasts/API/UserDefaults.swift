@@ -32,11 +32,7 @@ extension UserDefaults {
         } catch { print("Failed to encode downloaded episode:", error) }
     }
     
-    
-    
-    
-    
-    func updateEpisode(episode: Episode, fileUrl: String, downloadStatus: DownloadStatus) {
+    func updateEpisode(episode: Episode, fileUrl: String?, downloadStatus: DownloadStatus) {
         var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
         guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl} ) else { return }
         downloadedEpisodes[index].fileUrl = fileUrl
@@ -49,15 +45,6 @@ extension UserDefaults {
             print("Failed to encode downloaded episodes with file url update:", error)
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func deleteEpisode(episode: Episode) {
         let episodes = fetchDownloadedEpisodes()
