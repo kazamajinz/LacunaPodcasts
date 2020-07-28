@@ -67,7 +67,6 @@ class SearchResultsController: UITableViewController {
         view.backgroundColor = UIColor.appColor(.midnight)
         view.addSubview(noResultsView)
         setupLayouts()
-        
         noResultsView.isHidden = view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true ? true : false
     }
     
@@ -80,6 +79,7 @@ class SearchResultsController: UITableViewController {
         tableView.separatorColor = UIColor.appColor(.blue)
         tableView.tableFooterView = UIView()
         tableView.register(EpisodeCell.nib, forCellReuseIdentifier: EpisodeCell.reuseIdentifier)
+        tableView.keyboardDismissMode = .onDrag
     }
     
     //MARK: - TableView

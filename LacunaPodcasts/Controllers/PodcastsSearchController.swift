@@ -88,7 +88,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.nib, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
-        tableView.sectionFooterHeight = 0
+        tableView.keyboardDismissMode = .onDrag
     }
     
     //MARK: - TableView
@@ -102,8 +102,8 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if isLoading {
-            return AlertService.showActivityIndicator()
             noResultsView.isHidden = true
+            return AlertService.showActivityIndicator()
         } else {
             noResultsView.isHidden = false
             return UIView()

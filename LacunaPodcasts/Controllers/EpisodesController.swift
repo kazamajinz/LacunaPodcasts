@@ -152,18 +152,6 @@ class EpisodesController: UITableViewController {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     @objc fileprivate func handlePlayerDetailsMinimize() {
         if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
             let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
