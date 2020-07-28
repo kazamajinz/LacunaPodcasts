@@ -25,7 +25,7 @@ class LibraryController: UITableViewController {
                     self.episodes.append(contentsOf: episodes)
                 }
             }
-            browsePodcastsView.isHidden = podcasts.isEmpty ? false : true
+            browsePodcastsView.alpha = podcasts.isEmpty ? 1 : 0
         }
     }
     var filteredEpisodes: [Episode] = []
@@ -57,7 +57,7 @@ class LibraryController: UITableViewController {
     
     let browsePodcastsView: BrowsePodcastsView = {
         let view = BrowsePodcastsView()
-        view.isHidden = true
+        view.alpha = 0
         return view
     }()
     
@@ -75,7 +75,7 @@ class LibraryController: UITableViewController {
 
     private func setupLayouts() {
         browsePodcastsView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
-        browsePodcastsView.center(in: view, xAnchor: true, yAnchor: true)
+        browsePodcastsView.center(in: view, xAnchor: true, yAnchor: false)
     }
     
     private func setupBrowsePodcastsView() {

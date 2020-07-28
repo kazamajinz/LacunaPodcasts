@@ -25,21 +25,24 @@ class SearchResultsController: UITableViewController {
     }
     var isLoading: Bool = false {
         didSet {
-            
             DispatchQueue.main.async {
                 if self.view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
                     self.noResultsView.isHidden = true
                 } else { self.noResultsView.isHidden = false }
             }
-            
             tableView.reloadData()
-            
-            
+        }
+    }
+    var searchText: String = "" {
+        didSet {
+            DispatchQueue.main.async {
+                self.noResultsView.searchTextLabel.text = self.searchText
+            }
         }
     }
     
     //MARK: - Lifecycles
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -69,7 +72,7 @@ class SearchResultsController: UITableViewController {
     
     private func setupLayouts() {
         noResultsView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
-        noResultsView.center(in: view, xAnchor: true, yAnchor: true)
+        noResultsView.center(in: view, xAnchor: true, yAnchor: false)
     }
     
     fileprivate func setupTableView() {
