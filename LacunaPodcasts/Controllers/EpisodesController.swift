@@ -404,7 +404,7 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
         resultsController.isLoading = true
         
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.filterContentForSearchText(searchBar.text!)
             resultsController.isLoading = false
             resultsController.filteredEpisodes = self.filteredEpisodes

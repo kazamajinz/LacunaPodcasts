@@ -25,37 +25,13 @@ class SearchResultsController: UITableViewController {
     }
     var isLoading: Bool = false {
         didSet {
-            
-            if checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
+            if view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
                 noResultsView.isHidden = true
             } else { noResultsView.isHidden = false }
-            
-            
             
             tableView.reloadData()
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    func checkIfSubViewOfTypeExists<T: UIView>(type: T.Type) -> Bool {
-        let subviews = self.view.subviews.filter({ $0 is T })//.map({ $0.removeFromSuperview() })
-        if subviews.isEmpty {
-            return true
-        } else { return false }
-    }
-    
-    
-    
-    
-    
-    
-    
     
     //MARK: - Lifecycles
     

@@ -121,7 +121,7 @@ extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsU
         tableView.reloadData()
 
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.isLoading = false
             self.filterContentForSearchText(searchBar.text!)
         })

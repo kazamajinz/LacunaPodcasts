@@ -60,5 +60,18 @@ extension UIView {
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    func checkIfSubViewOfTypeExists<T: UIView>(type: T.Type) -> Bool {
+        let subviews = self.subviews.filter({ $0 is T })//.map({ $0.removeFromSuperview() })
+        if subviews.isEmpty {
+            return true
+        } else { return false }
+    }
 
 }
