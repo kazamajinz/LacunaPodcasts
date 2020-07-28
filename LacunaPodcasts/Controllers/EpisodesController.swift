@@ -27,6 +27,9 @@ class EpisodesController: UITableViewController {
     var selectedPodcast = Podcast()
     var podcast: Podcast? {
         didSet {
+            
+            view.isUserInteractionEnabled = false
+            
             if let podcast = podcast {
                 selectedPodcast = podcast
             }
@@ -53,6 +56,7 @@ class EpisodesController: UITableViewController {
             self.selectedPodcast.link = pod.link
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.view.isUserInteractionEnabled = true
             }
         }
     }
@@ -252,7 +256,7 @@ class EpisodesController: UITableViewController {
 
         if indexPath.section == 0 {
             guard let header = tableView.dequeueReusableCell(withIdentifier: EpisodeHeader.reuseIdentifier, for: indexPath) as? EpisodeHeader else { fatalError() }
-
+            
             header.podcast = selectedPodcast
             
             if let index = savedPodcasts.firstIndex(where: {$0.trackName == selectedPodcast.trackName} ) {
