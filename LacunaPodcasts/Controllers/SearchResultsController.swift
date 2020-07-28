@@ -25,7 +25,6 @@ class SearchResultsController: UITableViewController {
     }
     var isLoading: Bool = false {
         didSet {
-            noResultsView.isHidden = view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true ? true : false
             tableView.reloadData()
         }
     }
@@ -68,6 +67,8 @@ class SearchResultsController: UITableViewController {
         view.backgroundColor = UIColor.appColor(.midnight)
         view.addSubview(noResultsView)
         setupLayouts()
+        
+        noResultsView.isHidden = view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true ? true : false
     }
     
     private func setupLayouts() {

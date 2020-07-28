@@ -112,7 +112,7 @@ class APIService {
         let parser = FeedParser(URL: url)
         print("After Parser")
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             parser.parseAsync { (result) in
                 print("Successfully parsed feed:", result)
 

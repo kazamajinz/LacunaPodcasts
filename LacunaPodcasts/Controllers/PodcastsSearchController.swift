@@ -20,7 +20,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     var timer: Timer?
     var isLoading: Bool = false {
             didSet {
-                noResultsView.isHidden = view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true ? true : false
                 tableView.reloadData()
             }
         }
@@ -64,6 +63,8 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         view.addSubview(noResultsView)
         setupLayouts()
+        
+        noResultsView.isHidden = view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true ? true : false
     }
     
     private func setupLayouts() {
@@ -100,32 +101,21 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        //        return isLoading ? AlertService.showActivityIndicator() : noResultsLabel
-        
         if isLoading {
             return AlertService.showActivityIndicator()
         } else {
             noResultsView.isHidden = false
             return UIView()
         }
-        
-        
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        //        return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? K.podcastCellHeight : 0
-        
         if podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false {
             return K.podcastCellHeight
         } else {
-            
-            // DELAY BETWEEN THIS AND WHEN THE PODCASTS UPLOAD
-            
             noResultsView.isHidden = true
             return 0
         }
-        
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -165,7 +155,6 @@ extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsU
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.filterContentForSearchText(searchBar.text!)
-//            self.isLoading = false
             self.noResultsView.searchTextLabel.text = "Couldn't find \"\(searchBar.text!)\""
         })
     }
