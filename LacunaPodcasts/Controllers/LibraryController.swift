@@ -167,8 +167,7 @@ extension LibraryController: SearchResultsControllerDelegate {
         self.searchController.searchBar.text = ""
 
         // Find Podcast
-        guard let index = podcasts.firstIndex(where: {$0.artistName == episode.author} ) else { return }
-        print(index)
+        guard let index = podcasts.firstIndex(where: {$0.collectionId == episode.podcastCollectionId} ) else { return }
         
         //let podcast = self.podcasts[indexPath.row]
 //

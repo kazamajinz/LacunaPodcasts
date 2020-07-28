@@ -86,7 +86,8 @@ class EpisodeCell: UITableViewCell {
             guard let url = URL(string: episode.imageUrl ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
             titleLabel.text = episode.title
-            descriptionLabel.text = episode.description.stripOutHtml()
+//            descriptionLabel.text = episode.description.stripOutHtml()
+            descriptionLabel.text = String(episode.podcastCollectionId)
             
             let pubDate = dateFormatter.string(from: episode.pubDate).uppercased()
             let duration = episode.duration.toDisplayString()
