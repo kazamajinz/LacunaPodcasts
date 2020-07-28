@@ -18,7 +18,14 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     var podcasts = [Podcast]()
     let searchController = UISearchController(searchResultsController: nil)
     var timer: Timer?
-    var isLoading: Bool = false
+    var isLoading: Bool = false {
+            didSet {
+                    if self.view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
+                        self.noResultsView.isHidden = true
+                    } else { self.noResultsView.isHidden = false }
+                tableView.reloadData()
+            }
+        }
     
     // MARK: - Lifecycles
     
@@ -45,12 +52,25 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         return label
     }()
     
+    let noResultsView: NoResultsView = {
+        let view = NoResultsView()
+        view.isHidden = true
+        return view
+    }()
+    
     //MARK: - Setup
     
     private func setupView() {
         view.backgroundColor = UIColor.appColor(.midnight)
         navigationItem.title = "Add Podcast"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        view.addSubview(noResultsView)
+        setupLayouts()
+    }
+    
+    private func setupLayouts() {
+        noResultsView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
+        noResultsView.center(in: view, xAnchor: true, yAnchor: false)
     }
     
     fileprivate func setupSearchBar() {
@@ -82,11 +102,32 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return isLoading ? AlertService.showActivityIndicator() : noResultsLabel
+        //        return isLoading ? AlertService.showActivityIndicator() : noResultsLabel
+        
+        if isLoading {
+            return AlertService.showActivityIndicator()
+        } else {
+            noResultsView.isHidden = false
+            return UIView()
+        }
+        
+        
     }
-
+    
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? K.podcastCellHeight : 0
+        //        return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? K.podcastCellHeight : 0
+        
+        if podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false {
+            return K.podcastCellHeight
+        } else {
+            
+            // DELAY BETWEEN THIS AND WHEN THE PODCASTS UPLOAD
+            
+            noResultsView.isHidden = true
+            return 0
+        }
+        
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,7 +151,10 @@ extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsU
     func filterContentForSearchText(_ searchText: String) {
         APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
             self.podcasts = podcasts
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.isLoading = false
+            }
         }
     }
     
@@ -119,11 +163,12 @@ extension PodcastsSearchController: UISearchControllerDelegate, UISearchResultsU
         
         isLoading = true
         tableView.reloadData()
-
+        
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
-            self.isLoading = false
             self.filterContentForSearchText(searchBar.text!)
+//            self.isLoading = false
+            self.noResultsView.searchTextLabel.text = "Couldn't find \"\(searchBar.text!)\""
         })
     }
 }

@@ -411,7 +411,6 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.filterContentForSearchText(searchBar.text!)
             NotificationCenter.default.post(name: .searchControllerProgress, object: nil, userInfo: ["searchText": searchBar.text!])
-            resultsController.searchText = searchBar.text!
             resultsController.isLoading = false
             resultsController.filteredEpisodes = self.filteredEpisodes
         })

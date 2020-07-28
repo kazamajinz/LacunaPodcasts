@@ -25,15 +25,12 @@ class SearchResultsController: UITableViewController {
     }
     var isLoading: Bool = false {
         didSet {
-            DispatchQueue.main.async {
                 if self.view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
                     self.noResultsView.isHidden = true
                 } else { self.noResultsView.isHidden = false }
-            }
             tableView.reloadData()
         }
     }
-    var searchText: String = ""
     
     //MARK: - Lifecycles
 
@@ -42,11 +39,6 @@ class SearchResultsController: UITableViewController {
         setupView()
         setupTableView()
         setupObservers()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        noResultsView.isHidden = true
     }
     
     //MARK: - Setup Observers
