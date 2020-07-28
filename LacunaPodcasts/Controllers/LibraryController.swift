@@ -24,7 +24,7 @@ class LibraryController: UITableViewController {
                 APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes, pod) in
                     self.episodes.append(contentsOf: episodes)
                 }
-            }g
+            }
             browsePodcastsView.isHidden = podcasts.isEmpty ? false : true
         }
     }
@@ -36,6 +36,7 @@ class LibraryController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupBrowsePodcastsView()
         setupTableView()
         setupSearchBar()
         setupNavigationBarButtons()
@@ -77,9 +78,11 @@ class LibraryController: UITableViewController {
         browsePodcastsView.center(in: view, xAnchor: true, yAnchor: true)
     }
     
-    
-    
-    
+    private func setupBrowsePodcastsView() {
+        browsePodcastsView.browsePodcastsAction = { [weak self] in
+            self?.handleAddPodcast()
+        }
+    }
     
     fileprivate func setupSearchBar() {
         navigationItem.searchController = searchController
@@ -206,13 +209,6 @@ extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating
 // MARK: - UISearchBarDelegate
 
 extension LibraryController: UISearchBarDelegate { }
-
-
-
-
-
-
-
 
 
 
