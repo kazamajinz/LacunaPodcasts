@@ -32,6 +32,33 @@ extension UserDefaults {
         } catch { print("Failed to encode downloaded episode:", error) }
     }
     
+    
+    
+    
+    
+    func updateEpisode(episode: Episode, fileUrl: String, downloadStatus: DownloadStatus) {
+        var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
+        guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl} ) else { return }
+        downloadedEpisodes[index].fileUrl = fileUrl
+        downloadedEpisodes[index].downloadStatus = downloadStatus
+        
+        do {
+            let data = try JSONEncoder().encode(downloadedEpisodes)
+            UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
+        } catch {
+            print("Failed to encode downloaded episodes with file url update:", error)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func deleteEpisode(episode: Episode) {
         let episodes = fetchDownloadedEpisodes()
         let filteredEpisodes = episodes.filter { (e) -> Bool in

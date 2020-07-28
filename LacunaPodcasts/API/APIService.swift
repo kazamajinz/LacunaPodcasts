@@ -49,24 +49,17 @@ class APIService {
                 
             } else {
                 
+                
+
+                
                 print("Finished downloading episode: \(episode.title), to \(response.fileURL?.path ?? "")")
                 
                 let episodeDownloadComplete = EpisodeDownloadCompleteTuple(fileUrl: response.fileURL?.path ?? "", episode.title, episode.streamUrl)
                 NotificationCenter.default.post(name: .downloadComplete, object: episodeDownloadComplete, userInfo: nil)
                 
-                // Update UserDefaults
-                var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
-                guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl} ) else { return }
-                downloadedEpisodes[index].fileUrl = response.fileURL?.absoluteString ?? ""
-                downloadedEpisodes[index].isDownloaded = true
-                downloadedEpisodes[index].downloadStatus = .completed
-                
-                do {
-                    let data = try JSONEncoder().encode(downloadedEpisodes)
-                    UserDefaults.standard.set(data, forKey: K.UserDefaults.downloadedEpisodesKey)
-                } catch {
-                    print("Failed to encode downloaded episodes with file url update:", error)
-                }
+//                // Update UserDefaults
+                let fileUrl = response.fileURL?.absoluteString ?? ""
+                UserDefaults.standard.updateEpisode(episode: episode, fileUrl: fileUrl, downloadStatus: .completed)
             }
         }
     }
@@ -75,6 +68,11 @@ class APIService {
         guard let download = activeDownloads[episode.streamUrl] else { return }
         download.task?.cancel()
         activeDownloads[episode.streamUrl] = nil
+        
+//        // Update UserDefaults
+//        var downloadedEpisodes = UserDefaults.standard.fetchDownloadedEpisodes()
+//        guard let index = downloadedEpisodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl} ) else { return }
+//        downloadedEpisodes[index].downloadStatus = .none
     }
     
     

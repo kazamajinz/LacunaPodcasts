@@ -319,7 +319,7 @@ class EpisodesController: UITableViewController {
         switch indexPath.section {
         case 1:
             
-            if episode.downloadStatus != .completed {
+            if episode.downloadStatus == .none {
                 let downloadAction = SwipeActionService.createDownloadAction { (action, view, completionHandler) in
                     
                     // Check if episode is already downloading/downloaded
@@ -332,7 +332,13 @@ class EpisodesController: UITableViewController {
                             cell.updateDisplayForDownloadPending()
                         }
                         
+                        
+                        
+                        
                         // HANDLE CANCEL FIX HERE
+                        
+                        
+                        
 
                     }
                     completionHandler(true)
