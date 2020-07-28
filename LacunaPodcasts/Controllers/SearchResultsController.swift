@@ -33,13 +33,7 @@ class SearchResultsController: UITableViewController {
             tableView.reloadData()
         }
     }
-    var searchText: String = "" {
-        didSet {
-            DispatchQueue.main.async {
-                self.noResultsView.searchTextLabel.text = self.searchText
-            }
-        }
-    }
+    var searchText: String = ""
     
     //MARK: - Lifecycles
 
@@ -47,6 +41,7 @@ class SearchResultsController: UITableViewController {
         super.viewDidLoad()
         setupView()
         setupTableView()
+        setupObservers()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -54,8 +49,23 @@ class SearchResultsController: UITableViewController {
         noResultsView.isHidden = true
     }
     
-    // MARK: - Subviews
+    //MARK: - Setup Observers
     
+    fileprivate func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSearchControllerProgress), name: .searchControllerProgress, object: nil)
+    }
+    
+    @objc private func handleSearchControllerProgress(notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let searchText = userInfo["searchText"] as? String else { return }
+        
+        DispatchQueue.main.async {
+            self.noResultsView.searchTextLabel.text = "Couldn't find \"\(searchText)\""
+        }
+    }
+    
+    // MARK: - Subviews
+
     let noResultsView: NoResultsView = {
         let view = NoResultsView()
         view.isHidden = true

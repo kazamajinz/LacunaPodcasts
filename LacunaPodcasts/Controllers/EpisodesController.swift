@@ -10,6 +10,10 @@ import UIKit
 import FeedKit
 import SafariServices
 
+extension Notification.Name {
+    static let searchControllerProgress = NSNotification.Name("searchingEpisodes")
+}
+
 class EpisodesController: UITableViewController {
     
     deinit { print("EpisodesController memory being reclaimed...") }
@@ -406,6 +410,7 @@ extension EpisodesController: UISearchControllerDelegate, UISearchResultsUpdatin
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
             self.filterContentForSearchText(searchBar.text!)
+            NotificationCenter.default.post(name: .searchControllerProgress, object: nil, userInfo: ["searchText": searchBar.text!])
             resultsController.searchText = searchBar.text!
             resultsController.isLoading = false
             resultsController.filteredEpisodes = self.filteredEpisodes

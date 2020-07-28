@@ -200,6 +200,7 @@ extension LibraryController: UISearchControllerDelegate, UISearchResultsUpdating
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] (timer) in
             guard let self = self else { return }
             self.filterContentForSearchText(searchBar.text!)
+            NotificationCenter.default.post(name: .searchControllerProgress, object: nil, userInfo: ["searchText": searchBar.text!])
             resultsController.isLoading = false
             resultsController.filteredEpisodes = self.filteredEpisodes
         })   

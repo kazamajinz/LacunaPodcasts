@@ -10,6 +10,8 @@ import UIKit
 
 class NoResultsView: UIView {
     
+//    var searchTextAction: (() -> Void)?
+    
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var searchTextLabel: UILabel!
     
