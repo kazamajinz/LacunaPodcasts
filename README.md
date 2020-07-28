@@ -2,6 +2,8 @@
 
 A dark mode podcast app using iTunes Search API with offline playback and personal library persistence. Written programatically in Swift and built using Alamofire, FeedKit, AVKit, and iTunes API.
 
+![LacunaPodcsts Demo](https://github.com/mcipswitch/lacuna-podcasts/blob/master/Screenshots/small.gif)
+
 # Project Status
 
 This project is currently still in development. This latest version includes the following core features:
