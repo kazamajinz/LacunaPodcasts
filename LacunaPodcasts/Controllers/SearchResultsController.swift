@@ -26,14 +26,36 @@ class SearchResultsController: UITableViewController {
     var isLoading: Bool = false {
         didSet {
             
-//            if !isLoading && filteredEpisodes.isEmpty {
-//                noResultsView.isHidden = false
-//            }
+            if checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
+                noResultsView.isHidden = true
+            } else { noResultsView.isHidden = false }
+            
             
             
             tableView.reloadData()
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    func checkIfSubViewOfTypeExists<T: UIView>(type: T.Type) -> Bool {
+        let subviews = self.view.subviews.filter({ $0 is T })//.map({ $0.removeFromSuperview() })
+        if subviews.isEmpty {
+            return true
+        } else { return false }
+    }
+    
+    
+    
+    
+    
+    
+    
     
     //MARK: - Lifecycles
     
@@ -41,6 +63,11 @@ class SearchResultsController: UITableViewController {
         super.viewDidLoad()
         setupView()
         setupTableView()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        noResultsLabel.isHidden = true
     }
     
     // MARK: - Subviews
