@@ -19,10 +19,10 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     let searchController = UISearchController(searchResultsController: nil)
     var timer: Timer?
     var isLoading: Bool = false {
-            didSet {
-                tableView.reloadData()
-            }
+        didSet {
+            tableView.reloadData()
         }
+    }
     
     // MARK: - Lifecycles
     
