@@ -25,9 +25,7 @@ class SearchResultsController: UITableViewController {
     }
     var isLoading: Bool = false {
         didSet {
-                if self.view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
-                    self.noResultsView.isHidden = true
-                } else { self.noResultsView.isHidden = false }
+            noResultsView.isHidden = view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true ? true : false
             tableView.reloadData()
         }
     }
