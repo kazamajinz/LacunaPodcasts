@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Podcast: Codable, Equatable {
+struct Podcast: Codable, Equatable, Hashable {
     
     var collectionId: Int?
     

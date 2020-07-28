@@ -64,6 +64,7 @@ class EpisodeHeader: UITableViewCell {
             
             // Description
             descriptionLabel.text = podcast.description?.stripOutHtml()
+            
             if descriptionLabel.numberOfLines != 0 {
                 if let text = descriptionLabel.text {
                     if let styledText = styleDescriptionText(text) {

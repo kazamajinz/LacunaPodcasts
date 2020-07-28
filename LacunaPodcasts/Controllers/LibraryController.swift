@@ -85,14 +85,17 @@ class LibraryController: UITableViewController {
     }
     
     fileprivate func setupSearchBar() {
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        guard let resultsController = searchController.searchResultsController as? SearchResultsController else { return }
+        resultsController.delegate = self
+        
         searchController.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Library"
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Library"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
     }
     
@@ -167,19 +170,14 @@ extension LibraryController: SearchResultsControllerDelegate {
         self.searchController.searchBar.text = ""
 
         // Find Podcast
-        guard let index = podcasts.firstIndex(where: {$0.collectionId == episode.podcastCollectionId} ) else { return }
-        
-        //let podcast = self.podcasts[indexPath.row]
-//
-//        // Go to Podcast Episodes
-//        let episodesController = EpisodesController()
-//        episodesController.podcast = podcast
-//        navigationController?.pushViewController(episodesController, animated: true)
-//
-//        // Select Row
-//        guard let index = episodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl}) else { return }
-//        let indexPath = IndexPath(row: index, section: 1)
-//        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
+        guard let podIndex = podcasts.firstIndex(where: {$0.trackName == episode.podcast} ) else { return }
+        let podcast = self.podcasts[podIndex]
+
+        // Go to Podcast Episodes
+        let episodesController = EpisodesController()
+        episodesController.podcast = podcast
+        episodesController.selectedEpisode = episode
+        navigationController?.pushViewController(episodesController, animated: true)
     }
 }
 

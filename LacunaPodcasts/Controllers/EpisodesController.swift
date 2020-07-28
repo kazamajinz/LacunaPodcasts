@@ -24,10 +24,10 @@ class EpisodesController: UITableViewController {
     var filteredEpisodes: [Episode] = []
     var timer: Timer?
     let searchController = UISearchController(searchResultsController: SearchResultsController())
+    var selectedEpisode: Episode?
     var selectedPodcast = Podcast()
     var podcast: Podcast? {
         didSet {
-            
             view.isUserInteractionEnabled = false
             
             if let podcast = podcast {
@@ -57,6 +57,16 @@ class EpisodesController: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.view.isUserInteractionEnabled = true
+                self.scrollToSelectedEpisode()
+            }
+        }
+    }
+    
+    private func scrollToSelectedEpisode() {
+        if let index = self.episodes.firstIndex(where: {$0.streamUrl == self.selectedEpisode?.streamUrl}) {
+            let indexPath = IndexPath(row: index, section: 1)
+            if index < self.tableView.numberOfRows(inSection: 1) {
+                self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
             }
         }
     }
@@ -79,6 +89,11 @@ class EpisodesController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchController.searchBar.searchTextField.textColor = .white
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.selectedEpisode = nil
     }
     
     //MARK: - Setup Observers
@@ -398,7 +413,9 @@ extension EpisodesController: SearchResultsControllerDelegate {
         self.searchController.searchBar.text = ""
         guard let index = episodes.firstIndex(where: {$0.title == episode.title && $0.streamUrl == episode.streamUrl}) else { return }
         let indexPath = IndexPath(row: index, section: 1)
-        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
+        DispatchQueue.main.async {
+            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
+        }
     }
 }
 

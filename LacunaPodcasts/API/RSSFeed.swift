@@ -14,11 +14,19 @@ extension RSSFeed {
         
         var episodes = [Episode]()
         
+        
+        let podcast = title
+        
+        
         let imageUrl = iTunes?.iTunesImage?.attributes?.href
         
         items?.forEach({ (feedItem) in
             
             var episode = Episode(feedItem: feedItem)
+            
+            
+            episode.podcast = podcast
+            
             
             if episode.imageUrl == nil {
                 episode.imageUrl = imageUrl

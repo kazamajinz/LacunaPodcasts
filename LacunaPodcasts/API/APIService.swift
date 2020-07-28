@@ -97,7 +97,6 @@ class APIService {
 
                     // Episodes
                     let episodes = feed.toEpisodes()
-                    
                     completionHandler(episodes, podcast)
                     
                 case .failure(let error):

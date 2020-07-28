@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UISearchBar.appearance().tintColor = UIColor.appColor(.highlight)
         UISearchTextField.appearance().tintColor = UIColor.appColor(.highlight)
-        UISearchTextField.appearance().keyboardAppearance = UIKeyboardAppearance.darkgi
+        UISearchTextField.appearance().keyboardAppearance = UIKeyboardAppearance.dark
         
         return true
     }

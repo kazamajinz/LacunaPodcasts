@@ -18,7 +18,7 @@ enum DownloadStatus: String, Codable {
 
 struct Episode: Codable {
     
-    var podcastCollectionId: Int = 0
+    var podcast: String?
 
     let title: String
     let pubDate: Date
@@ -39,6 +39,7 @@ struct Episode: Codable {
     var downloadStatus: DownloadStatus = .none
     
     init(feedItem: RSSFeedItem) {
+
         self.title = feedItem.title ?? ""
         self.pubDate = feedItem.pubDate ?? Date()
         self.description = feedItem.description ?? ""
