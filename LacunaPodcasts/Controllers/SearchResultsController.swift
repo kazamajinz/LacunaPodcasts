@@ -25,6 +25,12 @@ class SearchResultsController: UITableViewController {
     }
     var isLoading: Bool = false {
         didSet {
+            
+//            if !isLoading && filteredEpisodes.isEmpty {
+//                noResultsView.isHidden = false
+//            }
+            
+            
             tableView.reloadData()
         }
     }
@@ -47,11 +53,24 @@ class SearchResultsController: UITableViewController {
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
     }()
+
+    let noResultsView: NoResultsView = {
+        let view = NoResultsView()
+        view.isHidden = true
+        return view
+    }()
     
     //MARK: - Setup
     
     private func setupView() {
         view.backgroundColor = UIColor.appColor(.midnight)
+        view.addSubview(noResultsView)
+        setupLayouts()
+    }
+    
+    private func setupLayouts() {
+        noResultsView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
+        noResultsView.center(in: view, xAnchor: true, yAnchor: true)
     }
     
     fileprivate func setupTableView() {
@@ -90,11 +109,21 @@ class SearchResultsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return isLoading ? AlertService.showActivityIndicator() : noResultsLabel
+        if isLoading {
+            return AlertService.showActivityIndicator()
+        } else {
+            noResultsView.isHidden = false
+            return UIView()
+        }
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return filteredEpisodes.isEmpty ? K.downloadEpisodeCellHeight : 0
+        if filteredEpisodes.isEmpty {
+            return K.downloadEpisodeCellHeight
+        } else {
+            noResultsView.isHidden = true
+            return 0
+        }
     }
 }
 
