@@ -11,6 +11,7 @@ import UIKit
 class NoResultsView: UIView {
     
     @IBOutlet var containerView: UIView!
+    @IBOutlet weak var searchTextLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

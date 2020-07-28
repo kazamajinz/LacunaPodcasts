@@ -25,11 +25,16 @@ class SearchResultsController: UITableViewController {
     }
     var isLoading: Bool = false {
         didSet {
-            if view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
-                noResultsView.isHidden = true
-            } else { noResultsView.isHidden = false }
+            
+            DispatchQueue.main.async {
+                if self.view.checkIfSubViewOfTypeExists(type: UIActivityIndicatorView.self) == true {
+                    self.noResultsView.isHidden = true
+                } else { self.noResultsView.isHidden = false }
+            }
             
             tableView.reloadData()
+            
+            
         }
     }
     
@@ -43,20 +48,11 @@ class SearchResultsController: UITableViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        noResultsLabel.isHidden = true
+        noResultsView.isHidden = true
     }
     
     // MARK: - Subviews
     
-    let noResultsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "No Results"
-        label.textColor = UIColor.appColor(.lightGray)
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
-
     let noResultsView: NoResultsView = {
         let view = NoResultsView()
         view.isHidden = true
