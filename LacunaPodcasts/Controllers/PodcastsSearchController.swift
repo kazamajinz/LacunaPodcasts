@@ -31,11 +31,27 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         setupView()
         setupSearchBar()
         setupTableView()
+        setupObservers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchController.searchBar.searchTextField.textColor = .white
+    }
+    
+    //MARK: - Setup Observers
+
+    fileprivate func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
+    }
+    
+    @objc fileprivate func handlePlayerDetailsMinimize() {
+        if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
+            let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
+            //guard let safeAreaInsetBottom = UIWindow.key?.safeAreaInsets.bottom else { return }
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+        }
     }
     
     // MARK: - Subviews
