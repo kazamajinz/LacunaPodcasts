@@ -30,6 +30,16 @@ class DownloadsController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
+            let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
+            //guard let safeAreaInsetBottom = UIWindow.key?.safeAreaInsets.bottom else { return }
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+        }
+    }
+    
     //MARK: - Setup
     
     private func setupView() {
@@ -51,7 +61,6 @@ class DownloadsController: UITableViewController {
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
     }
     
     @objc fileprivate func handleDownloadProgress(notification: Notification) {
@@ -81,15 +90,6 @@ class DownloadsController: UITableViewController {
         // Update UI
         DispatchQueue.main.async {
             self.reload(index)
-        }
-    }
-    
-    @objc fileprivate func handlePlayerDetailsMinimize() {
-        if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
-            let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
-            //guard let safeAreaInsetBottom = UIWindow.key?.safeAreaInsets.bottom else { return }
-            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
         }
     }
     

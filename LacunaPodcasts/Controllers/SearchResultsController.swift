@@ -38,11 +38,20 @@ class SearchResultsController: UITableViewController {
         setupObservers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
+            let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
+            //guard let safeAreaInsetBottom = UIWindow.key?.safeAreaInsets.bottom else { return }
+            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
+        }
+    }
+    
     //MARK: - Setup Observers
     
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleSearchControllerProgress), name: .searchControllerProgress, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
     }
     
     @objc private func handleSearchControllerProgress(notification: Notification) {
@@ -51,15 +60,6 @@ class SearchResultsController: UITableViewController {
         
         DispatchQueue.main.async {
             self.noResultsView.searchTextLabel.text = "Couldn't find \"\(searchText)\""
-        }
-    }
-    
-    @objc fileprivate func handlePlayerDetailsMinimize() {
-        if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
-            let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
-            //guard let safeAreaInsetBottom = UIWindow.key?.safeAreaInsets.bottom else { return }
-            tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -miniPlayerViewHeight, right: 0)
         }
     }
     

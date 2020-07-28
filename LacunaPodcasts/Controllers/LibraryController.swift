@@ -40,7 +40,6 @@ class LibraryController: UITableViewController {
         setupTableView()
         setupSearchBar()
         setupNavigationBarButtons()
-        setupObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,15 +51,7 @@ class LibraryController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchController.searchBar.searchTextField.textColor = .white
-    }
-    
-    //MARK: - Setup Observers
-
-    fileprivate func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePlayerDetailsMinimize), name: .minimizePlayerDetails, object: nil)
-    }
-    
-    @objc fileprivate func handlePlayerDetailsMinimize() {
+        
         if UIApplication.mainNavigationController()?.miniPlayerIsVisible == true {
             let miniPlayerViewHeight = UIApplication.mainNavigationController()?.minimizedTopAnchorConstraint.constant ?? 0
             //guard let safeAreaInsetBottom = UIWindow.key?.safeAreaInsets.bottom else { return }
