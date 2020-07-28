@@ -70,31 +70,7 @@ class APIService {
         activeDownloads[episode.streamUrl] = nil
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    // MARK: - Fetch Methods
     
     func fetchEpisodes(feedUrl: String, completionHandler: @escaping ([Episode], Podcast) -> Void) {
         
@@ -130,18 +106,6 @@ class APIService {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     func fetchPodcasts(searchText: String, completionHandler: @escaping ([Podcast]) -> ()) {
         
         let parameters = ["term": searchText,

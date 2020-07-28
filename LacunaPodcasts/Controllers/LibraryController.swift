@@ -166,9 +166,11 @@ extension LibraryController: SearchResultsControllerDelegate {
     func didSelectSearchResult(_ episode: Episode) {
         self.searchController.searchBar.text = ""
 
-//        // Find Podcast
-//        guard let index = podcasts.firstIndex(where: {$0.collectionId == podcast.collectionId} ) else { return }
-//        let podcast = self.podcasts[indexPath.row]
+        // Find Podcast
+        guard let index = podcasts.firstIndex(where: {$0.artistName == episode.author} ) else { return }
+        print(index)
+        
+        //let podcast = self.podcasts[indexPath.row]
 //
 //        // Go to Podcast Episodes
 //        let episodesController = EpisodesController()

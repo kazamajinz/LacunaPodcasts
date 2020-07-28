@@ -113,6 +113,7 @@ class SearchResultsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if isLoading {
+            noResultsView.isHidden = true
             return AlertService.showActivityIndicator()
         } else {
             noResultsView.isHidden = false

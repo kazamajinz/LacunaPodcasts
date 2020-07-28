@@ -103,6 +103,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if isLoading {
             return AlertService.showActivityIndicator()
+            noResultsView.isHidden = true
         } else {
             noResultsView.isHidden = false
             return UIView()
