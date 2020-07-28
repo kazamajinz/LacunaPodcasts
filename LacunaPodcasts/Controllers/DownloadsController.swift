@@ -102,7 +102,7 @@ class DownloadsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseIdentifier, for: indexPath) as? EpisodeCell else { fatalError() }
-//        cell.delegate = self
+        cell.delegate = self
         cell.episode = self.episodes[indexPath.row]
         cell.episodeImageView.isHidden = false
         cell.descriptionLabel.isHidden = true
@@ -121,6 +121,15 @@ class DownloadsController: UITableViewController {
         // Delete Action
         let deleteAction = SwipeActionService.createDeleteAction { (action, view, completionHandler) in
             let selectedEpisode = self.episodes[indexPath.row]
+            
+            // Cancel Download if In Progress
+            if self.episodes[indexPath.row].downloadStatus == .inProgress {
+                APIService.shared.cancelDownload(selectedEpisode)
+                self.episodes.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                completionHandler(true)
+                return
+            }
 
             // Delete Local File
             guard let fileUrl = URL(string: selectedEpisode.fileUrl ?? "") else { return }
@@ -157,13 +166,13 @@ class DownloadsController: UITableViewController {
 
 //MARK: - Episode Cell Delegate
 
-//extension DownloadsController: EpisodeCellDelegate {
-//    func didTapCancel(_ cell: EpisodeCell) {
-//        if let indexPath = tableView.indexPath(for: cell) {
-//            let episode = episodes[indexPath.row]
-//            APIService.shared.cancelDownload(episode)
-//            self.episodes.remove(at: indexPath.row)
-//            self.tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
-//}
+extension DownloadsController: EpisodeCellDelegate {
+    func didTapCancel(_ cell: EpisodeCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            let episode = episodes[indexPath.row]
+            APIService.shared.cancelDownload(episode)
+            self.episodes.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+}

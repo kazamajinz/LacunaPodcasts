@@ -105,6 +105,7 @@ class EpisodeCell: UITableViewCell {
     func updateDisplay(progress: Double) {
         downloadStatusView.isHidden = false
         circularProgressBar.setProgress(to: progress)
+        detailsLabel.textColor = UIColor.appColor(.orange)
         detailsLabel.text = "Downloading... \(Int(progress * 100))%"
     }
     
