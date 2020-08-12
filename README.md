@@ -43,7 +43,7 @@ Tech Specific:
 # Reflection
 
 As an avid podcast listener, I wanted to build something I was familiar with as a user.
-Some of the more challenging aspects of this project include the audio player min/max animations, 
+Some of the more challenging aspects of this project include the audio player animations, 
 tracking playback time (on audio player and control center simultaneously), monitoring downloads and updating UI,
 and converting HTML text to attributed strings.
 
