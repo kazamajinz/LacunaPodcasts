@@ -4,7 +4,7 @@ A dark mode podcast app using iTunes Search API with offline playback and person
 
 ![LacunaPodcsts Demo](https://github.com/mcipswitch/lacuna-podcasts/blob/master/Screenshots/small.gif)
 
-# Project Status
+## Project Status
 
 This project is currently still in development. This latest version includes the following core features:
 
@@ -24,7 +24,7 @@ Tech Specific:
 * User Library persistence with **UserDefaults**
 * Monitor Downloads with *Notification Center*
 
-# Screenshots
+## Screenshots
 
 <p float="left">
 <img src="https://github.com/mcipswitch/lacuna-podcasts/blob/master/Screenshots/library_view_empty.png" width="250">
@@ -40,7 +40,7 @@ Tech Specific:
 <img src="https://github.com/mcipswitch/lacuna-podcasts/blob/master/Screenshots/library_view_search_noresults.png" width="250">
 </p>
 
-# Reflection
+## Reflection
 
 As an avid podcast listener, I wanted to build something I was familiar with as a user.
 Some of the more challenging aspects of this project include the audio player animations, 
@@ -55,6 +55,3 @@ Features to add:
 * share episode or personal library with others
 * add haptics and feedback to user actions
 * cache data for faster loading and better user experience
-
-
-
